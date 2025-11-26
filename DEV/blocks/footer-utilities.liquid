@@ -1,0 +1,148 @@
+
+
+<div
+  class="footer-utilities spacing-style"
+  style="{% render 'spacing-style', settings: block.settings %} --border-width: {{ block.settings.divider_thickness }}px;"
+  {{ block.shopify_attributes }}
+>
+  <div class="footer-utilities__group footer-utilities__group--left">
+    {% content_for 'block', type: '_footer-copyright', id: 'copyright' %}
+    {% content_for 'block', type: '_footer-policy-list', id: 'policy_list' %}
+  </div>
+
+  <div class="footer-utilities__group footer-utilities__group--right">
+<div class="footer-custom-icons flex items-center gap-4">
+  <a href="https://instagram.com//shikha_chikan" target="_blank" aria-label="Instagram">
+    <img src="{{ 'instagram.svg' | asset_url }}" alt="Instagram" class="social-icon" />
+  </a>
+  <a href="https://www.threads.net/shikha_chikan" target="_blank" aria-label="Threads">
+    <img src="{{ 'threads.svg' | asset_url }}" alt="Threads" class="social-icon" />
+  </a>
+  <a href="https://facebook.com/Shikhachikenboutiques" target="_blank" aria-label="Facebook">
+    <img src="{{ 'facebook.svg' | asset_url }}" alt="Facebook" class="social-icon" />
+  </a>
+  <a href="https://www.youtube.com/@Shikha_Chikan/shorts" target="_blank" aria-label="youtube_shorts">
+    <img src="{{ 'youtube_shorts.svg' | asset_url }}" alt="youtube_shorts" class="social-icon" />
+  </a>
+</div>
+</div>
+</div>
+
+{% stylesheet %}
+  .footer-utilities {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--gap-lg);
+    text-wrap: nowrap;
+    border-top: var(--border-width) solid var(--color-border);
+    color: var(--color-foreground-muted);
+
+    @media screen and (min-width: 750px) {
+      flex-direction: row;
+      justify-content: space-between;
+      gap: var(--gap-md);
+      align-items: center;
+      text-align: left;
+    }
+  }
+
+  .footer-utilities a {
+    color: var(--color-foreground-muted);
+  }
+
+  .footer-utilities__group {
+    width: 100%;
+    display: flex;
+    flex: 1 1 max-content;
+    text-align: center;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--gap-md);
+
+    @media screen and (min-width: 750px) {
+      flex-direction: row;
+      align-items: baseline;
+      gap: var(--gap-2xs) var(--gap-xl);
+      text-align: left;
+    }
+  }
+
+  .footer-utilities__group--right {
+    @media screen and (min-width: 750px) {
+      justify-content: flex-end;
+    }
+  }
+
+  .footer-utilities__group:empty {
+    @media screen and (max-width: 749px) {
+      display: none;
+    }
+  }
+ .social-icon {
+  width: 28px;   /* adjust size */
+  height: 28px;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.social-icon:hover {
+  transform: scale(1.1);
+  opacity: 0.8;
+}
+
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.footer_utilities",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "range",
+      "id": "divider_thickness",
+      "label": "t:settings.divider_thickness",
+      "min": 0,
+      "max": 5,
+      "step": 0.5,
+      "unit": "px",
+      "default": 1
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.footer_utilities",
+      "category": "t:categories.footer"
+    }
+  ]
+}
+{% endschema %}

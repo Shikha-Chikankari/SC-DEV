@@ -1,0 +1,203 @@
+{% liquid
+  assign _p = product
+  if request.visual_preview_mode and _p == blank
+    assign _p = collections.all.products.first
+  endif
+
+  # Product description with fallback to block setting "text"
+  assign desc_html = _p.description | default: block.settings.text
+
+  # Metafields (namespace: custom)
+  assign mf = _p.metafields
+  assign fabric     = mf.custom.fabric | default: ''
+  assign fit        = mf.custom.fit | default: ''
+  assign embroidery = mf.custom.embroidery | default: ''
+  assign neckline   = mf.custom.neckline | default: ''
+  assign length_v   = mf.custom.length | default: ''
+  assign thread     = mf.custom.thread | default: ''
+  assign occasion   = mf.custom.occasion | default: ''
+  assign washcare   = mf.custom.washcare | default: ''
+%}
+
+{%- if desc_html != blank -%}
+  <div class="pd-desc rte">
+    {{ desc_html }}
+  </div>
+{%- endif -%}
+
+<div class="pd-accordions" data-pd-acc>
+  {%- if fabric != blank -%}
+  <details class="pd-acc">
+    <summary class="pd-acc__summary">Fabric</summary>
+    <div class="pd-acc__panel rte">{{ fabric }}</div>
+  </details>
+  {%- endif -%}
+
+  {%- if fit != blank -%}
+  <details class="pd-acc">
+    <summary class="pd-acc__summary">Fit</summary>
+    <div class="pd-acc__panel rte">{{ fit }}</div>
+  </details>
+  {%- endif -%}
+
+  {%- if embroidery != blank -%}
+  <details class="pd-acc">
+    <summary class="pd-acc__summary">Embroidery</summary>
+    <div class="pd-acc__panel rte">{{ embroidery }}</div>
+  </details>
+  {%- endif -%}
+
+  {%- if neckline != blank -%}
+  <details class="pd-acc">
+    <summary class="pd-acc__summary">Neckline</summary>
+    <div class="pd-acc__panel rte">{{ neckline }}</div>
+  </details>
+  {%- endif -%}
+
+  {%- if length_v != blank -%}
+  <details class="pd-acc">
+    <summary class="pd-acc__summary">Length</summary>
+    <div class="pd-acc__panel rte">{{ length_v }}</div>
+  </details>
+  {%- endif -%}
+
+  {%- if thread != blank -%}
+  <details class="pd-acc">
+    <summary class="pd-acc__summary">Thread</summary>
+    <div class="pd-acc__panel rte">{{ thread }}</div>
+  </details>
+  {%- endif -%}
+
+  {%- if occasion != blank -%}
+  <details class="pd-acc">
+    <summary class="pd-acc__summary">Occasion</summary>
+    <div class="pd-acc__panel rte">{{ occasion }}</div>
+  </details>
+  {%- endif -%}
+
+  {%- if washcare != blank -%}
+  <details class="pd-acc">
+    <summary class="pd-acc__summary">Washcare</summary>
+    <div class="pd-acc__panel rte">{{ washcare }}</div>
+  </details>
+  {%- endif -%}
+</div>
+
+<style>
+  /* Description block spacing */
+  .pd-desc { margin: 18px 0 22px; }
+
+  /* Accordion skeleton */
+  .pd-accordions { border-top: 1px solid var(--color-border, #e5e5e5); }
+  .pd-acc { border-bottom: 1px solid var(--color-border, #e5e5e5); }
+
+  .pd-acc__summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 16px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: 600;
+  }
+  .pd-acc__summary::-webkit-details-marker { display: none; }
+
+  /* Plus / minus indicator (kept subtle) */
+  .pd-acc__summary::after {
+    content: "+";
+    font-weight: 700;
+    line-height: 1;
+    transition: transform .2s ease, opacity .2s ease;
+    opacity: .9;
+  }
+  .pd-acc[open] .pd-acc__summary::after { content: "–"; transform: rotate(180deg); }
+
+  /* The sliding panel (animated by JS via max-height) */
+  .pd-acc__panel {
+    overflow: hidden;
+    max-height: 0;                 /* collapsed visual state */
+    padding: 0;                    /* padding added only when open for a crisp snap */
+    transition: max-height .3s ease, padding .2s ease;
+  }
+  .pd-acc.is-open .pd-acc__panel { padding: 0 0 14px 0; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pd-acc__panel, .pd-acc__summary::after { transition: none !important; }
+  }
+</style>
+
+<script>
+/* Smooth height animation for each details panel */
+(function(){
+  const accRoot = document.currentScript.previousElementSibling; // <style> is above this <script>
+  // The actual accordion wrapper is the previousElementSibling of <style>
+  const wrapper = accRoot && accRoot.previousElementSibling;
+  // If structure changes, fallback to querying:
+  const root = wrapper && wrapper.matches('.pd-accordions') ? wrapper : document.querySelector('.pd-accordions');
+  if (!root) return;
+
+  const items = root.querySelectorAll('details.pd-acc');
+
+  items.forEach(d => {
+    const panel = d.querySelector('.pd-acc__panel');
+    if (!panel) return;
+
+    // Ensure closed visual by default
+    if (!d.open) {
+      d.classList.remove('is-open');
+      panel.style.maxHeight = '0px';
+    } else {
+      d.classList.add('is-open');
+      panel.style.maxHeight = panel.scrollHeight + 'px';
+    }
+
+    d.addEventListener('toggle', () => {
+      if (d.open) {
+        d.classList.add('is-open');
+        panel.style.maxHeight = panel.scrollHeight + 'px';
+      } else {
+        // Animate from current height to 0
+        panel.style.maxHeight = panel.scrollHeight + 'px';
+        requestAnimationFrame(() => {
+          d.classList.remove('is-open');
+          panel.style.maxHeight = '0px';
+        });
+      }
+    });
+
+    // Keep height in sync when content reflows
+    const ro = new ResizeObserver(() => {
+      if (d.open) panel.style.maxHeight = panel.scrollHeight + 'px';
+    });
+    ro.observe(panel);
+
+    window.addEventListener('resize', () => {
+      if (d.open) panel.style.maxHeight = panel.scrollHeight + 'px';
+    }, { passive: true });
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "t:names.text",
+  "tag": null,
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "t:settings.text",
+      "default": "t:html_defaults.share_information_about_your"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.product_description",
+      "category": "t:categories.product",
+      "settings": {
+        "text": "{{ closest.product.description }}"
+      }
+    }
+  ]
+}
+{% endschema %}
