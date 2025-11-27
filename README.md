@@ -1,5 +1,6 @@
 <h1 align="center">
-  ✨🪡 Shikha Chikankari — Custom Shopify Theme 🪡✨  
+  <img width="50" height="50" alt="Shikha Chikankari" src="https://github.com/user-attachments/assets/e4735906-96ee-49b2-bce7-6359b7911881" />
+✨🪡 Shikha Chikankari — Custom Shopify Theme 🪡✨  
 </h1>
 
 <p align="center">
