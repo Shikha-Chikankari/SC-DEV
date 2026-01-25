@@ -82,7 +82,7 @@
                   "type": "button",
                   "settings": {
                     "label": "Shop now",
-                    "link": "shopify://collections/mulmul-collection",
+                    "link": "shopify://collections/mulmul-chikankari-kurtis-soft-cotton-lucknowi-collection",
                     "open_in_new_tab": false,
                     "style_class": "link",
                     "width": "fit-content",
@@ -604,7 +604,7 @@
           "signature-kurtis",
           "mens-kurtas",
           "new-arrivals",
-          "mulmul-collection",
+          "mulmul-chikankari-kurtis-soft-cotton-lucknowi-collection",
           "chikankari-rayon-fabric-collection"
         ],
         "layout_type": "grid",
@@ -1016,7 +1016,7 @@
       ],
       "name": "Featured collection",
       "settings": {
-        "collection": "mulmul-collection",
+        "collection": "mulmul-chikankari-kurtis-soft-cotton-lucknowi-collection",
         "layout_type": "grid",
         "carousel_on_mobile": false,
         "max_products": 5,
@@ -1222,7 +1222,7 @@
       "settings": {
         "collection_list": [
           "top-collection",
-          "mulmul-collection",
+          "mulmul-chikankari-kurtis-soft-cotton-lucknowi-collection",
           "chikankari-rayon-fabric-collection"
         ],
         "layout_type": "editorial",
