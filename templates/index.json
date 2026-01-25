@@ -172,7 +172,7 @@
                   "type": "button",
                   "settings": {
                     "label": "Shop now",
-                    "link": "shopify://collections/rayon-collection",
+                    "link": "shopify://collections/chikankari-rayon-fabric-collection",
                     "open_in_new_tab": false,
                     "style_class": "link",
                     "width": "fit-content",
@@ -605,7 +605,7 @@
           "mens-kurtas",
           "new-arrivals",
           "mulmul-collection",
-          "rayon-collection"
+          "chikankari-rayon-fabric-collection"
         ],
         "layout_type": "grid",
         "carousel_on_mobile": true,
@@ -1223,7 +1223,7 @@
         "collection_list": [
           "top-collection",
           "mulmul-collection",
-          "rayon-collection"
+          "chikankari-rayon-fabric-collection"
         ],
         "layout_type": "editorial",
         "carousel_on_mobile": false,
