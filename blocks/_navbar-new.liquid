@@ -1,0 +1,628 @@
+{% liquid
+  assign menu_data = block.settings.menu
+  assign show_search = block.settings.show_search | default: true
+  assign show_cart = block.settings.show_cart | default: true
+  assign show_account = block.settings.show_account | default: true
+  assign show_wishlist = block.settings.show_wishlist | default: true
+  assign navbar_color = block.settings.color_scheme | default: ''
+  assign logo_width = block.settings.logo_width | default: 60
+%}
+
+{% capture navbar_menu_json %}
+  [
+    {% for link in menu_data.links %}
+      {
+        "id": "{{ link.handle }}",
+        "label": "{{ link.title | escape }}",
+        "url": "{{ link.url | escape }}",
+        "children": [
+          {% for child_link in link.links %}
+            {
+              "id": "{{ child_link.handle }}",
+              "label": "{{ child_link.title | escape }}",
+              "url": "{{ child_link.url | escape }}"
+            }
+            {%- unless forloop.last %},{% endunless -%}
+          {% endfor %}
+        ]
+      }
+      {%- unless forloop.last %},{% endunless -%}
+    {% endfor %}
+  ]
+{% endcapture %}
+
+<navbar-component
+  class="navbar {% if navbar_color %}color-{{ navbar_color }}{% endif %}"
+  data-menu-data='{{ navbar_menu_json | strip_newlines }}'
+  data-logo-width="{{ logo_width }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="navbar__container">
+    <!-- Mobile Menu Button -->
+    <button
+      class="navbar__mobile-toggle"
+      ref="mobileMenuButton"
+      aria-label="Toggle navigation menu"
+      aria-expanded="false"
+    >
+      <span class="navbar__hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </span>
+    </button>
+
+    <!-- Logo -->
+    <div class="navbar__logo" data-logo-container>
+      {% if shop.logo %}
+        <img
+          src="{{ shop.logo | image_url: width: 200 }}"
+          alt="{{ shop.name }}"
+          width="{{ logo_width }}"
+          height="{{ logo_width }}"
+          loading="eager"
+        />
+      {% else %}
+        <span class="navbar__logo-text">{{ shop.name | split: ' ' | map: 'first' | join }}</span>
+      {% endif %}
+    </div>
+
+    <!-- Desktop Navigation Menu -->
+    <nav class="navbar__nav" aria-label="Main menu">
+      <ul class="navbar__list" ref="navList" role="menubar">
+        <!-- Menu items will be rendered here by JS -->
+      </ul>
+    </nav>
+
+    <!-- Right Actions -->
+    <div class="navbar__actions">
+      {% if show_search %}
+        <a
+          href="{{ routes.search_url }}"
+          class="navbar__action navbar__action--search"
+          aria-label="Open search"
+          title="Search"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.35-4.35"></path>
+          </svg>
+        </a>
+      {% endif %}
+
+      {% if show_cart %}
+        <a
+          href="{{ routes.cart_url }}"
+          class="navbar__action navbar__action--cart"
+          aria-label="Open cart"
+          title="Cart"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+          </svg>
+          <span class="navbar__cart-count" data-cart-count="0"></span>
+        </a>
+      {% endif %}
+
+      {% if show_wishlist %}
+        <button
+          class="navbar__action navbar__action--wishlist"
+          aria-label="Open wishlist"
+          title="Wishlist"
+          data-action="open-wishlist"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+          </svg>
+        </button>
+      {% endif %}
+
+      {% if shop.customer_accounts_enabled and show_account %}
+        <a
+          href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}"
+          class="navbar__action navbar__action--account"
+          aria-label="Account menu"
+          title="Account"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </a>
+      {% endif %}
+    </div>
+
+    <!-- Mobile Menu -->
+    <div class="navbar__mobile-menu" ref="mobileMenu">
+      <ul class="navbar__mobile-list" role="navigation">
+        <!-- Mobile menu items will be rendered here by JS -->
+      </ul>
+    </div>
+  </div>
+
+  <script src="{{ 'navbar.js' | asset_url }}" type="module" fetchpriority="low"></script>
+</navbar-component>
+
+{% stylesheet %}
+  .navbar {
+    --navbar-padding: 12px;
+    --navbar-radius: 24px;
+    --navbar-height: 70px;
+    --navbar-logo-size: 60px;
+    --navbar-bg: var(--color-background);
+    --navbar-text: var(--color-foreground);
+    --navbar-border: var(--color-border);
+    --navbar-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    --navbar-gap: 24px;
+  }
+
+  .navbar {
+    position: relative;
+    width: calc(100% - (var(--navbar-padding) * 2));
+    margin: var(--navbar-padding);
+    background: var(--navbar-bg);
+    border-radius: var(--navbar-radius);
+    border: 1px solid var(--navbar-border);
+    box-shadow: var(--navbar-shadow);
+  }
+
+  .navbar__container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--navbar-gap);
+    padding: 0 24px;
+    min-height: var(--navbar-height);
+  }
+
+  /* Logo Styling */
+  .navbar__logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--navbar-logo-size);
+    height: var(--navbar-logo-size);
+    min-width: var(--navbar-logo-size);
+    border-radius: 50%;
+    background: var(--navbar-text);
+    overflow: hidden;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+  }
+
+  .navbar__logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .navbar__logo-text {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--navbar-bg);
+    text-align: center;
+  }
+
+  /* Navigation Menu */
+  .navbar__nav {
+    flex: 1;
+    display: none;
+  }
+
+  @media (min-width: 768px) {
+    .navbar__nav {
+      display: block;
+    }
+  }
+
+  .navbar__list {
+    display: flex;
+    gap: var(--navbar-gap);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .navbar__item {
+    position: relative;
+  }
+
+  .navbar__link {
+    display: inline-block;
+    padding: 8px 0;
+    color: var(--navbar-text);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 16px;
+    transition: color 0.2s ease;
+    position: relative;
+  }
+
+  .navbar__link:hover {
+    color: var(--color-accent, currentColor);
+  }
+
+  .navbar__link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--color-accent, currentColor);
+    transition: width 0.2s ease;
+  }
+
+  .navbar__link:hover::after,
+  .navbar__link[aria-expanded="true"]::after {
+    width: 100%;
+  }
+
+  /* Submenu Styling */
+  .navbar__submenu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 200px;
+    margin-top: 8px;
+    padding: 12px 0;
+    background: var(--navbar-bg);
+    border-radius: 12px;
+    list-style: none;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: all 0.2s ease;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    z-index: 1000;
+    border: 1px solid var(--navbar-border);
+  }
+
+  .navbar__submenu--active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .navbar__submenu-item {
+    list-style: none;
+  }
+
+  .navbar__submenu-link {
+    display: block;
+    padding: 12px 16px;
+    color: var(--navbar-text);
+    text-decoration: none;
+    font-size: 14px;
+    transition: all 0.2s ease;
+  }
+
+  .navbar__submenu-link:hover {
+    background: rgba(0, 0, 0, 0.05);
+    color: var(--color-accent, currentColor);
+    padding-left: 20px;
+  }
+
+  /* Actions */
+  .navbar__actions {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .navbar__action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: transparent;
+    color: var(--navbar-text);
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    padding: 0;
+  }
+
+  .navbar__action:hover {
+    background: rgba(0, 0, 0, 0.05);
+    color: var(--color-accent, currentColor);
+  }
+
+  .navbar__action svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .navbar__cart-count {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    min-width: 20px;
+    height: 20px;
+    background: var(--color-accent, #ff0000);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  .navbar__cart-count[data-cart-count="0"] {
+    display: none;
+  }
+
+  /* Mobile Toggle Button */
+  .navbar__mobile-toggle {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 8px;
+    transition: background 0.2s ease;
+  }
+
+  @media (min-width: 768px) {
+    .navbar__mobile-toggle {
+      display: none;
+    }
+  }
+
+  .navbar__mobile-toggle:hover {
+    background: rgba(0, 0, 0, 0.05);
+  }
+
+  .navbar__hamburger {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 100%;
+    height: 100%;
+  }
+
+  .navbar__hamburger span {
+    width: 100%;
+    height: 2px;
+    background: var(--navbar-text);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+
+  .navbar__mobile-toggle[aria-expanded="true"] .navbar__hamburger span:nth-child(1) {
+    transform: rotate(45deg) translate(8px, 8px);
+  }
+
+  .navbar__mobile-toggle[aria-expanded="true"] .navbar__hamburger span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .navbar__mobile-toggle[aria-expanded="true"] .navbar__hamburger span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -7px);
+  }
+
+  /* Mobile Menu */
+  .navbar__mobile-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: var(--navbar-padding);
+    right: var(--navbar-padding);
+    background: var(--navbar-bg);
+    border-radius: 0 0 var(--navbar-radius) var(--navbar-radius);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+
+  @media (max-width: 767px) {
+    .navbar__mobile-menu {
+      display: block;
+    }
+  }
+
+  .navbar__mobile-menu--open {
+    max-height: 500px;
+  }
+
+  .navbar__mobile-list {
+    list-style: none;
+    margin: 0;
+    padding: 12px;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 1024px) {
+    .navbar {
+      --navbar-gap: 16px;
+    }
+
+    .navbar__list {
+      gap: 16px;
+    }
+
+    .navbar__link {
+      font-size: 14px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .navbar {
+      --navbar-padding: 8px;
+      --navbar-radius: 20px;
+      --navbar-height: 60px;
+      --navbar-logo-size: 50px;
+      padding: 0 16px;
+    }
+
+    .navbar__container {
+      gap: 12px;
+      padding: 0 8px;
+    }
+
+    .navbar__actions {
+      gap: 8px;
+    }
+
+    .navbar__action {
+      width: 36px;
+      height: 36px;
+    }
+
+    .navbar__logo {
+      width: var(--navbar-logo-size);
+      height: var(--navbar-logo-size);
+      min-width: var(--navbar-logo-size);
+    }
+  }
+
+  /* Mobile menu items */
+  .navbar__mobile-item {
+    list-style: none;
+  }
+
+  .navbar__mobile-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    color: var(--navbar-text);
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    width: 100%;
+  }
+
+  .navbar__mobile-link:hover {
+    background: rgba(0, 0, 0, 0.05);
+    color: var(--color-accent, currentColor);
+  }
+
+  .navbar__mobile-expand {
+    padding: 8px 12px;
+    background: transparent;
+    border: none;
+    color: var(--navbar-text);
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .navbar__mobile-item:has(.navbar__mobile-expand[aria-expanded="true"]) .navbar__mobile-expand {
+    transform: rotate(180deg);
+  }
+
+  .navbar__mobile-submenu {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    background: rgba(0, 0, 0, 0.02);
+  }
+
+  .navbar__mobile-submenu--open {
+    max-height: 500px;
+  }
+
+  .navbar__mobile-submenu-link {
+    display: block;
+    padding: 10px 16px 10px 32px;
+    color: var(--navbar-text);
+    text-decoration: none;
+    font-size: 14px;
+    transition: all 0.2s ease;
+  }
+
+  .navbar__mobile-submenu-link:hover {
+    background: rgba(0, 0, 0, 0.05);
+    color: var(--color-accent, currentColor);
+    padding-left: 40px;
+  }
+
+  /* Dark mode support */
+  @media (prefers-color-scheme: dark) {
+    .navbar {
+      --navbar-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .navbar__action:hover,
+    .navbar__mobile-toggle:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .navbar__submenu-link:hover,
+    .navbar__mobile-link:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .navbar__mobile-submenu {
+      background: rgba(255, 255, 255, 0.05);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Dynamic Navbar",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu"
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "min": 40,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Logo size",
+      "default": 60
+    },
+    {
+      "type": "checkbox",
+      "id": "show_search",
+      "label": "Show search",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cart",
+      "label": "Show cart",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_wishlist",
+      "label": "Show wishlist",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_account",
+      "label": "Show account menu",
+      "default": true
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme"
+    }
+  ]
+}
+{% endschema %}
