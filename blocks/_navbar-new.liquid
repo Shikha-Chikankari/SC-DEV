@@ -38,19 +38,28 @@
   {{ block.shopify_attributes }}
 >
   <div class="navbar__container">
-    <!-- Mobile Menu Button -->
-    <button
-      class="navbar__mobile-toggle"
-      ref="mobileMenuButton"
-      aria-label="Toggle navigation menu"
-      aria-expanded="false"
-    >
-      <span class="navbar__hamburger">
-        <span></span>
-        <span></span>
-        <span></span>
-      </span>
-    </button>
+    <div class="navbar__left">
+      <!-- Mobile Menu Button -->
+      <button
+        class="navbar__mobile-toggle"
+        ref="mobileMenuButton"
+        aria-label="Toggle navigation menu"
+        aria-expanded="false"
+      >
+        <span class="navbar__hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+      </button>
+
+      <!-- Desktop Navigation Menu -->
+      <nav class="navbar__nav" aria-label="Main menu">
+        <ul class="navbar__list" ref="navList" role="menubar">
+          <!-- Menu items will be rendered here by JS -->
+        </ul>
+      </nav>
+    </div>
 
     <!-- Logo -->
     <div class="navbar__logo" data-logo-container>
@@ -67,79 +76,77 @@
       {% endif %}
     </div>
 
-    <!-- Desktop Navigation Menu -->
-    <nav class="navbar__nav" aria-label="Main menu">
-      <ul class="navbar__list" ref="navList" role="menubar">
-        <!-- Menu items will be rendered here by JS -->
-      </ul>
-    </nav>
-
-    <!-- Right Actions -->
-    <div class="navbar__actions">
+    <div class="navbar__right">
       {% if show_search %}
-        <a
-          href="{{ routes.search_url }}"
-          class="navbar__action navbar__action--search"
-          aria-label="Open search"
-          title="Search"
-        >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="11" cy="11" r="8"></circle>
+        <form class="navbar__search" action="{{ routes.search_url }}" method="get" role="search">
+          <input
+            class="navbar__search-input"
+            type="search"
+            name="q"
+            placeholder="{{ 'general.search.search_for' | t | default: 'Search for' }}"
+            aria-label="{{ 'general.search.search_for' | t | default: 'Search for products' }}"
+          />
+          <button class="navbar__search-button" type="submit" aria-label="Submit search">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
             <path d="m21 21-4.35-4.35"></path>
           </svg>
-        </a>
-      {% endif %}
-
-      {% if show_cart %}
-        <a
-          href="{{ routes.cart_url }}"
-          class="navbar__action navbar__action--cart"
-          aria-label="Open cart"
-          title="Cart"
-        >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="9" cy="21" r="1"></circle>
-            <circle cx="20" cy="21" r="1"></circle>
-            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-          </svg>
-          <span class="navbar__cart-count" data-cart-count="0"></span>
-        </a>
-      {% endif %}
-
-      {% if show_wishlist %}
-        <button
-          class="navbar__action navbar__action--wishlist"
-          aria-label="Open wishlist"
-          title="Wishlist"
-          data-action="open-wishlist"
-        >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-          </svg>
         </button>
+      </form>
       {% endif %}
 
-      {% if shop.customer_accounts_enabled and show_account %}
-        <a
-          href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}"
-          class="navbar__action navbar__action--account"
-          aria-label="Account menu"
-          title="Account"
-        >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-            <circle cx="12" cy="7" r="4"></circle>
-          </svg>
-        </a>
-      {% endif %}
-    </div>
+      <div class="navbar__actions">
+        {% if show_cart %}
+          <a
+            href="{{ routes.cart_url }}"
+            class="navbar__action navbar__action--cart"
+            aria-label="Open cart"
+            title="Cart"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="9" cy="21" r="1"></circle>
+              <circle cx="20" cy="21" r="1"></circle>
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+            </svg>
+            <span class="navbar__cart-count" data-cart-count="0"></span>
+          </a>
+        {% endif %}
 
-    <!-- Mobile Menu -->
-    <div class="navbar__mobile-menu" ref="mobileMenu">
-      <ul class="navbar__mobile-list" role="navigation">
-        <!-- Mobile menu items will be rendered here by JS -->
-      </ul>
+        {% if show_wishlist %}
+          <button
+            class="navbar__action navbar__action--wishlist"
+            aria-label="Open wishlist"
+            title="Wishlist"
+            data-action="open-wishlist"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </svg>
+          </button>
+        {% endif %}
+
+        {% if shop.customer_accounts_enabled and show_account %}
+          <a
+            href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}"
+            class="navbar__action navbar__action--account"
+            aria-label="Account menu"
+            title="Account"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </a>
+        {% endif %}
+      </div>
     </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div class="navbar__mobile-menu" ref="mobileMenu">
+    <ul class="navbar__mobile-list" role="navigation">
+      <!-- Mobile menu items will be rendered here by JS -->
+    </ul>
   </div>
 
   <script src="{{ 'navbar.js' | asset_url }}" type="module" fetchpriority="low"></script>
@@ -148,13 +155,13 @@
 {% stylesheet %}
   .navbar {
     --navbar-padding: 12px;
-    --navbar-radius: 24px;
-    --navbar-height: 70px;
+    --navbar-radius: 32px;
+    --navbar-height: 72px;
     --navbar-logo-size: 60px;
-    --navbar-bg: var(--color-background);
-    --navbar-text: var(--color-foreground);
-    --navbar-border: var(--color-border);
-    --navbar-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    --navbar-bg: #d9d9d9;
+    --navbar-text: #1f1f1f;
+    --navbar-border: transparent;
+    --navbar-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
     --navbar-gap: 24px;
   }
 
@@ -169,12 +176,19 @@
   }
 
   .navbar__container {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: var(--navbar-gap);
+    padding: 0 20px;
+    min-height: var(--navbar-height);
+  }
+
+  .navbar__left {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: var(--navbar-gap);
-    padding: 0 24px;
-    min-height: var(--navbar-height);
+    gap: 22px;
+    justify-content: flex-start;
   }
 
   /* Logo Styling */
@@ -207,7 +221,6 @@
 
   /* Navigation Menu */
   .navbar__nav {
-    flex: 1;
     display: none;
   }
 
@@ -219,7 +232,7 @@
 
   .navbar__list {
     display: flex;
-    gap: var(--navbar-gap);
+    gap: 26px;
     list-style: none;
     margin: 0;
     padding: 0;
@@ -306,9 +319,56 @@
   }
 
   /* Actions */
+  .navbar__right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 16px;
+  }
+
+  .navbar__search {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: white;
+    border-radius: 999px;
+    padding: 8px 12px 8px 16px;
+    min-width: 280px;
+    max-width: 360px;
+    box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.04);
+  }
+
+  .navbar__search-input {
+    border: none;
+    background: transparent;
+    flex: 1;
+    font-size: 15px;
+    color: #1f1f1f;
+    outline: none;
+  }
+
+  .navbar__search-input::placeholder {
+    color: #8c8c8c;
+  }
+
+  .navbar__search-button {
+    border: none;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 6px;
+    color: #1f1f1f;
+  }
+
+  .navbar__search-button:hover {
+    color: var(--color-accent, #111);
+  }
+
   .navbar__actions {
     display: flex;
-    gap: 16px;
+    gap: 12px;
     align-items: center;
     flex-shrink: 0;
   }
@@ -318,8 +378,8 @@
     align-items: center;
     justify-content: center;
     position: relative;
-    width: 40px;
-    height: 40px;
+    width: 42px;
+    height: 42px;
     border: none;
     background: transparent;
     color: var(--navbar-text);
@@ -365,8 +425,8 @@
     display: flex;
     flex-direction: column;
     gap: 4px;
-    width: 40px;
-    height: 40px;
+    width: 42px;
+    height: 42px;
     border: none;
     background: transparent;
     cursor: pointer;
@@ -464,12 +524,16 @@
       --navbar-radius: 20px;
       --navbar-height: 60px;
       --navbar-logo-size: 50px;
-      padding: 0 16px;
     }
 
     .navbar__container {
+      grid-template-columns: auto 1fr auto;
       gap: 12px;
-      padding: 0 8px;
+      padding: 0 12px;
+    }
+
+    .navbar__left {
+      gap: 12px;
     }
 
     .navbar__actions {
@@ -485,6 +549,16 @@
       width: var(--navbar-logo-size);
       height: var(--navbar-logo-size);
       min-width: var(--navbar-logo-size);
+    }
+
+    .navbar__search {
+      min-width: 0;
+      max-width: none;
+      width: 100%;
+    }
+
+    .navbar__right {
+      gap: 10px;
     }
   }
 

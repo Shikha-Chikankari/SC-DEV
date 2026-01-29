@@ -68,7 +68,6 @@ class NavbarComponent extends Component {
 
   /**
    * Loads menu items from metadata attribute or API endpoint
-   * @private
    */
   #loadMenuItems = async () => {
     try {
