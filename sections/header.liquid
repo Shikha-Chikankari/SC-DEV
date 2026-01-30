@@ -201,24 +201,31 @@
     cursor: pointer;
   }
 
-  @media screen and (min-width: 1024px) {
+  /* At tablet and up, place logo in the visual centre and use grid layout
+     Use 768px breakpoint so the logo recenters earlier and more predictably */
+  @media screen and (min-width: 768px) {
     .navbar {
       display: grid;
       grid-template-columns: 1fr auto 1fr;
       justify-content: unset;
+      align-items: center;
     }
-    
+
+    /* Ensure the logo is placed in the exact centre of the grid and not
+       absolutely positioned (use !important to override earlier inline rules
+       or higher-specificity selectors from other files). */
     .navbar__logo {
-      position: static;
-      transform: none;
+      position: static !important;
+      left: auto !important;
+      transform: none !important;
       grid-column: 2;
-      order: 2;
+      justify-self: center;
+      align-self: center;
     }
 
     .navbar__list {
       display: flex;
       grid-column: 1;
-      order: 1;
     }
 
     .navbar__mobile-toggle {
@@ -227,7 +234,6 @@
 
     .navbar__actions {
       grid-column: 3;
-      order: 3;
       justify-self: end;
     }
   }
