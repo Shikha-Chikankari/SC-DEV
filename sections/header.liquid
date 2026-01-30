@@ -262,6 +262,10 @@
 ]
 {%- endcapture -%}
 
+{%- capture header_menu -%}
+  {%- content_for 'block', type: '_header-menu', id: 'header-menu' -%}
+{%- endcapture -%}
+
 <navbar-component
   class="navbar color-{{ section.settings.color_scheme }}"
   data-menu-data='{{ menu_json }}'
@@ -285,8 +289,14 @@
     {%- endif -%}
   </a>
 
-  <!-- Desktop Menu -->
-  <ul class="navbar__list" ref="navList"></ul>
+  <!-- Desktop Menu: prefer existing _header-menu block for quick navigation (mega menu). Falls back to JS-rendered list -->
+  {%- unless header_menu == blank -%}
+    <div class="navbar__menu desktop:visible">
+      {{ header_menu }}
+    </div>
+  {%- else -%}
+    <ul class="navbar__list" ref="navList"></ul>
+  {%- endunless -%}
 
   <!-- Actions -->
   <div class="navbar__actions">
