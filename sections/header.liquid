@@ -30,6 +30,8 @@
     max-width: var(--page-width, 1400px);
     width: calc(100% - 2rem);
     justify-content: space-between;
+    transition: transform 220ms ease-in-out, opacity 220ms ease-in-out;
+    will-change: transform, opacity;
   }
 
   .navbar__logo {
@@ -226,6 +228,8 @@
     .navbar__list {
       display: flex;
       grid-column: 1;
+      margin-left: 0;
+      padding-left: calc(var(--navbar-padding) / 2);
     }
 
     .navbar__mobile-toggle {
@@ -236,6 +240,36 @@
       grid-column: 3;
       justify-self: end;
     }
+  }
+
+  /* Hide the navbar on scroll-down and reveal on single scroll-up when using scroll-up sticky mode */
+  header-component[sticky='scroll-up'][data-scroll-direction='down'] .navbar {
+    transform: translateY(calc(-1 * (var(--navbar-height) + 12px)));
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  header-component[sticky='scroll-up'][data-scroll-direction='up'] .navbar,
+  header-component[sticky='scroll-up'][data-scroll-direction='none'] .navbar {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* If an existing header menu is used, ensure it aligns to the left column */
+  .navbar__menu {
+    grid-column: 1;
+    display: block;
+    align-self: center;
+  }
+
+  /* Make sure the header-menu list respects the navbar gap and spacing */
+  .navbar__menu .menu-list__list {
+    display: flex;
+    gap: var(--navbar-gap);
+    margin: 0;
+    padding: 0;
+    align-items: center;
   }
 {%- endstyle -%}
 
