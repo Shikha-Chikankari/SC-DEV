@@ -1133,6 +1133,15 @@
         "padding-block-end": 0
       }
     },
+    "featured_collection_grid_ACcp6X": {
+      "type": "featured-collection-grid",
+      "name": "Featured Collection Grid",
+      "settings": {
+        "featured_collection": "mulmul-chikankari-kurtis-soft-cotton-lucknowi-collection",
+        "featured_image": "shopify://shop_images/Create_a_premium_2k_202512231001.jpg",
+        "featured_title": "Crafted for Workdays That Turn Heads"
+      }
+    },
     "collection_list_iAQiBH": {
       "type": "collection-list",
       "blocks": {
@@ -1584,6 +1593,7 @@
     "featured_product_pW7dEU",
     "product_list_8kR3Hb",
     "featured_product_rKUqUR",
+    "featured_collection_grid_ACcp6X",
     "collection_list_iAQiBH",
     "marquee_y8LEWQ",
     "section_ppbEnA"
