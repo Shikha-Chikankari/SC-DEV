@@ -1,5 +1,5 @@
 {%- comment -%}
-  Featured Collection Grid - Left: Feature Card, Right: Quick Buy Products
+  Featured Collection Grid - Left: Feature Card, Right: Horizontal Product Slider
 {%- endcomment -%}
 
 {%- style -%}
@@ -16,9 +16,9 @@
 
   .featured-collection-grid__container {
     display: grid;
-    grid-template-columns: 45% 1fr;
+    grid-template-columns: 40% 1fr;
     gap: var(--grid-gap);
-    align-items: start;
+    align-items: stretch;
   }
 
   /* LEFT SIDE - Featured Collection Card (Vertical Portrait) */
@@ -26,7 +26,7 @@
     position: relative;
     border-radius: var(--card-radius);
     overflow: hidden;
-    height: 600px; /* Tall vertical card */
+    height: 600px;
     cursor: pointer;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     background: #f5f5f5;
@@ -98,23 +98,41 @@
     stroke-width: 2.5;
   }
 
-  /* RIGHT SIDE - Product Cards Grid */
-  .product-cards {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+  /* RIGHT SIDE - Horizontal Product Slider */
+  .product-slider-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height: 600px;
+  }
+
+  .product-slider {
+    display: flex;
+    flex-direction: column;
     gap: var(--grid-gap);
-    height: 600px; /* Match left card height */
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 8px;
+    scrollbar-width: thin;
+    scrollbar-color: #ccc #f0f0f0;
   }
 
-  /* Make 3rd product span full width at bottom */
-  .product-cards__item:nth-child(1),
-  .product-cards__item:nth-child(2) {
-    grid-row: 1;
+  .product-slider::-webkit-scrollbar {
+    width: 6px;
   }
 
-  .product-cards__item:nth-child(3) {
-    grid-column: 1 / -1;
-    grid-row: 2;
+  .product-slider::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 3px;
+  }
+
+  .product-slider::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 3px;
+  }
+
+  .product-slider::-webkit-scrollbar-thumb:hover {
+    background: #999;
   }
 
   .product-card {
@@ -124,21 +142,23 @@
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     display: flex;
-    flex-direction: column;
-    height: 100%;
+    flex-direction: row;
+    gap: 20px;
+    flex-shrink: 0;
   }
 
   .product-card:hover {
-    transform: translateY(-4px);
+    transform: translateX(4px);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
   }
 
   .product-card__image-wrapper {
     position: relative;
-    width: 100%;
-    flex: 1;
+    width: 200px;
+    height: 220px;
     background: #f5f5f5;
     overflow: hidden;
+    flex-shrink: 0;
   }
 
   .product-card__image {
@@ -148,7 +168,14 @@
   }
 
   .product-card__content {
-    padding: 20px;
+    padding: 20px 20px 20px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1;
+  }
+
+  .product-card__info {
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -175,7 +202,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-top: 12px;
+    gap: 12px;
   }
 
   .product-card__price {
@@ -186,6 +213,7 @@
     font-size: 16px;
     font-weight: 700;
     color: #1a1a1a;
+    white-space: nowrap;
   }
 
   .product-card__buy-btn {
@@ -201,6 +229,7 @@
     transition: all 0.2s ease;
     text-decoration: none;
     display: inline-block;
+    white-space: nowrap;
   }
 
   .product-card__buy-btn:hover {
@@ -219,12 +248,33 @@
       height: 550px;
     }
 
-    .product-cards {
+    .product-slider-wrapper {
       height: auto;
     }
 
-    .featured-card__text {
-      font-size: 22px;
+    .product-slider {
+      flex-direction: row;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      padding-right: 0;
+      padding-bottom: 12px;
+    }
+
+    .product-card {
+      flex-direction: column;
+      min-width: 280px;
+      scroll-snap-align: start;
+    }
+
+    .product-card__image-wrapper {
+      width: 100%;
+      height: 280px;
+    }
+
+    .product-card__content {
+      padding: 20px;
     }
   }
 
@@ -251,37 +301,8 @@
       height: 16px;
     }
 
-    /* Horizontal scroll for products on mobile */
-    .product-cards {
-      display: flex;
-      gap: 16px;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
-      padding-bottom: 12px;
-    }
-
-    .product-cards::-webkit-scrollbar {
-      height: 4px;
-    }
-
-    .product-cards::-webkit-scrollbar-track {
-      background: #f0f0f0;
-      border-radius: 2px;
-    }
-
-    .product-cards::-webkit-scrollbar-thumb {
-      background: #ccc;
-      border-radius: 2px;
-    }
-
-    .product-cards__item {
-      flex: 0 0 280px;
-      scroll-snap-align: start;
-    }
-
-    .product-cards__item:nth-child(3) {
-      grid-column: auto;
+    .product-card {
+      min-width: 260px;
     }
   }
 
@@ -302,8 +323,12 @@
       font-size: 18px;
     }
 
-    .product-cards__item {
-      flex: 0 0 240px;
+    .product-card {
+      min-width: 240px;
+    }
+
+    .product-card__image-wrapper {
+      height: 240px;
     }
 
     .product-card__content {
@@ -339,16 +364,16 @@
       </a>
     {%- endif -%}
 
-    {%- comment -%} RIGHT: Quick Buy Product Cards {%- endcomment -%}
-    <div class="product-cards">
-      {%- for block in section.blocks limit: 3 -%}
-        {%- if block.settings.product != blank -%}
-          {%- assign product = all_products[block.settings.product] -%}
-          <div class="product-cards__item" {{ block.shopify_attributes }}>
+    {%- comment -%} RIGHT: Vertical Scrolling Product Cards from Same Collection {%- endcomment -%}
+    <div class="product-slider-wrapper">
+      <div class="product-slider">
+        {%- if section.settings.featured_collection != blank -%}
+          {%- assign collection = collections[section.settings.featured_collection] -%}
+          {%- for product in collection.products limit: 3 -%}
             <div class="product-card">
               <div class="product-card__image-wrapper">
                 {%- if product.featured_image -%}
-                  {{ product.featured_image | image_url: width: 600 | image_tag:
+                  {{ product.featured_image | image_url: width: 400 | image_tag:
                      loading: 'lazy',
                      class: 'product-card__image',
                      alt: product.title
@@ -359,10 +384,14 @@
               </div>
               
               <div class="product-card__content">
-                <h3 class="product-card__title">{{ product.title }}</h3>
-                {%- if block.settings.subtitle != blank -%}
-                  <p class="product-card__subtitle">{{ block.settings.subtitle }}</p>
-                {%- endif -%}
+                <div class="product-card__info">
+                  <h3 class="product-card__title">{{ product.title }}</h3>
+                  {%- if product.metafields.custom.subtitle != blank -%}
+                    <p class="product-card__subtitle">{{ product.metafields.custom.subtitle }}</p>
+                  {%- else -%}
+                    <p class="product-card__subtitle">Perfect for Office</p>
+                  {%- endif -%}
+                </div>
                 
                 <div class="product-card__footer">
                   <span class="product-card__price">
@@ -375,9 +404,9 @@
                 </div>
               </div>
             </div>
-          </div>
+          {%- endfor -%}
         {%- endif -%}
-      {%- endfor -%}
+      </div>
     </div>
 
   </div>
@@ -389,17 +418,18 @@
   "settings": [
     {
       "type": "header",
-      "content": "Featured Collection Card (Left)"
+      "content": "Featured Collection"
     },
     {
       "type": "collection",
       "id": "featured_collection",
-      "label": "Select Collection"
+      "label": "Select Collection",
+      "info": "Products from this collection will appear on the right side"
     },
     {
       "type": "image_picker",
       "id": "featured_image",
-      "label": "Featured Image"
+      "label": "Featured Image (Left Card)"
     },
     {
       "type": "text",
@@ -408,40 +438,9 @@
       "default": "Crafted for Workdays That Turn Heads"
     }
   ],
-  "blocks": [
-    {
-      "type": "product",
-      "name": "Quick Buy Product",
-      "limit": 3,
-      "settings": [
-        {
-          "type": "product",
-          "id": "product",
-          "label": "Select Product"
-        },
-        {
-          "type": "text",
-          "id": "subtitle",
-          "label": "Subtitle",
-          "default": "Perfect for Office"
-        }
-      ]
-    }
-  ],
   "presets": [
     {
-      "name": "Featured Collection Grid",
-      "blocks": [
-        {
-          "type": "product"
-        },
-        {
-          "type": "product"
-        },
-        {
-          "type": "product"
-        }
-      ]
+      "name": "Featured Collection Grid"
     }
   ]
 }
