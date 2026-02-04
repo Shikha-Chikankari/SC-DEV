@@ -13,6 +13,36 @@
   "sections": {
     "header_section": {
       "type": "header",
+      "blocks": {
+        "header-menu": {
+          "type": "_header-menu",
+          "static": true,
+          "settings": {
+            "menu": "main-menu",
+            "menu_style": "collection_images",
+            "featured_products_aspect_ratio": "4 / 5",
+            "featured_collections_aspect_ratio": "16 / 9",
+            "image_border_radius": 0,
+            "product_title_case": "default",
+            "collection_title_case": "default",
+            "color_scheme": "",
+            "menu_font_style": "inverse_large",
+            "type_font_primary_link": "subheading",
+            "type_font_primary_size": "1rem",
+            "type_case_primary_link": "none",
+            "type_font_secondary_link": "subheading",
+            "type_case_secondary_link": "none",
+            "type_font_tertiary_link": "body",
+            "type_case_tertiary_link": "none",
+            "navigation_bar": false,
+            "color_scheme_navigation_bar": "",
+            "drawer_accordion": false,
+            "drawer_accordion_expand_first": false,
+            "drawer_dividers": false
+          },
+          "blocks": {}
+        }
+      },
       "settings": {
         "menu": "main-menu",
         "logo": "shopify://shop_images/Untitled_3_472cec4b-a1b8-49ca-9607-09763f37fd3f.png",
