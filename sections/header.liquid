@@ -13,7 +13,6 @@
   --navbar-text: {{ section.settings.color_scheme.settings.text | default: '#1f1f1f' }};
 }
 
-
   .navbar {
     display: grid;
     grid-template-columns: 1fr auto 1fr;
@@ -61,13 +60,13 @@
   left: 0;
   right: 0;
   z-index: 9999;
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  transform: translateY(0);
-  will-change: transform;
-  background: transparent;
+  transform: translateY(0) !important;
+  padding-top: 120px;
 }
 
-
+navbar-component[data-scroll-state="hidden"] {
+  transform: translateY(0) !important; /* Override any hide logic */
+}
   .navbar__container::before,
   .navbar__container::after {
     display: none !important;
@@ -155,31 +154,26 @@
     gap: 10px;
   }
 
-  .navbar__search {
-    display: none;
-  }
 
   @media (min-width: 768px) {
     .navbar__search {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: white;
-      border-radius: 20px;
-      padding: 7px 10px 7px 14px;
-      min-width: 240px;
-      max-width: 300px;
-      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.06);
+     background: white !important;
+  border-radius: 9999px !important; /* Perfect capsule */
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08) !important;
+  border: 1px solid rgba(0, 0, 0, 0.05) !important;
+  overflow: hidden !important;
+  backdrop-filter: blur(10px);
     }
   }
 
   .navbar__search-input {
-    border: none;
-    background: transparent;
-    outline: none;
-    flex: 1;
-    font-size: 13px;
-    color: #1f1f1f;
+    border-radius: 9999px !important; /* Matches container */
+  border: none !important;
+  background: transparent !important;
+  height: 40px !important; /* Perfect height */
+  padding: 0 44px 0 52px !important; /* Capsule padding */
+  font-size: 14px !important;
+  line-height: 1.4 !important;
   }
 
   .navbar__search-input::placeholder {
@@ -187,19 +181,14 @@
   }
 
   .navbar__search-button {
-    border: none;
-    background: transparent;
-    padding: 4px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    color: #1f1f1f;
-    transition: opacity 0.2s;
+    border-radius: 50% !important; /* Round button */
+  width: 36px !important;
+  height: 36px !important;
+  margin: 2px !important; /* Centers perfectly */
+  border: none !important;
+  transition: all 0.2s ease !important;
   }
 
-  .navbar__search-button:hover {
-    opacity: 0.7;
-  }
 
   .navbar__search-button svg {
     width: 16px;
@@ -604,9 +593,37 @@ body:has(.navbar__mobile-menu--open) {
       position: relative !important;
     }
 
-    .navbar__search {
-      display: none !important;
-    }
+   .animated-search-container {
+  position: relative;
+}
+
+/* .search-placeholder {
+  left: 20px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  font-size: 14px !important;
+  height: 36px !important;
+  display: flex !important;
+  align-items: center !important;
+} */
+
+.search-placeholder span.fixed {
+  color: #8c8c8c;
+}
+
+.search-placeholder span.animated {
+  margin-left: 8px;
+  color: #1f1f1f;
+  font-weight: 600;
+  opacity: 1;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.search-placeholder span.animated.fade-out {
+  opacity: 0;
+  transform: translateX(-10px);
+}
+
 
     .navbar__action {
       width: 32px;
@@ -704,6 +721,139 @@ body:has(.navbar__mobile-menu--open) {
       height: 32px !important;
     }
   }
+  /* Perfect spacing for animated search */
+/* CAPSULE SEARCH BAR WITH VERTICAL SCROLL ANIMATION */
+@media (min-width: 768px) {
+  .navbar__search.animated-search-container {
+    position: relative;
+    background: white;
+    border-radius: 9999px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    min-width: 300px;
+    max-width: 380px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+  }
+
+  .navbar__search.animated-search-container form {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .navbar__search-input {
+    width: 100%;
+    height: 100%;
+    border-radius: 9999px;
+    border: none;
+    background: transparent;
+    padding: 0 50px 0 20px;
+    font-size: 14px;
+    color: transparent;
+    caret-color: #1f1f1f;
+    outline: none;
+  }
+
+  .navbar__search-input:focus {
+    color: #1f1f1f;
+  }
+
+  .navbar__search-input:focus ~ .search-placeholder,
+  .navbar__search-input:not(:placeholder-shown) ~ .search-placeholder {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  /* Search button - no background */
+  .navbar__search-button {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 24px;
+    border: none;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .navbar__search-button:hover {
+    opacity: 0.7;
+  }
+
+  .navbar__search-button svg {
+    width: 18px;
+    height: 18px;
+    stroke: #666;
+    stroke-width: 2;
+  }
+
+  /* Animated placeholder with vertical scroll */
+  .search-placeholder {
+  position: absolute;
+  left: 20px;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  pointer-events: none;
+  z-index: 10;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+  overflow: hidden;
+  max-width: calc(100% - 80px);
+  height: 100%;
+}
+
+  .search-placeholder .fixed {
+    color: #8c8c8c;
+  font-weight: 500;
+  flex-shrink: 0;
+
+  }
+
+  .search-placeholder .animated {
+  color: #1f1f1f;
+  font-weight: 600;
+  display: inline-block;
+  transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+  transform: translateY(0);
+  will-change: transform, opacity;
+}
+
+  /* Slide UP and fade out */
+ .search-placeholder .animated.fade-out {
+  opacity: 0;
+  transform: translateY(-100%);
+}
+
+  /* Slide UP from bottom when appearing */
+  .search-placeholder .animated.fade-in {
+    animation: smartSlideUp 0.3s ease-out forwards;
+  }
+
+  @keyframes slideUpIn {
+     from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  }
+  
+}
 
 {%- endstyle -%}
 
@@ -767,25 +917,33 @@ body:has(.navbar__mobile-menu--open) {
 
   <!-- Right Section: Search + Actions -->
   <div class="navbar__right">
-    <!-- Search Bar (Desktop only) -->
-    {%- if section.settings.show_search -%}
-      <form class="navbar__search" action="{{ routes.search_url }}" method="get" role="search">
-        <input
-          class="navbar__search-input"
-          type="search"
-          name="q"
-          placeholder="Search for"
-          aria-label="Search products"
-          autocomplete="off"
-        />
-        <button class="navbar__search-button" type="submit" aria-label="Search">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="11" cy="11" r="8"></circle>
-            <path d="m21 21-4.35-4.35"></path>
-          </svg>
-        </button>
-      </form>
-    {%- endif -%}
+   <!-- Animated Search Bar -->
+{%- if section.settings.show_search -%}
+  <div class="navbar__search animated-search-container">
+    <span class="search-placeholder">
+      <span class="fixed">Search for </span>
+      <span class="animated">Kurtis</span>
+    </span>
+    <form action="{{ routes.search_url }}" method="get" role="search">
+      <input
+        class="navbar__search-input"
+        type="search"
+        name="q"
+        autocomplete="off"
+        aria-label="Search products"
+      />
+      <button class="navbar__search-button" type="submit" aria-label="Search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.35-4.35"></path>
+        </svg>
+      </button>
+    </form>
+  </div>
+{%- endif -%}
+
+
+
 
     <!-- Action Icons -->
     <div class="navbar__actions">
@@ -879,6 +1037,67 @@ body:has(.navbar__mobile-menu--open) {
     </a>
   </div>
 </div>
+<script>
+(function() {
+  const container = document.querySelector('.animated-search-container');
+  if (!container) return;
+
+  const input = container.querySelector('.navbar__search-input');
+  const animatedSpan = container.querySelector('.search-placeholder .animated');
+  const placeholder = container.querySelector('.search-placeholder');
+  
+  if (!input || !animatedSpan) return;
+
+  const terms = ['Kurtis', 'Sarees', 'Short Tops', 'Tube Tops', 'Trending', 'Summer fits'];
+  let index = 0;
+  let timeout;
+
+  function nextTerm() {
+    // Slide current term UP and fade out
+    animatedSpan.classList.remove('fade-in');
+    animatedSpan.classList.add('fade-out');
+    
+    setTimeout(() => {
+      // Change text
+      index = (index + 1) % terms.length;
+      animatedSpan.textContent = terms[index];
+      
+      // Slide new term UP from bottom
+      animatedSpan.classList.remove('fade-out');
+      animatedSpan.classList.add('fade-in');
+      
+      // Remove fade-in class after animation
+      setTimeout(() => {
+        animatedSpan.classList.remove('fade-in');
+      }, 400);
+      
+      timeout = setTimeout(nextTerm, 3000);
+    }, 400); // Wait for slide-up animation
+  }
+
+  // Start animation
+  timeout = setTimeout(nextTerm, 2000);
+
+  // Hide on focus
+  input.addEventListener('focus', () => {
+    clearTimeout(timeout);
+  });
+
+  // Resume on blur if empty
+  input.addEventListener('blur', () => {
+    if (!input.value.trim()) {
+      timeout = setTimeout(nextTerm, 2000);
+    }
+  });
+
+  // Hide when typing
+  input.addEventListener('input', (e) => {
+    placeholder.style.opacity = e.target.value.length > 0 ? '0' : '1';
+  });
+})();
+</script>
+
+
 
 
 {% schema %}

@@ -1,0 +1,358 @@
+{%- comment -%} Animated Search Bar Section {%- endcomment -%}
+
+{%- style -%}
+  .search-bar-section {
+    position: relative;
+    padding: 2rem 0;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  }
+
+  .search-bar-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    text-align: center;
+  }
+
+  .search-bar-wrapper {
+    position: relative;
+    display: inline-block;
+    max-width: 500px;
+  }
+
+  .search-bar {
+    width: 100%;
+    padding: 16px 20px;
+    font-size: 18px;
+    border: 2px solid #e9ecef;
+    border-radius: 50px;
+    background: white;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    outline: none;
+    transition: all 0.3s ease;
+  }
+
+  .search-bar:focus {
+    border-color: #007acc;
+    box-shadow: 0 0 0 4px rgba(0,122,204,0.1);
+    transform: translateY(-2px);
+  }
+
+  .search-bar::placeholder {
+    color: #6c757d;
+    font-weight: 500;
+  }
+
+  /* Animated placeholder text */
+  .search-placeholder {
+    position: relative;
+  }
+
+  .search-placeholder::before {
+    content: attr(data-fixed-text);
+    color: #6c757d;
+  }
+
+  .search-placeholder::after {
+    content: attr(data-animated-text);
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: #007acc;
+    opacity: 0;
+    transform: translateX(10px);
+    transition: all 0.3s ease;
+  }
+
+  .search-placeholder.animating::after {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .search-placeholder.fade-out::after {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+
+  .search-icon {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #6c757d;
+    pointer-events: none;
+  }
+
+  @media (max-width: 768px) {
+    .search-bar {
+      font-size: 16px;
+      padding: 14px 18px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="search-bar-section">
+  <div class="search-bar-container">
+    <form action="{{ routes.search_url }}" method="get" role="search" class="search-bar-wrapper">
+      <input
+        class="search-bar"
+        type="search"
+        name="q"
+        placeholder=""
+        aria-label="Search products"
+        autocomplete="off"
+        data-search-input
+      />
+      <svg class="search-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"></circle>
+        <path d="m21 21-4.35-4.35"></path>
+      </svg>
+    </form>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const searchInput = document.querySelector('[data-search-input]');
+  if (!searchInput) return;
+
+  // Fixed prefix
+  const fixedText = 'Search for ';
+  
+  // Shopify settings - add your words here
+  const searchTerms = [
+    '{{ section.settings.term1 | default: "Kurtis" }}',
+    '{{ section.settings.term2 | default: "Sarees" }}',
+    '{{ section.settings.term3 | default: "Short Tops" }}',
+    '{{ section.settings.term4 | default: "Tube Tops" }}',
+    '{{ section.settings.term5 | default: "Trending" }}',
+    '{{ section.settings.term6 | default: "Summer fits" }}'
+  ].filter(term => term.trim() !== ''); // Remove empty terms
+
+  // Search suggestions
+  const searchSuggestions = [];
+  let suggestionTimeout;
+  let isTyping = false;
+
+  let currentIndex = 0;
+  let animationTimeout;
+
+  function updatePlaceholder() {
+    const placeholderSpan = searchInput.parentElement.querySelector('.search-placeholder') || createPlaceholder();
+    const nextTerm = searchTerms[currentIndex];
+    
+    // Fade out current
+    placeholderSpan.classList.add('fade-out');
+    
+    setTimeout(() => {
+      placeholderSpan.setAttribute('data-animated-text', nextTerm);
+      placeholderSpan.classList.remove('fade-out');
+      placeholderSpan.classList.add('animating');
+      
+      setTimeout(() => {
+        placeholderSpan.classList.remove('animating');
+      }, 300);
+      
+      currentIndex = (currentIndex + 1) % searchTerms.length;
+      animationTimeout = setTimeout(updatePlaceholder, 3000); // Next cycle after 3s
+    }, 300); // 300ms delay
+  }
+
+  function createPlaceholder() {
+    const span = document.createElement('span');
+    span.className = 'search-placeholder';
+    span.setAttribute('data-fixed-text', fixedText);
+    span.setAttribute('data-animated-text', searchTerms[0] || '');
+    searchInput.parentElement.insertBefore(span, searchInput);
+    return span;
+  }
+
+  // Start animation
+  if (searchTerms.length > 0) {
+    updatePlaceholder();
+  }
+
+  // Initialize search suggestions
+  function fetchSuggestions(query) {
+    if (!query || query.length < 2) {
+      hideSuggestions();
+      return;
+    }
+
+    // Debounce typing
+    clearTimeout(suggestionTimeout);
+    suggestionTimeout = setTimeout(() => {
+      isTyping = false;
+      fetchSuggestionsFromShopify(query);
+    }, 300); // 300ms delay
+  }
+
+  function fetchSuggestionsFromShopify(query) {
+    // Shopify search endpoint
+    const searchUrl = `https://${Shopify.shop}/search/suggest.json?q=${encodeURIComponent(query)}&resources[type]=product&resources[limit]=5`;
+
+    fetch(searchUrl)
+      .then(response => response.json())
+      .then(data => {
+        if (data.suggestions && data.suggestions.length > 0) {
+          displaySuggestions(data.suggestions);
+        } else {
+          hideSuggestions();
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching suggestions:', error);
+        hideSuggestions();
+      });
+  }
+
+  function displaySuggestions(suggestions) {
+    const suggestionsList = document.createElement('ul');
+    suggestionsList.className = 'search-suggestions';
+    suggestionsList.style.cssText = `
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: white;
+      border: 1px solid #e9ecef;
+      border-radius: 0 0 20px 20px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      z-index: 1000;
+      max-height: 300px;
+      overflow-y: auto;
+    `;
+
+    suggestions.forEach(suggestion => {
+      const suggestionItem = document.createElement('li');
+      suggestionItem.style.cssText = `
+        padding: 12px 20px;
+        border-bottom: 1px solid #e9ecef;
+        cursor: pointer;
+        transition: background 0.2s;
+      `;
+      suggestionItem.textContent = suggestion;
+      suggestionItem.addEventListener('click', () => {
+        searchInput.value = suggestion;
+        searchInput.form.submit();
+      });
+      suggestionItem.addEventListener('mouseenter', () => {
+        suggestionItem.style.background = '#f8f9fa';
+      });
+      suggestionItem.addEventListener('mouseleave', () => {
+        suggestionItem.style.background = 'white';
+      });
+      suggestionsList.appendChild(suggestionItem);
+    });
+
+    // Remove existing suggestions
+    const existingSuggestions = searchInput.parentElement.querySelector('.search-suggestions');
+    if (existingSuggestions) {
+      existingSuggestions.remove();
+    }
+
+    searchInput.parentElement.appendChild(suggestionsList);
+  }
+
+  function hideSuggestions() {
+    const existingSuggestions = searchInput.parentElement.querySelector('.search-suggestions');
+    if (existingSuggestions) {
+      existingSuggestions.remove();
+    }
+  }
+
+  // Add input event listener
+  searchInput.addEventListener('input', (e) => {
+    isTyping = true;
+    fetchSuggestions(e.target.value);
+  });
+
+  // Hide suggestions on blur
+  searchInput.addEventListener('blur', () => {
+    setTimeout(hideSuggestions, 200); // Small delay to allow click
+  });
+
+  // Pause on focus, resume on blur
+  searchInput.addEventListener('focus', () => {
+    if (animationTimeout) {
+      clearTimeout(animationTimeout);
+    }
+  });
+
+  searchInput.addEventListener('blur', () => {
+    if (searchTerms.length > 0) {
+      updatePlaceholder();
+    }
+  });
+});
+</script>
+
+{% schema %}
+{
+  "name": "Animated Search Bar",
+  "tag": "section",
+  "class": "search-bar-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "term1",
+      "label": "Search Term 1",
+      "default": "Kurtis"
+    },
+    {
+      "type": "text",
+      "id": "term2",
+      "label": "Search Term 2",
+      "default": "Sarees"
+    },
+    {
+      "type": "text",
+      "id": "term3",
+      "label": "Search Term 3",
+      "default": "Short Tops"
+    },
+    {
+      "type": "text",
+      "id": "term4",
+      "label": "Search Term 4",
+      "default": "Tube Tops"
+    },
+    {
+      "type": "text",
+      "id": "term5",
+      "label": "Search Term 5",
+      "default": "Trending"
+    },
+    {
+      "type": "text",
+      "id": "term6",
+      "label": "Search Term 6",
+      "default": "Summer fits"
+    },
+    {
+      "type": "range",
+      "id": "animation_delay",
+      "min": 2000,
+      "max": 8000,
+      "step": 500,
+      "unit": "ms",
+      "label": "Cycle interval",
+      "default": 3000
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "background-1"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Animated Search Bar"
+    }
+  ]
+}
+{% endschema %}
