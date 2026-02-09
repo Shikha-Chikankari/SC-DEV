@@ -47,14 +47,33 @@
 
   .spotlight-carousel__content {
     position: relative;
-    z-index: 2;
-    padding: 60px 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 40px;
+  z-index: 2;
+  padding: 60px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
   }
+.spotlight-carousel__content::before,
+.spotlight-carousel__content::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 150px;
+  height: 100%;
+  pointer-events: none;
+  z-index: 10;
+}
 
+.spotlight-carousel__content::before {
+  left: 0;
+  background: linear-gradient(to right, rgba(0,0,0,0.3) 0%, transparent 100%);
+}
+
+.spotlight-carousel__content::after {
+  right: 0;
+  background: linear-gradient(to left, rgba(0,0,0,0.3) 0%, transparent 100%);
+}
   .spotlight-carousel__header {
     text-align: center;
     color: white;
@@ -97,29 +116,41 @@
   }
 
   /* Product Card */
-  .spotlight-card {
-    flex-shrink: 0;
-    width: 400px;
-    scroll-snap-align: center;
-    scroll-snap-stop: always;
-    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                opacity 0.4s ease,
-                filter 0.4s ease;
-    transform: scale(0.85) rotateY(15deg);
-    opacity: 0.6;
-    filter: blur(2px);
-    cursor: pointer;
-    text-decoration: none;
-    display: block;
-  }
+  /* Product Card */
+.spotlight-card {
+  flex-shrink: 0;
+  width: 400px;
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              opacity 0.4s ease,
+              filter 0.4s ease;
+  transform: scale(0.85) rotateY(15deg); /* Default: rotate right */
+  opacity: 0.6;
+  filter: blur(2px);
+  cursor: pointer;
+  text-decoration: none;
+  display: block;
+}
 
-  /* Center card (active) */
-  .spotlight-card.is-center {
-    transform: scale(1) rotateY(0deg);
-    opacity: 1;
-    filter: blur(0);
-    z-index: 10;
-  }
+/* Center card (active) */
+.spotlight-card.is-center {
+  transform: scale(1) rotateY(0deg) !important;
+  opacity: 1;
+  filter: blur(0);
+  z-index: 10;
+}
+
+/* Left side cards */
+.spotlight-card.is-left {
+  transform: scale(0.85) rotateY(-15deg) !important;
+}
+
+/* Right side cards */
+.spotlight-card.is-right {
+  transform: scale(0.85) rotateY(15deg) !important;
+}
+
 
   .spotlight-card__inner {
     background: white;
@@ -261,6 +292,77 @@
       height: 350px;
     }
   }
+/* Flash Sale Badge - Top Left Corner */
+.spotlight-carousel__badge {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 180px;
+  height: 180px;
+  overflow: hidden;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.spotlight-carousel__badge-ribbon {
+  position: absolute;
+  top: 35px;
+  left: -60px;
+  width: 280px;
+  padding: 12px 0;
+  background: linear-gradient(135deg, #d4af37 0%, #f4d03f 100%);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  transform: rotate(-45deg);
+  text-align: center;
+}
+
+.spotlight-carousel__badge-text {
+  font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  color: #000;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);
+}
+
+/* Badge responsive sizing */
+@media (max-width: 768px) {
+  .spotlight-carousel__badge {
+    width: 150px;
+    height: 150px;
+  }
+
+  .spotlight-carousel__badge-ribbon {
+    top: 30px;
+    left: -50px;
+    width: 230px;
+    padding: 10px 0;
+  }
+
+  .spotlight-carousel__badge-text {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .spotlight-carousel__badge {
+    width: 130px;
+    height: 130px;
+  }
+
+  .spotlight-carousel__badge-ribbon {
+    top: 25px;
+    left: -45px;
+    width: 200px;
+    padding: 8px 0;
+  }
+
+  .spotlight-carousel__badge-text {
+    font-size: 13px;
+  }
+}
+
 {%- endstyle -%}
 
 <div class="spotlight-carousel">
@@ -274,7 +376,13 @@
   {%- endif -%}
   
   <div class="spotlight-carousel__overlay"></div>
-
+{%- if section.settings.show_sale_badge -%}
+    <div class="spotlight-carousel__badge">
+      <div class="spotlight-carousel__badge-ribbon">
+        <span class="spotlight-carousel__badge-text">{{ section.settings.badge_text }}</span>
+      </div>
+    </div>
+  {%- endif -%}
   <div class="spotlight-carousel__content">
     {%- comment -%} Header {%- endcomment -%}
     <div class="spotlight-carousel__header">
@@ -315,6 +423,8 @@
     {%- comment -%} Navigation Dots {%- endcomment -%}
     <div class="spotlight-carousel__dots" id="spotlight-dots-{{ section.id }}"></div>
   </div>
+  
+
 </div>
 
 <script>
@@ -369,11 +479,125 @@
   updateCenterCard();
 })();
 </script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const slider = document.getElementById('spotlight-slider-{{ section.id }}');
+  const dotsContainer = document.getElementById('spotlight-dots-{{ section.id }}');
+  
+  // Safety check
+  if (!slider || !dotsContainer) return;
+  
+  const cards = slider.querySelectorAll('.spotlight-card');
+  
+  // Clear any existing dots (prevents duplicates)
+  dotsContainer.innerHTML = '';
+  
+  // Create dots
+  cards.forEach((card, index) => {
+    const dot = document.createElement('button');
+    dot.classList.add('spotlight-dot');
+    dot.setAttribute('aria-label', `Go to slide ${index + 1}`);
+    if (index === 0) dot.classList.add('is-active');
+    
+    dot.addEventListener('click', function() {
+      card.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      if (navigator.vibrate) navigator.vibrate(10);
+    });
+    
+    dotsContainer.appendChild(dot);
+  });
+
+  const dots = dotsContainer.querySelectorAll('.spotlight-dot');
+  let isUpdating = false;
+
+  // Update center card on scroll with correct rotation direction
+  function updateCenterCard() {
+    if (isUpdating) return;
+    isUpdating = true;
+    
+    const sliderCenter = slider.scrollLeft + slider.clientWidth / 2;
+    let activeIndex = -1;
+    
+    cards.forEach((card, index) => {
+      const cardCenter = card.offsetLeft + card.clientWidth / 2;
+      const distance = Math.abs(sliderCenter - cardCenter);
+      const position = cardCenter - sliderCenter;
+      
+      // Remove all position classes first
+      card.classList.remove('is-center', 'is-left', 'is-right');
+      
+      if (distance < card.clientWidth / 2) {
+        // Center card
+        card.classList.add('is-center');
+        activeIndex = index;
+      } else {
+        // Side cards - apply rotation based on position
+        if (position < 0) {
+          card.classList.add('is-left');
+        } else {
+          card.classList.add('is-right');
+        }
+      }
+    });
+    
+    // Update dots
+    dots.forEach((dot, index) => {
+      if (index === activeIndex) {
+        dot.classList.add('is-active');
+      } else {
+        dot.classList.remove('is-active');
+      }
+    });
+    
+    isUpdating = false;
+  }
+
+  // Auto-peek on load
+  setTimeout(function() {
+    slider.scrollLeft = 100;
+    setTimeout(function() {
+      slider.scrollLeft = 0;
+      updateCenterCard();
+    }, 800);
+  }, 500);
+
+  // Throttle scroll event
+  let scrollTimeout;
+  slider.addEventListener('scroll', function() {
+    clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(updateCenterCard, 50);
+  });
+
+  // Initial update
+  updateCenterCard();
+});
+</script>
+
 
 {% schema %}
 {
   "name": "Spotlight Carousel",
   "settings": [
+    {
+      "type": "header",
+      "content": "Flash Sale Badge"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sale_badge",
+      "label": "Show Flash Sale Badge",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge Text",
+      "default": "FLASH SALE"
+    },
+    {
+      "type": "header",
+      "content": "Section Content"
+    },
     {
       "type": "text",
       "id": "title",
