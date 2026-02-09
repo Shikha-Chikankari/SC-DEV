@@ -1,0 +1,417 @@
+{%- comment -%}
+  Spotlight Collection Carousel - 3D horizontal scrollable with center focus
+  Middle card is highlighted, snap scrolling, haptic feedback
+{%- endcomment -%}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    margin: 0;
+    padding: 0;
+    display: block;
+  }
+
+  .spotlight-carousel {
+    position: relative;
+    width: 100%;
+    min-height: 600px;
+    overflow: hidden;
+    border-radius: 32px;
+    margin: 60px auto;
+    max-width: 1400px;
+  }
+
+  .spotlight-carousel__background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+  }
+
+  .spotlight-carousel__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.3) 0%,
+      rgba(0, 0, 0, 0.1) 50%,
+      rgba(0, 0, 0, 0.3) 100%
+    );
+    z-index: 1;
+  }
+
+  .spotlight-carousel__content {
+    position: relative;
+    z-index: 2;
+    padding: 60px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+  }
+
+  .spotlight-carousel__header {
+    text-align: center;
+    color: white;
+  }
+
+  .spotlight-carousel__title {
+    font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 48px;
+    font-weight: 700;
+    margin: 0 0 12px 0;
+    letter-spacing: -0.02em;
+    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  }
+
+  .spotlight-carousel__subtitle {
+    font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  /* 3D Carousel Container */
+  .spotlight-carousel__slider {
+    display: flex;
+    gap: 30px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    padding: 40px calc(50vw - 200px);
+    width: 100%;
+    perspective: 1000px;
+  }
+
+  .spotlight-carousel__slider::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Product Card */
+  .spotlight-card {
+    flex-shrink: 0;
+    width: 400px;
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                opacity 0.4s ease,
+                filter 0.4s ease;
+    transform: scale(0.85) rotateY(15deg);
+    opacity: 0.6;
+    filter: blur(2px);
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+  }
+
+  /* Center card (active) */
+  .spotlight-card.is-center {
+    transform: scale(1) rotateY(0deg);
+    opacity: 1;
+    filter: blur(0);
+    z-index: 10;
+  }
+
+  .spotlight-card__inner {
+    background: white;
+    border-radius: 28px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    transition: box-shadow 0.3s ease;
+  }
+
+  .spotlight-card:hover .spotlight-card__inner {
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
+  }
+
+  .spotlight-card__image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 500px;
+    overflow: hidden;
+    background: #f5f5f5;
+  }
+
+  .spotlight-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+
+  .spotlight-card:hover .spotlight-card__image {
+    transform: scale(1.05);
+  }
+
+  .spotlight-card__info {
+    padding: 24px;
+    text-align: center;
+  }
+
+  .spotlight-card__title {
+    font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 8px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .spotlight-card__price {
+    font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: #666;
+    margin: 0;
+  }
+
+  /* Navigation Dots */
+  .spotlight-carousel__dots {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+  .spotlight-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .spotlight-dot.is-active {
+    background: white;
+    width: 24px;
+    border-radius: 4px;
+  }
+
+  /* Mobile Responsive */
+  @media (max-width: 768px) {
+    .spotlight-carousel {
+      min-height: 500px;
+      border-radius: 24px;
+      margin: 40px 16px;
+    }
+
+    .spotlight-carousel__content {
+      padding: 40px 16px;
+      gap: 30px;
+    }
+
+    .spotlight-carousel__title {
+      font-size: 32px;
+    }
+
+    .spotlight-carousel__subtitle {
+      font-size: 16px;
+    }
+
+    .spotlight-carousel__slider {
+      padding: 20px calc(50vw - 150px);
+      gap: 20px;
+    }
+
+    .spotlight-card {
+      width: 300px;
+    }
+
+    .spotlight-card__image-wrapper {
+      height: 380px;
+    }
+
+    .spotlight-card__info {
+      padding: 20px;
+    }
+
+    .spotlight-card__title {
+      font-size: 18px;
+    }
+
+    .spotlight-card__price {
+      font-size: 16px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .spotlight-carousel__slider {
+      padding: 20px calc(50vw - 140px);
+    }
+
+    .spotlight-card {
+      width: 280px;
+    }
+
+    .spotlight-card__image-wrapper {
+      height: 350px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="spotlight-carousel">
+  {%- comment -%} Background Image {%- endcomment -%}
+  {%- if section.settings.background_image != blank -%}
+    {{ section.settings.background_image | image_url: width: 1600 | image_tag:
+       loading: 'lazy',
+       class: 'spotlight-carousel__background',
+       alt: section.settings.title
+    }}
+  {%- endif -%}
+  
+  <div class="spotlight-carousel__overlay"></div>
+
+  <div class="spotlight-carousel__content">
+    {%- comment -%} Header {%- endcomment -%}
+    <div class="spotlight-carousel__header">
+      <h2 class="spotlight-carousel__title">{{ section.settings.title }}</h2>
+      {%- if section.settings.subtitle != blank -%}
+        <p class="spotlight-carousel__subtitle">{{ section.settings.subtitle }}</p>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} 3D Carousel {%- endcomment -%}
+    <div class="spotlight-carousel__slider" id="spotlight-slider-{{ section.id }}">
+      {%- if section.settings.collection != blank -%}
+        {%- assign collection = collections[section.settings.collection] -%}
+        {%- for product in collection.products limit: section.settings.product_limit -%}
+          <a href="{{ product.url }}" class="spotlight-card" data-card-index="{{ forloop.index0 }}">
+            <div class="spotlight-card__inner">
+              <div class="spotlight-card__image-wrapper">
+                {%- if product.featured_image -%}
+                  {{ product.featured_image | image_url: width: 800 | image_tag:
+                     loading: 'lazy',
+                     class: 'spotlight-card__image',
+                     alt: product.title
+                  }}
+                {%- else -%}
+                  {{ 'product-1' | placeholder_svg_tag: 'spotlight-card__image' }}
+                {%- endif -%}
+              </div>
+              <div class="spotlight-card__info">
+                <h3 class="spotlight-card__title">{{ product.title }}</h3>
+                <p class="spotlight-card__price">{{ product.price | money }}</p>
+              </div>
+            </div>
+          </a>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} Navigation Dots {%- endcomment -%}
+    <div class="spotlight-carousel__dots" id="spotlight-dots-{{ section.id }}"></div>
+  </div>
+</div>
+
+<script>
+(function() {
+  const slider = document.getElementById('spotlight-slider-{{ section.id }}');
+  const dotsContainer = document.getElementById('spotlight-dots-{{ section.id }}');
+  const cards = slider.querySelectorAll('.spotlight-card');
+  
+  // Create dots
+  cards.forEach((card, index) => {
+    const dot = document.createElement('button');
+    dot.classList.add('spotlight-dot');
+    if (index === 0) dot.classList.add('is-active');
+    dot.addEventListener('click', () => {
+      card.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      // Haptic feedback
+      if (navigator.vibrate) navigator.vibrate(10);
+    });
+    dotsContainer.appendChild(dot);
+  });
+
+  const dots = dotsContainer.querySelectorAll('.spotlight-dot');
+
+  // Update center card on scroll
+  function updateCenterCard() {
+    const sliderCenter = slider.scrollLeft + slider.clientWidth / 2;
+    
+    cards.forEach((card, index) => {
+      const cardCenter = card.offsetLeft + card.clientWidth / 2;
+      const distance = Math.abs(sliderCenter - cardCenter);
+      
+      if (distance < card.clientWidth / 2) {
+        card.classList.add('is-center');
+        dots[index].classList.add('is-active');
+        // Haptic feedback when card snaps to center
+        if (navigator.vibrate) navigator.vibrate(5);
+      } else {
+        card.classList.remove('is-center');
+        dots[index].classList.remove('is-active');
+      }
+    });
+  }
+
+  // Throttle scroll event
+  let scrollTimeout;
+  slider.addEventListener('scroll', () => {
+    clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(updateCenterCard, 100);
+  });
+
+  // Initial update
+  updateCenterCard();
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Spotlight Carousel",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Final Few Left"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Classic designs, now in their final numbers"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection",
+      "info": "Select the collection to display"
+    },
+    {
+      "type": "range",
+      "id": "product_limit",
+      "label": "Number of products",
+      "min": 3,
+      "max": 12,
+      "step": 1,
+      "default": 6
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background Image",
+      "info": "Recommended: 1600x800px"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Spotlight Carousel"
+    }
+  ]
+}
+{% endschema %}
