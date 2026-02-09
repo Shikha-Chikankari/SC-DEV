@@ -1143,6 +1143,16 @@
         "background_image": "shopify://shop_images/95f828216016263.6778de1399627.png"
       }
     },
+    "spotlight_collection_carousel_PAwDMM": {
+      "type": "spotlight-collection-carousel",
+      "name": "Spotlight Carousel",
+      "settings": {
+        "title": "Final Few Left",
+        "subtitle": "Classic designs, now in their final numbers",
+        "collection": "best-selling-chikankari-kurtis-top-rated-lucknowi-designs",
+        "product_limit": 6
+      }
+    },
     "collection_list_iAQiBH": {
       "type": "collection-list",
       "blocks": {
@@ -1595,6 +1605,7 @@
     "product_list_8kR3Hb",
     "featured_product_rKUqUR",
     "featured_collection_grid_ACcp6X",
+    "spotlight_collection_carousel_PAwDMM",
     "collection_list_iAQiBH",
     "marquee_y8LEWQ",
     "section_ppbEnA"
