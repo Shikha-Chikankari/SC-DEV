@@ -309,26 +309,26 @@
   {%- else -%}
     <div class="bento-box {% if section.settings.box2_dark_text %}bento-box--dark{% endif %}">
   {%- endif -%}
-    {%- if section.settings.box2_video != blank -%}
-  <div class="bento-box__video-wrapper">
-    {{ section.settings.box2_video | video_tag: 
-       image_size: '1100x',
-       autoplay: true,
-       loop: true,
-       muted: true
-    }}
-  </div>
-  <div class="bento-box__overlay"></div>
-{%- elsif section.settings.box2_image != blank -%}
-  <div class="bento-box__image-wrapper">
-    {{ section.settings.box2_image | image_url: width: 600 | image_tag:
-       loading: 'lazy',
-       class: 'bento-box__image',
-       alt: section.settings.box2_title
-    }}
-  </div>
-  <div class="bento-box__overlay"></div>
-{%- endif -%}
+    {%- comment -%} Video has priority, then image {%- endcomment -%}
+  {%- if section.settings.box2_video != null -%}
+    <div class="bento-box__video-wrapper">
+      <video autoplay muted loop playsinline class="bento-box__video">
+        {%- for source in section.settings.box2_video.sources -%}
+          <source src="{{ source.url }}" type="{{ source.mime_type }}">
+        {%- endfor -%}
+      </video>
+    </div>
+    <div class="bento-box__overlay"></div>
+  {%- elsif section.settings.box2_image != blank -%}
+    <div class="bento-box__image-wrapper">
+      {{ section.settings.box2_image | image_url: width: 600 | image_tag:
+         loading: 'lazy',
+         class: 'bento-box__image',
+         alt: section.settings.box2_title
+      }}
+    </div>
+    <div class="bento-box__overlay"></div>
+  {%- endif -%}
 
     {%- if section.settings.box2_title != blank or section.settings.box2_subtitle != blank -%}
       <div class="bento-box__content">
@@ -370,26 +370,26 @@
   {%- else -%}
     <div class="bento-box {% if section.settings.box5_dark_text %}bento-box--dark{% endif %}">
   {%- endif -%}
-   {%- if section.settings.box5_video != blank -%}
-  <div class="bento-box__video-wrapper">
-    {{ section.settings.box5_video | video_tag: 
-       image_size: '1100x',
-       autoplay: true,
-       loop: true,
-       muted: true
-    }}
-  </div>
-  <div class="bento-box__overlay"></div>
-{%- elsif section.settings.box5_image != blank -%}
-  <div class="bento-box__image-wrapper">
-    {{ section.settings.box5_image | image_url: width: 600 | image_tag:
-       loading: 'lazy',
-       class: 'bento-box__image',
-       alt: section.settings.box5_title
-    }}
-  </div>
-  <div class="bento-box__overlay"></div>
-{%- endif -%}
+   {%- comment -%} Video has priority, then image {%- endcomment -%}
+  {%- if section.settings.box5_video != null -%}
+    <div class="bento-box__video-wrapper">
+      <video autoplay muted loop playsinline class="bento-box__video">
+        {%- for source in section.settings.box5_video.sources -%}
+          <source src="{{ source.url }}" type="{{ source.mime_type }}">
+        {%- endfor -%}
+      </video>
+    </div>
+    <div class="bento-box__overlay"></div>
+  {%- elsif section.settings.box5_image != blank -%}
+    <div class="bento-box__image-wrapper">
+      {{ section.settings.box5_image | image_url: width: 600 | image_tag:
+         loading: 'lazy',
+         class: 'bento-box__image',
+         alt: section.settings.box5_title
+      }}
+    </div>
+    <div class="bento-box__overlay"></div>
+  {%- endif -%}
 
     {%- if section.settings.box5_title != blank or section.settings.box5_subtitle != blank -%}
       <div class="bento-box__content">
@@ -417,26 +417,26 @@
   {%- else -%}
     <div class="bento-box {% if section.settings.box6_dark_text %}bento-box--dark{% endif %}">
   {%- endif -%}
-    {%- if section.settings.box6_video != blank -%}
-  <div class="bento-box__video-wrapper">
-    {{ section.settings.box6_video | video_tag: 
-       image_size: '1100x',
-       autoplay: true,
-       loop: true,
-       muted: true
-    }}
-  </div>
-  <div class="bento-box__overlay"></div>
-{%- elsif section.settings.box6_image != blank -%}
-  <div class="bento-box__image-wrapper">
-    {{ section.settings.box6_image | image_url: width: 600 | image_tag:
-       loading: 'lazy',
-       class: 'bento-box__image',
-       alt: section.settings.box6_title
-    }}
-  </div>
-  <div class="bento-box__overlay"></div>
-{%- endif -%}
+   {%- comment -%} Video has priority, then image {%- endcomment -%}
+  {%- if section.settings.box6_video != null -%}
+    <div class="bento-box__video-wrapper">
+      <video autoplay muted loop playsinline class="bento-box__video">
+        {%- for source in section.settings.box6_video.sources -%}
+          <source src="{{ source.url }}" type="{{ source.mime_type }}">
+        {%- endfor -%}
+      </video>
+    </div>
+    <div class="bento-box__overlay"></div>
+  {%- elsif section.settings.box6_image != blank -%}
+    <div class="bento-box__image-wrapper">
+      {{ section.settings.box6_image | image_url: width: 600 | image_tag:
+         loading: 'lazy',
+         class: 'bento-box__image',
+         alt: section.settings.box6_title
+      }}
+    </div>
+    <div class="bento-box__overlay"></div>
+  {%- endif -%}
 
     {%- if section.settings.box6_title != blank or section.settings.box6_subtitle != blank -%}
       <div class="bento-box__content">
@@ -464,26 +464,26 @@
   {%- else -%}
     <div class="bento-box {% if section.settings.box7_dark_text %}bento-box--dark{% endif %}">
   {%- endif -%}
-    {%- if section.settings.box7_video != blank -%}
-  <div class="bento-box__video-wrapper">
-    {{ section.settings.box7_video | video_tag: 
-       image_size: '1100x',
-       autoplay: true,
-       loop: true,
-       muted: true
-    }}
-  </div>
-  <div class="bento-box__overlay"></div>
-{%- elsif section.settings.box7_image != blank -%}
-  <div class="bento-box__image-wrapper">
-    {{ section.settings.box7_image | image_url: width: 600 | image_tag:
-       loading: 'lazy',
-       class: 'bento-box__image',
-       alt: section.settings.box7_title
-    }}
-  </div>
-  <div class="bento-box__overlay"></div>
-{%- endif -%}
+   {%- comment -%} Video has priority, then image {%- endcomment -%}
+  {%- if section.settings.box7_video != null -%}
+    <div class="bento-box__video-wrapper">
+      <video autoplay muted loop playsinline class="bento-box__video">
+        {%- for source in section.settings.box7_video.sources -%}
+          <source src="{{ source.url }}" type="{{ source.mime_type }}">
+        {%- endfor -%}
+      </video>
+    </div>
+    <div class="bento-box__overlay"></div>
+  {%- elsif section.settings.box7_image != blank -%}
+    <div class="bento-box__image-wrapper">
+      {{ section.settings.box7_image | image_url: width: 600 | image_tag:
+         loading: 'lazy',
+         class: 'bento-box__image',
+         alt: section.settings.box7_title
+      }}
+    </div>
+    <div class="bento-box__overlay"></div>
+  {%- endif -%}
 
     {%- if section.settings.box7_title != blank or section.settings.box7_subtitle != blank -%}
       <div class="bento-box__content">
@@ -503,26 +503,26 @@
   {%- else -%}
     <div class="bento-box bento-box--centered {% if section.settings.box8_dark_text %}bento-box--dark{% endif %}">
   {%- endif -%}
-    {%- if section.settings.box8_video != blank -%}
-  <div class="bento-box__video-wrapper">
-    {{ section.settings.box8_video | video_tag: 
-       image_size: '1100x',
-       autoplay: true,
-       loop: true,
-       muted: true
-    }}
-  </div>
-  <div class="bento-box__overlay"></div>
-{%- elsif section.settings.box8_image != blank -%}
-  <div class="bento-box__image-wrapper">
-    {{ section.settings.box8_image | image_url: width: 600 | image_tag:
-       loading: 'lazy',
-       class: 'bento-box__image',
-       alt: section.settings.box8_title
-    }}
-  </div>
-  <div class="bento-box__overlay"></div>
-{%- endif -%}
+    {%- comment -%} Video has priority, then image {%- endcomment -%}
+  {%- if section.settings.box8_video != null -%}
+    <div class="bento-box__video-wrapper">
+      <video autoplay muted loop playsinline class="bento-box__video">
+        {%- for source in section.settings.box8_video.sources -%}
+          <source src="{{ source.url }}" type="{{ source.mime_type }}">
+        {%- endfor -%}
+      </video>
+    </div>
+    <div class="bento-box__overlay"></div>
+  {%- elsif section.settings.box8_image != blank -%}
+    <div class="bento-box__image-wrapper">
+      {{ section.settings.box8_image | image_url: width: 600 | image_tag:
+         loading: 'lazy',
+         class: 'bento-box__image',
+         alt: section.settings.box8_title
+      }}
+    </div>
+    <div class="bento-box__overlay"></div>
+  {%- endif -%}
 
     {%- if section.settings.box8_title != blank or section.settings.box8_subtitle != blank -%}
       <div class="bento-box__content">
@@ -542,26 +542,26 @@
   {%- else -%}
     <div class="bento-box {% if section.settings.box9_dark_text %}bento-box--dark{% endif %}">
   {%- endif -%}
-    {%- if section.settings.box9_video != blank -%}
-  <div class="bento-box__video-wrapper">
-    {{ section.settings.box9_video | video_tag: 
-       image_size: '1100x',
-       autoplay: true,
-       loop: true,
-       muted: true
-    }}
-  </div>
-  <div class="bento-box__overlay"></div>
-{%- elsif section.settings.box9_image != blank -%}
-  <div class="bento-box__image-wrapper">
-    {{ section.settings.box9_image | image_url: width: 600 | image_tag:
-       loading: 'lazy',
-       class: 'bento-box__image',
-       alt: section.settings.box9_title
-    }}
-  </div>
-  <div class="bento-box__overlay"></div>
-{%- endif -%}
+    {%- comment -%} Video has priority, then image {%- endcomment -%}
+  {%- if section.settings.box9_video != null -%}
+    <div class="bento-box__video-wrapper">
+      <video autoplay muted loop playsinline class="bento-box__video">
+        {%- for source in section.settings.box9_video.sources -%}
+          <source src="{{ source.url }}" type="{{ source.mime_type }}">
+        {%- endfor -%}
+      </video>
+    </div>
+    <div class="bento-box__overlay"></div>
+  {%- elsif section.settings.box9_image != blank -%}
+    <div class="bento-box__image-wrapper">
+      {{ section.settings.box9_image | image_url: width: 600 | image_tag:
+         loading: 'lazy',
+         class: 'bento-box__image',
+         alt: section.settings.box9_title
+      }}
+    </div>
+    <div class="bento-box__overlay"></div>
+  {%- endif -%}
 
     {%- if section.settings.box9_title != blank or section.settings.box9_subtitle != blank -%}
       <div class="bento-box__content">
