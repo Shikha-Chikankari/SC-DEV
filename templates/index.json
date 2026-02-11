@@ -625,6 +625,55 @@
         "padding-block-end": 50
       }
     },
+    "bento_grid_section_YhfVwH": {
+      "type": "bento-grid-section",
+      "name": "Bento Grid",
+      "settings": {
+        "box1_image": "shopify://shop_images/GeneratedImageSeptember20_2025-2_49PM_33161ffd-9a8e-4cac-b9dd-598c0e25dda4.png",
+        "box1_title": "",
+        "box1_subtitle": "",
+        "box1_link": "shopify://products/turquoise-blue-mulmul-short-top",
+        "box1_dark_text": true,
+        "box2_image": "shopify://shop_images/Female_model_wearing_2k_202601201133.jpg",
+        "box2_title": "",
+        "box2_subtitle": "",
+        "box2_link": "",
+        "box2_dark_text": false,
+        "box3_title": "STEALS UNDER ₹999",
+        "box3_link": "",
+        "box4_title": "READY TO SHIP",
+        "box4_link": "",
+        "box5_image": "shopify://shop_images/GeneratedImageNovember03_2025-3_45PM.jpg",
+        "box5_title": "Dhoti Shalwar",
+        "box5_subtitle": "",
+        "box5_link": "shopify://products/dhoti-shalwar-white",
+        "box5_dark_text": true,
+        "box6_image": "shopify://shop_images/Chiikankari_coord_sets_2k_202601201120.jpg",
+        "box6_title": "FOr MENS",
+        "box6_subtitle": "",
+        "box6_link_type": "collection",
+        "box6_collection": "mens-chikankari-kurtas-authentic-lucknowi-kurta-collection",
+        "box6_product": "",
+        "box6_dark_text": true,
+        "box7_image": "shopify://shop_images/Sample2.png",
+        "box7_title": "",
+        "box7_subtitle": "",
+        "box7_link_type": "collection",
+        "box7_collection": "",
+        "box7_product": "yellow-chikankari-kurti-mulmul-short-top",
+        "box7_dark_text": false,
+        "box8_image": "shopify://shop_images/Screenshot_2026-02-11_at_09.58.30.png",
+        "box8_title": "Influencer MArket",
+        "box8_subtitle": "",
+        "box8_link": "",
+        "box8_dark_text": true,
+        "box9_image": "shopify://shop_images/A_high_quality_2k_202601211101.jpg",
+        "box9_title": "Made in Lucknow.",
+        "box9_subtitle": "0% Machine Work.",
+        "box9_link": "",
+        "box9_dark_text": false
+      }
+    },
     "featured_product_pW7dEU": {
       "type": "featured-product",
       "blocks": {
@@ -715,6 +764,7 @@
           "block_order": []
         }
       },
+      "disabled": true,
       "name": "t:names.featured_product",
       "settings": {
         "product": "deep-wine-chikankari-kurti",
@@ -1124,6 +1174,7 @@
           "block_order": []
         }
       },
+      "disabled": true,
       "name": "t:names.featured_product",
       "settings": {
         "product": "dhoti-shalwar-white",
@@ -1147,6 +1198,8 @@
       "type": "spotlight-collection-carousel",
       "name": "Spotlight Carousel",
       "settings": {
+        "show_sale_badge": true,
+        "badge_text": "FLASH SALE",
         "title": "Final Few Left",
         "subtitle": "Classic designs, now in their final numbers",
         "collection": "best-selling-chikankari-kurtis-top-rated-lucknowi-designs",
@@ -1602,6 +1655,7 @@
     "slideshow_kWkw8n",
     "17621515165fe6b4f9",
     "collection_list_FFV7jq",
+    "bento_grid_section_YhfVwH",
     "featured_product_pW7dEU",
     "product_list_8kR3Hb",
     "featured_product_rKUqUR",
