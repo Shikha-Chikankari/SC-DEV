@@ -1,0 +1,8 @@
+{
+  "sections": {
+    "about_us_main": {
+      "type": "about-us-page"
+    }
+  },
+  "order": ["about_us_main"]
+}
