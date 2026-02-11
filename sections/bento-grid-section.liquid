@@ -268,14 +268,15 @@
 {%- else -%}
   <div class="bento-box {% if section.settings.box1_dark_text %}bento-box--dark{% endif %}">
 {%- endif -%}
-  {%- if section.settings.box1_video != blank -%}
+  
+  {%- comment -%} Video has priority, then image {%- endcomment -%}
+  {%- if section.settings.box1_video != null -%}
     <div class="bento-box__video-wrapper">
-      {{ section.settings.box1_video | video_tag: 
-         image_size: '1100x',
-         autoplay: true,
-         loop: true,
-         muted: true
-      }}
+      <video autoplay muted loop playsinline class="bento-box__video">
+        {%- for source in section.settings.box1_video.sources -%}
+          <source src="{{ source.url }}" type="{{ source.mime_type }}">
+        {%- endfor -%}
+      </video>
     </div>
     <div class="bento-box__overlay"></div>
   {%- elsif section.settings.box1_image != blank -%}
@@ -288,6 +289,7 @@
     </div>
     <div class="bento-box__overlay"></div>
   {%- endif -%}
+  
   {%- if section.settings.box1_title != blank or section.settings.box1_subtitle != blank -%}
     <div class="bento-box__content">
       {%- if section.settings.box1_title != blank -%}
@@ -298,6 +300,7 @@
       {%- endif -%}
     </div>
   {%- endif -%}
+  
 {%- if section.settings.box1_link != blank -%}</a>{%- else -%}</div>{%- endif -%}
 
   {%- comment -%} Box 2 - Top Center Left {%- endcomment -%}
@@ -582,16 +585,18 @@
       "content": "Box 1 - Top Left"
     },
     {
-      "type": "image_picker",
-      "id": "box1_image",
-      "label": "Image"
+      "type": "paragraph",
+      "content": "Upload either an image OR a video (not both)"
     },
     {
-      "type": "video_url",
+      "type": "image_picker",
+      "id": "box1_image",
+      "label": "📷 Image"
+    },
+    {
+      "type": "video",
       "id": "box1_video",
-      "label": "Video URL (overrides image)",
-      "accept": ["youtube", "vimeo"],
-      "info": "YouTube or Vimeo URL"
+      "label": "🎥 Video"
     },
     {
       "type": "text",
@@ -619,15 +624,18 @@
       "content": "Box 2 - Top Center Left"
     },
     {
-      "type": "image_picker",
-      "id": "box2_image",
-      "label": "Image"
+      "type": "paragraph",
+      "content": "Upload either an image OR a video (not both)"
     },
     {
-      "type": "video_url",
+      "type": "image_picker",
+      "id": "box2_image",
+      "label": "📷 Image"
+    },
+    {
+      "type": "video",
       "id": "box2_video",
-      "label": "Video URL (overrides image)",
-      "accept": ["youtube", "vimeo"]
+      "label": "🎥 Video"
     },
     {
       "type": "text",
@@ -685,15 +693,18 @@
       "content": "Box 5 - Middle Left (Tall)"
     },
     {
-      "type": "image_picker",
-      "id": "box5_image",
-      "label": "Image"
+      "type": "paragraph",
+      "content": "Upload either an image OR a video (not both)"
     },
     {
-      "type": "video_url",
+      "type": "image_picker",
+      "id": "box5_image",
+      "label": "📷 Image"
+    },
+    {
+      "type": "video",
       "id": "box5_video",
-      "label": "Video URL (overrides image)",
-      "accept": ["youtube", "vimeo"]
+      "label": "🎥 Video"
     },
     {
       "type": "text",
@@ -721,15 +732,18 @@
       "content": "Box 6 - Middle Center"
     },
     {
-      "type": "image_picker",
-      "id": "box6_image",
-      "label": "Image"
+      "type": "paragraph",
+      "content": "Upload either an image OR a video (not both)"
     },
     {
-      "type": "video_url",
+      "type": "image_picker",
+      "id": "box6_image",
+      "label": "📷 Image"
+    },
+    {
+      "type": "video",
       "id": "box6_video",
-      "label": "Video URL (overrides image)",
-      "accept": ["youtube", "vimeo"]
+      "label": "🎥 Video"
     },
     {
       "type": "text",
@@ -746,18 +760,9 @@
       "id": "box6_link_type",
       "label": "Link Type",
       "options": [
-        {
-          "value": "none",
-          "label": "None"
-        },
-        {
-          "value": "collection",
-          "label": "Collection"
-        },
-        {
-          "value": "product",
-          "label": "Product"
-        }
+        {"value": "none", "label": "None"},
+        {"value": "collection", "label": "Collection"},
+        {"value": "product", "label": "Product"}
       ],
       "default": "collection"
     },
@@ -782,15 +787,18 @@
       "content": "Box 7 - Middle Right (Wide)"
     },
     {
-      "type": "image_picker",
-      "id": "box7_image",
-      "label": "Image"
+      "type": "paragraph",
+      "content": "Upload either an image OR a video (not both)"
     },
     {
-      "type": "video_url",
+      "type": "image_picker",
+      "id": "box7_image",
+      "label": "📷 Image"
+    },
+    {
+      "type": "video",
       "id": "box7_video",
-      "label": "Video URL (overrides image)",
-      "accept": ["youtube", "vimeo"]
+      "label": "🎥 Video"
     },
     {
       "type": "text",
@@ -807,18 +815,9 @@
       "id": "box7_link_type",
       "label": "Link Type",
       "options": [
-        {
-          "value": "none",
-          "label": "None"
-        },
-        {
-          "value": "collection",
-          "label": "Collection"
-        },
-        {
-          "value": "product",
-          "label": "Product"
-        }
+        {"value": "none", "label": "None"},
+        {"value": "collection", "label": "Collection"},
+        {"value": "product", "label": "Product"}
       ],
       "default": "collection"
     },
@@ -843,15 +842,18 @@
       "content": "Box 8 - Bottom Left (Wide, Centered)"
     },
     {
-      "type": "image_picker",
-      "id": "box8_image",
-      "label": "Image"
+      "type": "paragraph",
+      "content": "Upload either an image OR a video (not both)"
     },
     {
-      "type": "video_url",
+      "type": "image_picker",
+      "id": "box8_image",
+      "label": "📷 Image"
+    },
+    {
+      "type": "video",
       "id": "box8_video",
-      "label": "Video URL (overrides image)",
-      "accept": ["youtube", "vimeo"]
+      "label": "🎥 Video"
     },
     {
       "type": "text",
@@ -881,15 +883,18 @@
       "content": "Box 9 - Bottom Right"
     },
     {
-      "type": "image_picker",
-      "id": "box9_image",
-      "label": "Image"
+      "type": "paragraph",
+      "content": "Upload either an image OR a video (not both)"
     },
     {
-      "type": "video_url",
+      "type": "image_picker",
+      "id": "box9_image",
+      "label": "📷 Image"
+    },
+    {
+      "type": "video",
       "id": "box9_video",
-      "label": "Video URL (overrides image)",
-      "accept": ["youtube", "vimeo"]
+      "label": "🎥 Video"
     },
     {
       "type": "text",
