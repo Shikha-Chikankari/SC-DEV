@@ -637,6 +637,7 @@
             "desktop_width_percent": 75,
             "section_padding": 25,
             "section_background_image": "shopify://shop_images/Untitled_Project_-_Artboard_12_2.png",
+            "section_background_video": "shopify://files/videos/Untitled.mp4",
             "section_background": "#f9f9f9",
             "section_background_overlay": "#000000",
             "section_background_overlay_opacity": 0,
