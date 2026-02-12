@@ -442,12 +442,15 @@
 {%- endstyle -%}
 
 <div class="spotlight-carousel">
-  {%- comment -%} Video Background {%- endcomment -%}
+ {%- comment -%} Video Background {%- endcomment -%}
   {%- if section.settings.background_video != blank -%}
     <div class="spotlight-carousel__video-background">
-      <video autoplay muted loop playsinline>
-        <source src="{{ section.settings.background_video }}" type="video/mp4">
-      </video>
+      {{ section.settings.background_video | video_tag: 
+         autoplay: true, 
+         loop: true, 
+         muted: true,
+         controls: false
+      }}
     </div>
   {%- elsif section.settings.background_image != blank -%}
     {%- comment -%} Background Image (fallback) {%- endcomment -%}
@@ -716,10 +719,10 @@ document.addEventListener('DOMContentLoaded', function() {
       "info": "Recommended: 1600x800px"
     },
     {
-  "type": "text",
+ "type": "video",
   "id": "background_video",
-  "label": "Background Video URL",
-  "info": "Upload video to Settings > Files, paste URL here. Video overrides image."
+  "label": "Background Video",
+  "info": "Upload video directly. Video overrides image."
 }
   ],
   "presets": [
