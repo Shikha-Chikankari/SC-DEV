@@ -827,6 +827,12 @@ body:has(.navbar__mobile-menu--open) {
   font-weight: 500;
   flex-shrink: 0;
   }
+  /* Hide search icon on desktop (search bar is already visible) */
+@media (min-width: 768px) {
+  .navbar__action--search {
+    display: none !important;
+  }
+}
 
   .search-placeholder .animated {
   color: #1f1f1f;
