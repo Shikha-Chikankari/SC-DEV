@@ -30,6 +30,23 @@
     z-index: 0;
   }
 
+  /* Video Background */
+  .spotlight-carousel__video-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .spotlight-carousel__video-background video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
   .spotlight-carousel__overlay {
     position: absolute;
     top: 0;
@@ -425,14 +442,22 @@
 {%- endstyle -%}
 
 <div class="spotlight-carousel">
-  {%- comment -%} Background Image {%- endcomment -%}
-  {%- if section.settings.background_image != blank -%}
+  {%- comment -%} Video Background {%- endcomment -%}
+  {%- if section.settings.background_video != blank -%}
+    <div class="spotlight-carousel__video-background">
+      <video autoplay muted loop playsinline>
+        <source src="{{ section.settings.background_video }}" type="video/mp4">
+      </video>
+    </div>
+  {%- elsif section.settings.background_image != blank -%}
+    {%- comment -%} Background Image (fallback) {%- endcomment -%}
     {{ section.settings.background_image | image_url: width: 1600 | image_tag:
        loading: 'lazy',
        class: 'spotlight-carousel__background',
        alt: section.settings.title
     }}
   {%- endif -%}
+
   
   <div class="spotlight-carousel__overlay"></div>
 {%- if section.settings.show_sale_badge -%}
@@ -689,7 +714,13 @@ document.addEventListener('DOMContentLoaded', function() {
       "id": "background_image",
       "label": "Background Image",
       "info": "Recommended: 1600x800px"
-    }
+    },
+    {
+  "type": "text",
+  "id": "background_video",
+  "label": "Background Video URL",
+  "info": "Upload video to Settings > Files, paste URL here. Video overrides image."
+}
   ],
   "presets": [
     {
