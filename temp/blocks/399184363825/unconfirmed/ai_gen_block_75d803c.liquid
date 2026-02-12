@@ -1,6 +1,840 @@
+{% doc %}
+  @prompt
+    add a mood based shopping corousel, has different mood of shopping
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-mood-carousel-{{ ai_gen_id }} {
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+    padding: {{ block.settings.section_padding }}px 0;
+    display: block;
+  }
+
+  .ai-mood-carousel__header-{{ ai_gen_id }} {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .ai-mood-carousel__title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.title_size }}px;
+    color: {{ block.settings.title_color }};
+    margin: 0 0 12px;
+    text-transform: {{ block.settings.title_case }};
+  }
+
+  .ai-mood-carousel__subtitle-{{ ai_gen_id }} {
+    font-size: {{ block.settings.subtitle_size }}px;
+    color: {{ block.settings.subtitle_color }};
+    margin: 0;
+  }
+
+  .ai-mood-carousel__container-{{ ai_gen_id }} {
+    position: relative;
+    overflow: hidden;
+    padding: 0 50px;
+  }
+
+  .ai-mood-carousel__track-{{ ai_gen_id }} {
+    display: flex;
+    gap: {{ block.settings.card_gap }}px;
+    transition: transform 0.5s ease;
+  }
+
+  .ai-mood-carousel__card-{{ ai_gen_id }} {
+    flex: 0 0 calc((100% - {{ block.settings.card_gap | times: 2 }}px) / 3);
+    background-color: {{ block.settings.card_background }};
+    border-radius: {{ block.settings.card_border_radius }}px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-decoration: none;
+    display: block;
+  }
+
+  .ai-mood-carousel__card-{{ ai_gen_id }}:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  }
+
+  .ai-mood-carousel__card-image-wrapper-{{ ai_gen_id }} {
+    position: relative;
+    width: 100%;
+    padding-bottom: 100%;
+    overflow: hidden;
+    background-color: #f4f4f4;
+  }
+
+  .ai-mood-carousel__card-image-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .ai-mood-carousel__card-image-wrapper-{{ ai_gen_id }} svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .ai-mood-carousel__card-overlay-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.6) 100%);
+    display: flex;
+    align-items: flex-end;
+    padding: 20px;
+  }
+
+  .ai-mood-carousel__card-mood-{{ ai_gen_id }} {
+    color: #ffffff;
+    font-size: {{ block.settings.mood_text_size }}px;
+    font-weight: 600;
+    margin: 0;
+    text-transform: {{ block.settings.mood_text_case }};
+  }
+
+  .ai-mood-carousel__card-content-{{ ai_gen_id }} {
+    padding: 20px;
+  }
+
+  .ai-mood-carousel__card-description-{{ ai_gen_id }} {
+    color: {{ block.settings.description_color }};
+    font-size: {{ block.settings.description_size }}px;
+    margin: 0 0 12px;
+    line-height: 1.5;
+  }
+
+  .ai-mood-carousel__card-cta-{{ ai_gen_id }} {
+    color: {{ block.settings.cta_color }};
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .ai-mood-carousel__card-cta-{{ ai_gen_id }}:hover {
+    color: {{ block.settings.cta_hover_color }};
+  }
+
+  .ai-mood-carousel__nav-{{ ai_gen_id }} {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: {{ block.settings.nav_button_background }};
+    color: {{ block.settings.nav_button_color }};
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+    z-index: 2;
+  }
+
+  .ai-mood-carousel__nav-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.nav_button_hover_background }};
+  }
+
+  .ai-mood-carousel__nav-{{ ai_gen_id }}:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
+  .ai-mood-carousel__nav--prev-{{ ai_gen_id }} {
+    left: 0;
+  }
+
+  .ai-mood-carousel__nav--next-{{ ai_gen_id }} {
+    right: 0;
+  }
+
+  .ai-mood-carousel__dots-{{ ai_gen_id }} {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 30px;
+  }
+
+  .ai-mood-carousel__dot-{{ ai_gen_id }} {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: {{ block.settings.dot_color }};
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+
+  .ai-mood-carousel__dot-{{ ai_gen_id }}.active {
+    background-color: {{ block.settings.dot_active_color }};
+    transform: scale(1.2);
+  }
+
+  @media screen and (max-width: 989px) {
+    .ai-mood-carousel__card-{{ ai_gen_id }} {
+      flex: 0 0 calc((100% - {{ block.settings.card_gap }}px) / 2);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-mood-carousel__container-{{ ai_gen_id }} {
+      padding: 0 40px;
+    }
+
+    .ai-mood-carousel__card-{{ ai_gen_id }} {
+      flex: 0 0 100%;
+    }
+
+    .ai-mood-carousel__title-{{ ai_gen_id }} {
+      font-size: {{ block.settings.title_size | times: 0.7 }}px;
+    }
+
+    .ai-mood-carousel__subtitle-{{ ai_gen_id }} {
+      font-size: {{ block.settings.subtitle_size | times: 0.9 }}px;
+    }
+  }
+{% endstyle %}
+
+<mood-carousel-{{ ai_gen_id }}
+  class="ai-mood-carousel-{{ ai_gen_id }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="ai-mood-carousel__header-{{ ai_gen_id }}">
+    {% if block.settings.title != blank %}
+      <h2 class="ai-mood-carousel__title-{{ ai_gen_id }}">{{ block.settings.title }}</h2>
+    {% endif %}
+    {% if block.settings.subtitle != blank %}
+      <p class="ai-mood-carousel__subtitle-{{ ai_gen_id }}">{{ block.settings.subtitle }}</p>
+    {% endif %}
+  </div>
+
+  <div class="ai-mood-carousel__container-{{ ai_gen_id }}">
+    <button
+      class="ai-mood-carousel__nav-{{ ai_gen_id }} ai-mood-carousel__nav--prev-{{ ai_gen_id }}"
+      aria-label="Previous"
+      data-nav="prev"
+    >
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="15 18 9 12 15 6"></polyline>
+      </svg>
+    </button>
+
+    <div class="ai-mood-carousel__track-{{ ai_gen_id }}" data-track>
+      {% for i in (1..6) %}
+        {% liquid
+          assign mood_enabled_key = 'mood_' | append: i | append: '_enabled'
+          assign mood_name_key = 'mood_' | append: i | append: '_name'
+          assign mood_description_key = 'mood_' | append: i | append: '_description'
+          assign mood_image_key = 'mood_' | append: i | append: '_image'
+          assign mood_collection_key = 'mood_' | append: i | append: '_collection'
+
+          assign mood_enabled = block.settings[mood_enabled_key]
+          assign mood_name = block.settings[mood_name_key]
+          assign mood_description = block.settings[mood_description_key]
+          assign mood_image = block.settings[mood_image_key]
+          assign mood_collection = block.settings[mood_collection_key]
+        %}
+
+        {% if mood_enabled %}
+          {% if mood_collection != blank %}
+            <a
+              href="{{ mood_collection.url }}"
+              class="ai-mood-carousel__card-{{ ai_gen_id }}"
+            >
+          {% else %}
+            <div class="ai-mood-carousel__card-{{ ai_gen_id }}">
+          {% endif %}
+            <div class="ai-mood-carousel__card-image-wrapper-{{ ai_gen_id }}">
+              {% if mood_image %}
+                <img
+                  src="{{ mood_image | image_url: width: 600 }}"
+                  alt="{{ mood_name | escape }}"
+                  class="ai-mood-carousel__card-image-{{ ai_gen_id }}"
+                  loading="lazy"
+                  width="600"
+                  height="600"
+                >
+              {% else %}
+                {{ 'collection-apparel-1' | placeholder_svg_tag }}
+              {% endif %}
+              <div class="ai-mood-carousel__card-overlay-{{ ai_gen_id }}">
+                <h3 class="ai-mood-carousel__card-mood-{{ ai_gen_id }}">{{ mood_name }}</h3>
+              </div>
+            </div>
+            <div class="ai-mood-carousel__card-content-{{ ai_gen_id }}">
+              {% if mood_description != blank %}
+                <p class="ai-mood-carousel__card-description-{{ ai_gen_id }}">{{ mood_description }}</p>
+              {% endif %}
+              {% if mood_collection != blank %}
+                <span class="ai-mood-carousel__card-cta-{{ ai_gen_id }}">
+                  {{ block.settings.cta_text }}
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                </span>
+              {% endif %}
+            </div>
+          {% if mood_collection != blank %}
+            </a>
+          {% else %}
+            </div>
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    <button
+      class="ai-mood-carousel__nav-{{ ai_gen_id }} ai-mood-carousel__nav--next-{{ ai_gen_id }}"
+      aria-label="Next"
+      data-nav="next"
+    >
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="9 18 15 12 9 6"></polyline>
+      </svg>
+    </button>
+  </div>
+
+  <div class="ai-mood-carousel__dots-{{ ai_gen_id }}" data-dots></div>
+</mood-carousel-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class MoodCarousel{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+        this.currentIndex = 0;
+        this.itemsPerView = 3;
+      }
+
+      connectedCallback() {
+        this.track = this.querySelector('[data-track]');
+        this.cards = Array.from(this.track.children);
+        this.prevButton = this.querySelector('[data-nav="prev"]');
+        this.nextButton = this.querySelector('[data-nav="next"]');
+        this.dotsContainer = this.querySelector('[data-dots]');
+
+        this.updateItemsPerView();
+        this.createDots();
+        this.setupEventListeners();
+        this.updateCarousel();
+
+        window.addEventListener('resize', () => {
+          this.updateItemsPerView();
+          this.createDots();
+          this.updateCarousel();
+        });
+      }
+
+      updateItemsPerView() {
+        if (window.innerWidth <= 749) {
+          this.itemsPerView = 1;
+        } else if (window.innerWidth <= 989) {
+          this.itemsPerView = 2;
+        } else {
+          this.itemsPerView = 3;
+        }
+      }
+
+      createDots() {
+        this.dotsContainer.innerHTML = '';
+        const totalDots = Math.ceil(this.cards.length / this.itemsPerView);
+
+        for (let i = 0; i < totalDots; i++) {
+          const dot = document.createElement('button');
+          dot.className = 'ai-mood-carousel__dot-{{ ai_gen_id }}';
+          dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+          dot.addEventListener('click', () => this.goToSlide(i));
+          this.dotsContainer.appendChild(dot);
+        }
+
+        this.dots = Array.from(this.dotsContainer.children);
+      }
+
+      setupEventListeners() {
+        this.prevButton.addEventListener('click', () => this.prev());
+        this.nextButton.addEventListener('click', () => this.next());
+      }
+
+      prev() {
+        if (this.currentIndex > 0) {
+          this.currentIndex--;
+          this.updateCarousel();
+        }
+      }
+
+      next() {
+        const maxIndex = Math.ceil(this.cards.length / this.itemsPerView) - 1;
+        if (this.currentIndex < maxIndex) {
+          this.currentIndex++;
+          this.updateCarousel();
+        }
+      }
+
+      goToSlide(index) {
+        this.currentIndex = index;
+        this.updateCarousel();
+      }
+
+      updateCarousel() {
+        const cardWidth = this.cards[0].offsetWidth;
+        const gap = {{ block.settings.card_gap }};
+        const offset = -(this.currentIndex * this.itemsPerView * (cardWidth + gap));
+
+        this.track.style.transform = 'translateX(' + offset + 'px)';
+
+        const maxIndex = Math.ceil(this.cards.length / this.itemsPerView) - 1;
+        this.prevButton.disabled = this.currentIndex === 0;
+        this.nextButton.disabled = this.currentIndex === maxIndex;
+
+        this.dots.forEach((dot, index) => {
+          if (index === this.currentIndex) {
+            dot.classList.add('active');
+          } else {
+            dot.classList.remove('active');
+          }
+        });
+      }
+    }
+
+    customElements.define('mood-carousel-{{ ai_gen_id }}', MoodCarousel{{ ai_gen_id }});
+  })();
+</script>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Mood shopping carousel",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "General"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "title",
+      "label": "Title",
+      "default": "Shop by mood"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Find the perfect collection for your vibe"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "cta_text",
+      "label": "CTA text",
+      "default": "Explore"
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "section_padding",
+      "label": "Section padding",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Title size",
+      "min": 16,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "select",
+      "id": "title_case",
+      "label": "Title case",
+      "options": [
+        {
+          "value": "none",
+          "label": "Default"
+        },
+        {
+          "value": "uppercase",
+          "label": "Uppercase"
+        }
+      ],
+      "default": "uppercase"
+    },
+    {
+      "type": "range",
+      "id": "subtitle_size",
+      "label": "Subtitle size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "mood_text_size",
+      "label": "Mood text size",
+      "min": 16,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "select",
+      "id": "mood_text_case",
+      "label": "Mood text case",
+      "options": [
+        {
+          "value": "none",
+          "label": "Default"
+        },
+        {
+          "value": "uppercase",
+          "label": "Uppercase"
+        }
+      ],
+      "default": "uppercase"
+    },
+    {
+      "type": "range",
+      "id": "description_size",
+      "label": "Description size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subtitle",
+      "default": "#666666"
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Card background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Description",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "cta_color",
+      "label": "CTA",
+      "default": "#c15045"
+    },
+    {
+      "type": "color",
+      "id": "cta_hover_color",
+      "label": "CTA hover",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Card style"
+    },
+    {
+      "type": "range",
+      "id": "card_border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "card_gap",
+      "label": "Gap between cards",
+      "min": 10,
+      "max": 50,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Navigation"
+    },
+    {
+      "type": "color",
+      "id": "nav_button_background",
+      "label": "Button background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "nav_button_color",
+      "label": "Button icon",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "nav_button_hover_background",
+      "label": "Button hover background",
+      "default": "#f4f4f4"
+    },
+    {
+      "type": "color",
+      "id": "dot_color",
+      "label": "Dot",
+      "default": "#cccccc"
+    },
+    {
+      "type": "color",
+      "id": "dot_active_color",
+      "label": "Active dot",
+      "default": "#c15045"
+    },
+    {
+      "type": "header",
+      "content": "Mood 1"
+    },
+    {
+      "type": "checkbox",
+      "id": "mood_1_enabled",
+      "label": "Enable mood 1",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "mood_1_name",
+      "label": "Mood name",
+      "default": "Cozy vibes"
+    },
+    {
+      "type": "textarea",
+      "id": "mood_1_description",
+      "label": "Description",
+      "default": "Soft, comfortable pieces for relaxing at home"
+    },
+    {
+      "type": "image_picker",
+      "id": "mood_1_image",
+      "label": "Image"
+    },
+    {
+      "type": "collection",
+      "id": "mood_1_collection",
+      "label": "Collection"
+    },
+    {
+      "type": "header",
+      "content": "Mood 2"
+    },
+    {
+      "type": "checkbox",
+      "id": "mood_2_enabled",
+      "label": "Enable mood 2",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "mood_2_name",
+      "label": "Mood name",
+      "default": "Bold & confident"
+    },
+    {
+      "type": "textarea",
+      "id": "mood_2_description",
+      "label": "Description",
+      "default": "Statement pieces that make you stand out"
+    },
+    {
+      "type": "image_picker",
+      "id": "mood_2_image",
+      "label": "Image"
+    },
+    {
+      "type": "collection",
+      "id": "mood_2_collection",
+      "label": "Collection"
+    },
+    {
+      "type": "header",
+      "content": "Mood 3"
+    },
+    {
+      "type": "checkbox",
+      "id": "mood_3_enabled",
+      "label": "Enable mood 3",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "mood_3_name",
+      "label": "Mood name",
+      "default": "Minimalist chic"
+    },
+    {
+      "type": "textarea",
+      "id": "mood_3_description",
+      "label": "Description",
+      "default": "Clean lines and timeless elegance"
+    },
+    {
+      "type": "image_picker",
+      "id": "mood_3_image",
+      "label": "Image"
+    },
+    {
+      "type": "collection",
+      "id": "mood_3_collection",
+      "label": "Collection"
+    },
+    {
+      "type": "header",
+      "content": "Mood 4"
+    },
+    {
+      "type": "checkbox",
+      "id": "mood_4_enabled",
+      "label": "Enable mood 4",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "mood_4_name",
+      "label": "Mood name",
+      "default": "Adventure ready"
+    },
+    {
+      "type": "textarea",
+      "id": "mood_4_description",
+      "label": "Description",
+      "default": "Durable and stylish for your next journey"
+    },
+    {
+      "type": "image_picker",
+      "id": "mood_4_image",
+      "label": "Image"
+    },
+    {
+      "type": "collection",
+      "id": "mood_4_collection",
+      "label": "Collection"
+    },
+    {
+      "type": "header",
+      "content": "Mood 5"
+    },
+    {
+      "type": "checkbox",
+      "id": "mood_5_enabled",
+      "label": "Enable mood 5",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "mood_5_name",
+      "label": "Mood name",
+      "default": "Romantic"
+    },
+    {
+      "type": "textarea",
+      "id": "mood_5_description",
+      "label": "Description",
+      "default": "Soft, feminine pieces for special moments"
+    },
+    {
+      "type": "image_picker",
+      "id": "mood_5_image",
+      "label": "Image"
+    },
+    {
+      "type": "collection",
+      "id": "mood_5_collection",
+      "label": "Collection"
+    },
+    {
+      "type": "header",
+      "content": "Mood 6"
+    },
+    {
+      "type": "checkbox",
+      "id": "mood_6_enabled",
+      "label": "Enable mood 6",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "mood_6_name",
+      "label": "Mood name",
+      "default": "Sporty active"
+    },
+    {
+      "type": "textarea",
+      "id": "mood_6_description",
+      "label": "Description",
+      "default": "Performance wear for your active lifestyle"
+    },
+    {
+      "type": "image_picker",
+      "id": "mood_6_image",
+      "label": "Image"
+    },
+    {
+      "type": "collection",
+      "id": "mood_6_collection",
+      "label": "Collection"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Mood shopping carousel"
+    }
+  ]
+}
 {% endschema %}
