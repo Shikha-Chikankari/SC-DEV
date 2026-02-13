@@ -1,6 +1,697 @@
+{% doc %}
+  @prompt
+    a horizontal feature collection, should give option to change the title, and has option to add the add photo and video in background seperately, the product from collection should be in card style, showing the price, compared price and percent off in the bottom, it should contain animation, design should be modern and suits perfect with the mobile and desktop view
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-feature-collection-{{ ai_gen_id }} {
+    position: relative;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+    overflow: hidden;
+    display: block;
+  }
+
+  .ai-feature-collection__background-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+
+  .ai-feature-collection__background-media-{{ ai_gen_id }} {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .ai-feature-collection__overlay-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: {{ block.settings.overlay_color }};
+    opacity: {{ block.settings.overlay_opacity }};
+    z-index: 1;
+  }
+
+  .ai-feature-collection__content-{{ ai_gen_id }} {
+    position: relative;
+    z-index: 2;
+    padding: {{ block.settings.section_padding }}px;
+  }
+
+  .ai-feature-collection__header-{{ ai_gen_id }} {
+    margin-bottom: {{ block.settings.title_spacing }}px;
+    text-align: {{ block.settings.title_alignment }};
+  }
+
+  .ai-feature-collection__title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.title_size }}px;
+    color: {{ block.settings.title_color }};
+    margin: 0;
+    font-weight: 600;
+  }
+
+  .ai-feature-collection__products-{{ ai_gen_id }} {
+    display: flex;
+    gap: {{ block.settings.card_gap }}px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: {{ block.settings.scrollbar_color }} transparent;
+    padding-bottom: 10px;
+  }
+
+  .ai-feature-collection__products-{{ ai_gen_id }}::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  .ai-feature-collection__products-{{ ai_gen_id }}::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .ai-feature-collection__products-{{ ai_gen_id }}::-webkit-scrollbar-thumb {
+    background-color: {{ block.settings.scrollbar_color }};
+    border-radius: 4px;
+  }
+
+  .ai-feature-collection__card-{{ ai_gen_id }} {
+    flex: 0 0 {{ block.settings.card_width }}px;
+    background-color: {{ block.settings.card_background }};
+    border-radius: {{ block.settings.card_border_radius }}px;
+    overflow: hidden;
+    box-shadow: {{ block.settings.card_shadow_x }}px {{ block.settings.card_shadow_y }}px {{ block.settings.card_shadow_blur }}px {{ block.settings.card_shadow_color }};
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  .ai-feature-collection__card-{{ ai_gen_id }}.ai-animate-in {
+    animation: ai-slide-up-{{ ai_gen_id }} 0.6s ease forwards;
+  }
+
+  @keyframes ai-slide-up-{{ ai_gen_id }} {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .ai-feature-collection__card-{{ ai_gen_id }}:hover {
+    transform: translateY(-8px);
+    box-shadow: {{ block.settings.card_shadow_x }}px {{ block.settings.card_shadow_y | plus: 4 }}px {{ block.settings.card_shadow_blur | plus: 8 }}px {{ block.settings.card_shadow_color }};
+  }
+
+  .ai-feature-collection__card-link-{{ ai_gen_id }} {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .ai-feature-collection__card-image-wrapper-{{ ai_gen_id }} {
+    position: relative;
+    width: 100%;
+    padding-top: 125%;
+    overflow: hidden;
+    background-color: #f4f4f4;
+  }
+
+  .ai-feature-collection__card-image-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .ai-feature-collection__card-{{ ai_gen_id }}:hover .ai-feature-collection__card-image-{{ ai_gen_id }} {
+    transform: scale(1.05);
+  }
+
+  .ai-feature-collection__card-info-{{ ai_gen_id }} {
+    padding: {{ block.settings.card_padding }}px;
+  }
+
+  .ai-feature-collection__card-title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.product_title_size }}px;
+    color: {{ block.settings.product_title_color }};
+    margin: 0 0 8px 0;
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+  .ai-feature-collection__card-prices-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+  }
+
+  .ai-feature-collection__price-{{ ai_gen_id }} {
+    font-size: {{ block.settings.price_size }}px;
+    color: {{ block.settings.price_color }};
+    font-weight: 600;
+  }
+
+  .ai-feature-collection__compare-price-{{ ai_gen_id }} {
+    font-size: {{ block.settings.price_size | minus: 2 }}px;
+    color: {{ block.settings.compare_price_color }};
+    text-decoration: line-through;
+  }
+
+  .ai-feature-collection__discount-badge-{{ ai_gen_id }} {
+    display: inline-block;
+    background-color: {{ block.settings.discount_badge_bg }};
+    color: {{ block.settings.discount_badge_text }};
+    padding: 4px 8px;
+    border-radius: {{ block.settings.discount_badge_radius }}px;
+    font-size: {{ block.settings.discount_badge_size }}px;
+    font-weight: 600;
+  }
+
+  .ai-feature-collection__empty-state-{{ ai_gen_id }} {
+    text-align: center;
+    padding: 60px 20px;
+    color: {{ block.settings.title_color }};
+  }
+
+  .ai-feature-collection__empty-state-{{ ai_gen_id }} svg {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 20px;
+    opacity: 0.3;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-feature-collection__card-{{ ai_gen_id }} {
+      flex: 0 0 {{ block.settings.card_width_mobile }}px;
+    }
+
+    .ai-feature-collection__title-{{ ai_gen_id }} {
+      font-size: {{ block.settings.title_size | times: 0.7 }}px;
+    }
+
+    .ai-feature-collection__content-{{ ai_gen_id }} {
+      padding: {{ block.settings.section_padding | times: 0.6 }}px;
+    }
+  }
+{% endstyle %}
+
+<feature-collection-{{ ai_gen_id }}
+  class="ai-feature-collection-{{ ai_gen_id }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="ai-feature-collection__background-{{ ai_gen_id }}">
+    {% if block.settings.background_type == 'image' and block.settings.background_image %}
+      <img
+        src="{{ block.settings.background_image | image_url: width: 2000 }}"
+        alt="{{ block.settings.background_image.alt | escape }}"
+        class="ai-feature-collection__background-media-{{ ai_gen_id }}"
+        loading="lazy"
+      >
+    {% elsif block.settings.background_type == 'video' and block.settings.background_video %}
+      <video
+        class="ai-feature-collection__background-media-{{ ai_gen_id }}"
+        autoplay
+        muted
+        loop
+        playsinline
+      >
+        <source src="{{ block.settings.background_video }}" type="video/mp4">
+      </video>
+    {% else %}
+      <div
+        class="ai-feature-collection__background-media-{{ ai_gen_id }}"
+        style="background-color: {{ block.settings.background_color }};"
+      ></div>
+    {% endif %}
+    <div class="ai-feature-collection__overlay-{{ ai_gen_id }}"></div>
+  </div>
+
+  <div class="ai-feature-collection__content-{{ ai_gen_id }}">
+    {% if block.settings.collection_title != blank %}
+      <div class="ai-feature-collection__header-{{ ai_gen_id }}">
+        <h2 class="ai-feature-collection__title-{{ ai_gen_id }}">
+          {{ block.settings.collection_title }}
+        </h2>
+      </div>
+    {% endif %}
+
+    {% if block.settings.collection != blank %}
+      <div class="ai-feature-collection__products-{{ ai_gen_id }}">
+        {% for product in block.settings.collection.products limit: block.settings.products_to_show %}
+          <div
+            class="ai-feature-collection__card-{{ ai_gen_id }}"
+            style="animation-delay: {{ forloop.index0 | times: 0.1 }}s;"
+          >
+            <a
+              href="{{ product.url }}"
+              class="ai-feature-collection__card-link-{{ ai_gen_id }}"
+            >
+              <div class="ai-feature-collection__card-image-wrapper-{{ ai_gen_id }}">
+                {% if product.featured_image %}
+                  <img
+                    src="{{ product.featured_image | image_url: width: 600 }}"
+                    alt="{{ product.featured_image.alt | escape }}"
+                    class="ai-feature-collection__card-image-{{ ai_gen_id }}"
+                    loading="lazy"
+                    width="600"
+                    height="750"
+                  >
+                {% else %}
+                  {{ 'product-1' | placeholder_svg_tag }}
+                {% endif %}
+              </div>
+
+              <div class="ai-feature-collection__card-info-{{ ai_gen_id }}">
+                <h3 class="ai-feature-collection__card-title-{{ ai_gen_id }}">
+                  {{ product.title }}
+                </h3>
+
+                <div class="ai-feature-collection__card-prices-{{ ai_gen_id }}">
+                  <span class="ai-feature-collection__price-{{ ai_gen_id }}">
+                    {{ product.price | money }}
+                  </span>
+
+                  {% if product.compare_at_price > product.price %}
+                    <span class="ai-feature-collection__compare-price-{{ ai_gen_id }}">
+                      {{ product.compare_at_price | money }}
+                    </span>
+
+                    {% assign discount_percent = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price %}
+                    <span class="ai-feature-collection__discount-badge-{{ ai_gen_id }}">
+                      -{{ discount_percent }}%
+                    </span>
+                  {% endif %}
+                </div>
+              </div>
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="ai-feature-collection__empty-state-{{ ai_gen_id }}">
+        {{ 'collection-1' | placeholder_svg_tag }}
+        <p>Next, select a collection to display products</p>
+      </div>
+    {% endif %}
+  </div>
+</feature-collection-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class FeatureCollection{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        this.initializeAnimation();
+      }
+
+      initializeAnimation() {
+        const cards = this.querySelectorAll('.ai-feature-collection__card-{{ ai_gen_id }}');
+        
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('ai-animate-in');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, {
+          threshold: 0.1
+        });
+
+        cards.forEach(card => {
+          observer.observe(card);
+        });
+      }
+    }
+
+    customElements.define('feature-collection-{{ ai_gen_id }}', FeatureCollection{{ ai_gen_id }});
+  })();
+</script>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Feature collection",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Collection"
+    },
+    {
+      "type": "text",
+      "id": "collection_title",
+      "label": "Title",
+      "default": "Featured collection"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "Products to show",
+      "min": 4,
+      "max": 20,
+      "step": 1,
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "select",
+      "id": "background_type",
+      "label": "Background type",
+      "options": [
+        {
+          "value": "color",
+          "label": "Color"
+        },
+        {
+          "value": "image",
+          "label": "Image"
+        },
+        {
+          "value": "video",
+          "label": "Video"
+        }
+      ],
+      "default": "color"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image"
+    },
+    {
+      "type": "url",
+      "id": "background_video",
+      "label": "Background video URL"
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Overlay color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Overlay opacity",
+      "min": 0,
+      "max": 1,
+      "step": 0.1,
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Title style"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Title size",
+      "min": 16,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title color",
+      "default": "#000000"
+    },
+    {
+      "type": "select",
+      "id": "title_alignment",
+      "label": "Title alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "range",
+      "id": "title_spacing",
+      "label": "Title spacing",
+      "min": 10,
+      "max": 60,
+      "step": 5,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "Card style"
+    },
+    {
+      "type": "range",
+      "id": "card_width",
+      "label": "Card width (desktop)",
+      "min": 200,
+      "max": 400,
+      "step": 10,
+      "unit": "px",
+      "default": 280
+    },
+    {
+      "type": "range",
+      "id": "card_width_mobile",
+      "label": "Card width (mobile)",
+      "min": 150,
+      "max": 300,
+      "step": 10,
+      "unit": "px",
+      "default": 220
+    },
+    {
+      "type": "range",
+      "id": "card_gap",
+      "label": "Gap between cards",
+      "min": 10,
+      "max": 40,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Card background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "card_border_radius",
+      "label": "Card border radius",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "card_padding",
+      "label": "Card padding",
+      "min": 10,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Card shadow"
+    },
+    {
+      "type": "range",
+      "id": "card_shadow_x",
+      "label": "Shadow X offset",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "card_shadow_y",
+      "label": "Shadow Y offset",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "card_shadow_blur",
+      "label": "Shadow blur",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "color",
+      "id": "card_shadow_color",
+      "label": "Shadow color",
+      "default": "#00000026"
+    },
+    {
+      "type": "header",
+      "content": "Product details"
+    },
+    {
+      "type": "range",
+      "id": "product_title_size",
+      "label": "Product title size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "color",
+      "id": "product_title_color",
+      "label": "Product title color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "price_size",
+      "label": "Price size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "color",
+      "id": "price_color",
+      "label": "Price color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "compare_price_color",
+      "label": "Compare price color",
+      "default": "#999999"
+    },
+    {
+      "type": "header",
+      "content": "Discount badge"
+    },
+    {
+      "type": "color",
+      "id": "discount_badge_bg",
+      "label": "Background",
+      "default": "#c15045"
+    },
+    {
+      "type": "color",
+      "id": "discount_badge_text",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "discount_badge_size",
+      "label": "Font size",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "discount_badge_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "section_padding",
+      "label": "Section padding",
+      "min": 20,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "color",
+      "id": "scrollbar_color",
+      "label": "Scrollbar color",
+      "default": "#cccccc"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Feature collection"
+    }
+  ]
+}
 {% endschema %}
