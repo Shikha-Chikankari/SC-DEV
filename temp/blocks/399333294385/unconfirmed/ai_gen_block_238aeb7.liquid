@@ -1,6 +1,361 @@
+{% doc %}
+  @prompt
+    simple text section, i can change it, and add animation to it
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-animated-text-{{ ai_gen_id }} {
+    display: block;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+    padding: {{ block.settings.padding_top }}px {{ block.settings.padding_horizontal }}px {{ block.settings.padding_bottom }}px;
+    text-align: {{ block.settings.text_alignment }};
+  }
+
+  .ai-animated-text__content-{{ ai_gen_id }} {
+    color: {{ block.settings.text_color }};
+    font-size: {{ block.settings.font_size }}px;
+    line-height: {{ block.settings.line_height }};
+    opacity: 0;
+  }
+
+  {% if block.settings.animation_type == 'fade_in' %}
+    @keyframes ai-fade-in-{{ ai_gen_id }} {
+      from {
+        opacity: 0;
+        transform: translateY({{ block.settings.fade_distance }}px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .ai-animated-text__content-{{ ai_gen_id }}.ai-animated {
+      animation: ai-fade-in-{{ ai_gen_id }} {{ block.settings.animation_duration }}s ease-out forwards;
+      animation-delay: {{ block.settings.animation_delay }}s;
+    }
+  {% elsif block.settings.animation_type == 'slide_in' %}
+    @keyframes ai-slide-in-{{ ai_gen_id }} {
+      from {
+        opacity: 0;
+        transform: translateX({{ block.settings.slide_distance }}px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .ai-animated-text__content-{{ ai_gen_id }}.ai-animated {
+      animation: ai-slide-in-{{ ai_gen_id }} {{ block.settings.animation_duration }}s ease-out forwards;
+      animation-delay: {{ block.settings.animation_delay }}s;
+    }
+  {% elsif block.settings.animation_type == 'scale_in' %}
+    @keyframes ai-scale-in-{{ ai_gen_id }} {
+      from {
+        opacity: 0;
+        transform: scale({{ block.settings.scale_start }});
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .ai-animated-text__content-{{ ai_gen_id }}.ai-animated {
+      animation: ai-scale-in-{{ ai_gen_id }} {{ block.settings.animation_duration }}s ease-out forwards;
+      animation-delay: {{ block.settings.animation_delay }}s;
+    }
+  {% elsif block.settings.animation_type == 'none' %}
+    .ai-animated-text__content-{{ ai_gen_id }}.ai-animated {
+      opacity: 1;
+    }
+  {% endif %}
+
+  @media screen and (max-width: 749px) {
+    .ai-animated-text-{{ ai_gen_id }} {
+      width: 100%;
+    }
+
+    .ai-animated-text__content-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.font_size }}px * 0.8);
+    }
+  }
+{% endstyle %}
+
+<animated-text-{{ ai_gen_id }}
+  class="ai-animated-text-{{ ai_gen_id }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="ai-animated-text__content-{{ ai_gen_id }}">
+    {{ block.settings.text_content }}
+  </div>
+</animated-text-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class AnimatedText{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+        this.textElement = this.querySelector('.ai-animated-text__content-{{ ai_gen_id }}');
+        this.hasAnimated = false;
+      }
+
+      connectedCallback() {
+        if (this.textElement) {
+          {% if block.settings.trigger_type == 'on_load' %}
+            this.animateText();
+          {% elsif block.settings.trigger_type == 'on_scroll' %}
+            this.setupScrollObserver();
+          {% endif %}
+        }
+      }
+
+      animateText() {
+        if (!this.hasAnimated) {
+          this.textElement.classList.add('ai-animated');
+          this.hasAnimated = true;
+        }
+      }
+
+      setupScrollObserver() {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting && !this.hasAnimated) {
+                this.animateText();
+                observer.unobserve(this);
+              }
+            });
+          },
+          {
+            threshold: 0.2
+          }
+        );
+
+        observer.observe(this);
+      }
+    }
+
+    customElements.define('animated-text-{{ ai_gen_id }}', AnimatedText{{ ai_gen_id }});
+  })();
+</script>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Animated text",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "richtext",
+      "id": "text_content",
+      "label": "Text",
+      "default": "<p>Your animated text goes here</p>"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "label": "Font size",
+      "min": 12,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "select",
+      "id": "line_height",
+      "label": "Line height",
+      "options": [
+        {
+          "value": "1",
+          "label": "Tight"
+        },
+        {
+          "value": "1.5",
+          "label": "Normal"
+        },
+        {
+          "value": "2",
+          "label": "Loose"
+        }
+      ],
+      "default": "1.5"
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Text alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Animation"
+    },
+    {
+      "type": "select",
+      "id": "animation_type",
+      "label": "Animation type",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "fade_in",
+          "label": "Fade in"
+        },
+        {
+          "value": "slide_in",
+          "label": "Slide in"
+        },
+        {
+          "value": "scale_in",
+          "label": "Scale in"
+        }
+      ],
+      "default": "fade_in"
+    },
+    {
+      "type": "select",
+      "id": "trigger_type",
+      "label": "Animation trigger",
+      "options": [
+        {
+          "value": "on_load",
+          "label": "On page load"
+        },
+        {
+          "value": "on_scroll",
+          "label": "On scroll into view"
+        }
+      ],
+      "default": "on_scroll"
+    },
+    {
+      "type": "range",
+      "id": "animation_duration",
+      "label": "Duration",
+      "min": 0.5,
+      "max": 3,
+      "step": 0.5,
+      "unit": "s",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "animation_delay",
+      "label": "Delay",
+      "min": 0,
+      "max": 2,
+      "step": 0.5,
+      "unit": "s",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "fade_distance",
+      "label": "Fade distance",
+      "min": 0,
+      "max": 100,
+      "step": 10,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "slide_distance",
+      "label": "Slide distance",
+      "min": -100,
+      "max": 100,
+      "step": 10,
+      "unit": "px",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "scale_start",
+      "label": "Scale start",
+      "min": 0,
+      "max": 1,
+      "step": 0.1,
+      "default": 0.5
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_horizontal",
+      "label": "Padding horizontal",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 20
+    }
+  ],
+  "presets": [
+    {
+      "name": "Animated text"
+    }
+  ]
+}
 {% endschema %}
