@@ -813,7 +813,7 @@
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
-                "type_preset": "h2",
+                "type_preset": "h3",
                 "font": "var(--font-body--family)",
                 "font_size": "",
                 "line_height": "normal",
@@ -1073,6 +1073,63 @@
         "featured_image": "shopify://shop_images/Frame_31_3.png",
         "featured_title": "Crafted for Workdays That Turn Heads",
         "background_image": "shopify://shop_images/95f828216016263.6778de1399627.png"
+      }
+    },
+    "177094944163247e97": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_238aeb7_PmjYBD": {
+          "type": "ai_gen_block_238aeb7",
+          "settings": {
+            "text_content": "<h4><strong>A Grid for You</strong></h4>",
+            "text_color": "#000000",
+            "font_size": 32,
+            "line_height": "1",
+            "text_alignment": "center",
+            "animation_type": "scale_in",
+            "trigger_type": "on_scroll",
+            "animation_duration": 1,
+            "animation_delay": 0,
+            "fade_distance": 30,
+            "slide_distance": 50,
+            "scale_start": 0.5,
+            "desktop_width_percent": 100,
+            "padding_top": 40,
+            "padding_bottom": 40,
+            "padding_horizontal": 20
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_238aeb7_PmjYBD"
+      ],
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 12,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 0,
+        "padding-block-end": 0
       }
     },
     "bento_grid_section_YhfVwH": {
@@ -1578,6 +1635,7 @@
     "spotlight_collection_carousel_PAwDMM",
     "product_list_8kR3Hb",
     "featured_collection_grid_ACcp6X",
+    "177094944163247e97",
     "bento_grid_section_YhfVwH",
     "collection_list_iAQiBH",
     "marquee_y8LEWQ",
