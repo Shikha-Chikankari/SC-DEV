@@ -253,23 +253,26 @@ navbar-component[data-scroll-state="hidden"] {
 
 /* PREMIUM DRAWER MENU - Half Screen with Backdrop */
 .navbar__mobile-menu {
+  width: 75% !important;
   position: fixed;
   left: 0;
-  top: 0 !important;
-  bottom: 0 !important;
-  height: 100vh !important; /* Force full viewport height */
-  width: 80%;
-  max-width: 360px;
-  background: #E0E0E0;
-  z-index: 99999; /* Higher than navbar */
-  transform: translateX(-100%);
-  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  top: 0;
+  bottom: 0;
+  height: 50dvh;
+  min-height: 100dvh;
+  max-height: 100dvh;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  background: rgba(255, 255, 255, 0.75);
+backdrop-filter: blur(20px);
+-webkit-backdrop-filter: blur(10px);
+  z-index: 99999;
+  transform: translateX(-100%);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 4px 0 24px rgba(0, 0, 0, 0.2);
-  border-top-right-radius: 20px;
-  border-bottom-right-radius: 20px;
+  border-top-right-radius: 24px;
+  border-bottom-right-radius: 24px;
 }
 
 /* Backdrop overlay - Full Viewport */
@@ -296,24 +299,11 @@ navbar-component[data-scroll-state="hidden"] {
 
 /* Backdrop overlay */
 .navbar__mobile-menu::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.35s ease, visibility 0.35s ease;
-  pointer-events: none;
-  z-index: -1;
+ display: none !important;
 }
 
 .navbar__mobile-menu--open::before {
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
+  display: none !important;
 }
 
 /* Mobile Menu Header - FIXED */
@@ -323,7 +313,7 @@ navbar-component[data-scroll-state="hidden"] {
   align-items: center;
   padding: 16px 18px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-  background: #E0E0E0;
+  background: transparent;
   flex-shrink: 0;
   min-height: 60px;
 }
@@ -365,12 +355,14 @@ navbar-component[data-scroll-state="hidden"] {
 /* Mobile Menu Content Area - SCROLLABLE */
 .navbar__mobile-content {
   flex: 1;
-  overflow-y: auto;
+  overflow-y: visible;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
   min-height: 0;
-  padding: 16px 18px 12px;
+  padding: 24px 32px 20px; 
+  display: flex;
+  flex-direction: column;
 }
 
 /* Custom scrollbar styling (optional) */
@@ -383,16 +375,18 @@ navbar-component[data-scroll-state="hidden"] {
 }
 
 .navbar__mobile-content::-webkit-scrollbar-thumb {
-  background: #ccc;
+  background: #ffffff;
   border-radius: 3px;
 }
 
 .navbar__mobile-content::-webkit-scrollbar-thumb:hover {
-  background: #999;
+  background: #ffffff;
 }
 
 /* Drawer Search Bar */
+/* Drawer Search Bar with Animation */
 .navbar__search--drawer {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -400,6 +394,7 @@ navbar-component[data-scroll-state="hidden"] {
   background: #ffffff;
   border-radius: 999px;
   margin-bottom: 20px;
+  overflow: hidden:
 }
 
 .navbar__search--drawer svg {
@@ -407,6 +402,7 @@ navbar-component[data-scroll-state="hidden"] {
   height: 18px;
   color: #666;
   flex-shrink: 0;
+  z-index: 1;
 }
 
 .navbar__search--drawer-input {
@@ -416,11 +412,62 @@ navbar-component[data-scroll-state="hidden"] {
   font-size: 14px;
   outline: none;
   color: #1a1a1a;
+  position: relative;
+  z-index: 2;
+  padding-right: 10px;
+}
+
+.navbar__search--drawer-input:focus {
+  color: #1a1a1a;
 }
 
 .navbar__search--drawer-input::placeholder {
-  color: #999;
+  color: transparent;
 }
+
+/* Animated placeholder for drawer */
+.search-placeholder--drawer {
+  position: absolute;
+  left: 42px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  pointer-events: none;
+  z-index: 1;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+  white-space: nowrap;
+}
+
+.navbar__search--drawer-input:focus ~ .search-placeholder--drawer,
+.navbar__search--drawer-input:not(:placeholder-shown) ~ .search-placeholder--drawer {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.search-placeholder--drawer .fixed {
+  color: #8c8c8c;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.search-placeholder--drawer .animated {
+  color: #1f1f1f;
+  font-weight: 600;
+  display: inline-block;
+  transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+  transform: translateY(0);
+}
+
+.search-placeholder--drawer .animated.fade-out {
+  opacity: 0;
+  transform: translateY(-100%);
+}
+
+.search-placeholder--drawer .animated.fade-in {
+  animation: slideUpIn 0.3s ease-out forwards;
+}
+
 
 /* Mobile Menu List */
 .navbar__mobile-list {
@@ -462,7 +509,7 @@ navbar-component[data-scroll-state="hidden"] {
 .navbar__mobile-footer {
   padding: 14px 18px 18px;
   border-top: 1px solid rgba(0, 0, 0, 0.12);
-  background: #E0E0E0;
+  background: transparent;
   flex-shrink: 0;
   min-height: 60px;
 }
@@ -692,13 +739,6 @@ body:has(.navbar__mobile-menu--open) {
     }
   }
 
-  /* Sticky behavior */
-  header-component[sticky='scroll-up'][data-scroll-direction='down'] .navbar {
-    transform: translateY(calc(-1 * (var(--navbar-height) + 20px)));
-    opacity: 0;
-    pointer-events: none;
-  }
-
   header-component[sticky='scroll-up'][data-scroll-direction='up'] .navbar,
   header-component[sticky='scroll-up'][data-scroll-direction='none'] .navbar {
     transform: translateY(0);
@@ -872,6 +912,16 @@ body:has(.navbar__mobile-menu--open) {
   display: none !important;
 }
 
+.navbar__backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 9998;
+}
+.navbar__backdrop--visible {
+  display: block;
+}
 {%- endstyle -%}
 
 <script src="{{ 'navbar.js' | asset_url }}" defer="defer"></script>
@@ -914,6 +964,8 @@ body:has(.navbar__mobile-menu--open) {
   <div class="navbar__menu-wrapper">
     {%- content_for 'block', type: '_header-menu', id: 'header-menu' -%}
   </div>
+
+ <div class="navbar__backdrop" id="mobile-backdrop"></div>
 
   <!-- Logo (Center) -->
   <a href="{{ routes.root_url }}" class="navbar__logo">
@@ -1010,30 +1062,37 @@ body:has(.navbar__mobile-menu--open) {
   </div>
 
   <div class="navbar__mobile-content">
-    <div class="navbar__search--drawer">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <circle cx="11" cy="11" r="8"></circle>
-        <path d="m21 21-4.35-4.35"></path>
-      </svg>
-      <input
-        type="search"
-        class="navbar__search--drawer-input"
-        placeholder="Search for Kurtis"
-        name="q"
-        form="drawer-search-form"
-      >
-    </div>
-
-    <ul class="navbar__mobile-list">
-      {%- for link in menu_links -%}
-        <li class="navbar__mobile-item">
-          <a href="{{ link.url }}" class="navbar__mobile-link">
-            {{ link.title }}
-          </a>
-        </li>
-      {%- endfor -%}
-    </ul>
+  {%- comment -%} Drawer search bar with animation {%- endcomment -%}
+  <div class="navbar__search--drawer">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="11" cy="11" r="8"></circle>
+      <path d="m21 21-4.35-4.35"></path>
+    </svg>
+    
+    <span class="search-placeholder--drawer">
+      <span class="fixed">Search for </span>
+      <span class="animated">Kurtis</span>
+    </span>
+    
+    <input
+      type="search"
+      class="navbar__search--drawer-input"
+      name="q"
+      form="drawer-search-form"
+    >
   </div>
+
+  <ul class="navbar__mobile-list">
+    {%- for link in menu_links -%}
+      <li class="navbar__mobile-item">
+        <a href="{{ link.url }}" class="navbar__mobile-link">
+          {{ link.title }}
+        </a>
+      </li>
+    {%- endfor -%}
+  </ul>
+</div>
+
 
   <div class="navbar__mobile-footer">
     <a href="/pages/wishlist" class="navbar__mobile-footer-link--wishlist">
@@ -1059,12 +1118,14 @@ body:has(.navbar__mobile-menu--open) {
   // Open menu
   trigger.addEventListener('click', () => {
     drawer.classList.add('navbar__mobile-menu--open');
+    document.getElementById('mobile-backdrop').classList.add('navbar__backdrop--visible');
     document.body.style.overflow = 'hidden';
   });
 
   // Close menu
   closeBtn?.addEventListener('click', () => {
     drawer.classList.remove('navbar__mobile-menu--open');
+    document.getElementById('mobile-backdrop').classList.remove('navbar__backdrop--visible');
     document.body.style.overflow = '';
   });
 
@@ -1084,6 +1145,64 @@ body:has(.navbar__mobile-menu--open) {
     }
   });
 })();
+
+// Mobile drawer search animation
+(function() {
+  const drawer = document.getElementById('mobile-drawer');
+  if (!drawer) return;
+
+  const input = drawer.querySelector('.navbar__search--drawer-input');
+  const animatedSpan = drawer.querySelector('.search-placeholder--drawer .animated');
+  const placeholder = drawer.querySelector('.search-placeholder--drawer');
+  
+  if (!input || !animatedSpan) return;
+
+  const terms = ['Kurtis', 'Sarees', 'Short Tops', 'Tube Tops', 'Suits', 'Dupatta'];
+  let index = 0;
+  let timeout;
+
+  function nextTerm() {
+    animatedSpan.classList.remove('fade-in');
+    animatedSpan.classList.add('fade-out');
+    
+    setTimeout(() => {
+      index = (index + 1) % terms.length;
+      animatedSpan.textContent = terms[index];
+      
+      animatedSpan.classList.remove('fade-out');
+      animatedSpan.classList.add('fade-in');
+      
+      setTimeout(() => animatedSpan.classList.remove('fade-in'), 400);
+      timeout = setTimeout(nextTerm, 3000);
+    }, 400);
+  }
+
+  // Start animation when drawer opens
+  const trigger = document.getElementById('mobile-menu-trigger');
+  trigger?.addEventListener('click', () => {
+    setTimeout(() => {
+      timeout = setTimeout(nextTerm, 2000);
+    }, 500);
+  });
+
+  // Stop when drawer closes
+  const closeBtn = document.getElementById('mobile-menu-close');
+  closeBtn?.addEventListener('click', () => {
+    clearTimeout(timeout);
+    index = 0;
+    animatedSpan.textContent = terms[0];
+    animatedSpan.classList.remove('fade-in', 'fade-out');
+  });
+
+  input.addEventListener('focus', () => clearTimeout(timeout));
+  input.addEventListener('blur', () => {
+    if (!input.value.trim()) timeout = setTimeout(nextTerm, 2000);
+  });
+  input.addEventListener('input', (e) => {
+    placeholder.style.opacity = e.target.value.length > 0 ? '0' : '1';
+  });
+})();
+
 
 // Desktop search animation
 (function() {
