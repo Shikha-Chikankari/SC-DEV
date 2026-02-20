@@ -468,6 +468,7 @@
         "slide_wVmBJL",
         "slide_ncWYJF"
       ],
+      "disabled": true,
       "name": "t:names.slideshow",
       "settings": {
         "icons_style": "arrows_large",
@@ -495,10 +496,14 @@
             "slide_1_enabled": true,
             "slide_1_image_desktop": "shopify://shop_images/Peach_blue.png",
             "slide_1_image_mobile": "shopify://shop_images/Untitled-2.png",
-            "slide_1_link": "",
+            "slide_1_link": "shopify://products/peach-noodle-strip-top",
             "slide_2_enabled": true,
+            "slide_2_image_desktop": "shopify://shop_images/Untitled-1.png",
+            "slide_2_image_mobile": "shopify://shop_images/Untitled-2_1.png",
             "slide_2_link": "",
             "slide_3_enabled": true,
+            "slide_3_image_desktop": "shopify://shop_images/Untitled-2_2.png",
+            "slide_3_image_mobile": "shopify://shop_images/MensKurtaPoster.png",
             "slide_3_link": "",
             "slide_4_enabled": false,
             "slide_4_link": "",
