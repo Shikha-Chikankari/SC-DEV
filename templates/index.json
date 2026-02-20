@@ -481,70 +481,35 @@
         "padding-block-end": 0
       }
     },
-    "17715236329be4a1ea": {
+    "17715576365ca8e1b3": {
       "type": "_blocks",
       "blocks": {
-        "ai_gen_block_02213f9_YbQpAe": {
-          "type": "ai_gen_block_02213f9",
+        "ai_gen_block_6ac5591_nKmDqb": {
+          "type": "ai_gen_block_6ac5591",
           "settings": {
             "autoplay": true,
-            "autoplay_speed": 5,
-            "show_arrows": true,
-            "show_dots": true,
-            "desktop_height": 400,
-            "mobile_height": 200,
-            "overlay_color": "#000000",
-            "overlay_opacity": 0,
-            "text_color": "#ffffff",
-            "title_size": 48,
-            "description_size": 18,
-            "arrow_background": "#ffffff",
-            "arrow_hover_background": "#f5f5f5",
-            "arrow_color": "#000000",
+            "autoplay_interval": 5,
+            "aspect_ratio_desktop": 40,
+            "aspect_ratio_mobile": 125,
             "dot_color": "#ffffff",
             "slide_1_enabled": true,
-            "slide_1_image": "shopify://shop_images/Peach_blue.png",
-            "slide_1_title": "",
-            "slide_1_description": "",
-            "slide_1_link_type": "product",
-            "slide_1_collection": "",
-            "slide_1_product": "peach-noodle-strip-top",
-            "slide_1_url": "",
+            "slide_1_image_desktop": "shopify://shop_images/Peach_blue.png",
+            "slide_1_image_mobile": "shopify://shop_images/Untitled-2.png",
+            "slide_1_link": "",
             "slide_2_enabled": true,
-            "slide_2_image": "shopify://shop_images/Banner1_2026_V2.png",
-            "slide_2_title": "",
-            "slide_2_description": "",
-            "slide_2_link_type": "none",
-            "slide_2_collection": "",
-            "slide_2_product": "",
-            "slide_2_url": "",
+            "slide_2_link": "",
             "slide_3_enabled": true,
-            "slide_3_title": "Special offers",
-            "slide_3_description": "Limited time deals",
-            "slide_3_link_type": "none",
-            "slide_3_collection": "",
-            "slide_3_product": "",
-            "slide_3_url": "",
+            "slide_3_link": "",
             "slide_4_enabled": false,
-            "slide_4_title": "",
-            "slide_4_description": "",
-            "slide_4_link_type": "none",
-            "slide_4_collection": "",
-            "slide_4_product": "",
-            "slide_4_url": "",
+            "slide_4_link": "",
             "slide_5_enabled": false,
-            "slide_5_title": "",
-            "slide_5_description": "",
-            "slide_5_link_type": "none",
-            "slide_5_collection": "",
-            "slide_5_product": "",
-            "slide_5_url": ""
+            "slide_5_link": ""
           },
           "blocks": {}
         }
       },
       "block_order": [
-        "ai_gen_block_02213f9_YbQpAe"
+        "ai_gen_block_6ac5591_nKmDqb"
       ],
       "settings": {
         "content_direction": "column",
@@ -1497,7 +1462,7 @@
   },
   "order": [
     "slideshow_kWkw8n",
-    "17715236329be4a1ea",
+    "17715576365ca8e1b3",
     "17621515165fe6b4f9",
     "collection_list_FFV7jq",
     "17708607347f0693fe",
