@@ -468,6 +468,7 @@
         "slide_wVmBJL",
         "slide_ncWYJF"
       ],
+      "disabled": true,
       "name": "t:names.slideshow",
       "settings": {
         "icons_style": "arrows_large",
@@ -477,6 +478,70 @@
         "autoplay_speed": 4,
         "section_width": "full-width",
         "slide_height": "small",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
+    "17715576365ca8e1b3": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_6ac5591_nKmDqb": {
+          "type": "ai_gen_block_6ac5591",
+          "settings": {
+            "autoplay": true,
+            "autoplay_interval": 5,
+            "aspect_ratio_desktop": 40,
+            "aspect_ratio_mobile": 125,
+            "dot_color": "#ffffff",
+            "slide_1_enabled": true,
+            "slide_1_image_desktop": "shopify://shop_images/Untitled-2_4.png",
+            "slide_1_image_mobile": "shopify://shop_images/Untitled_20.png",
+            "slide_1_link": "shopify://products/turquoise-blue-mulmul-short-top",
+            "slide_2_enabled": true,
+            "slide_2_image_desktop": "shopify://shop_images/Untitled-2_2.png",
+            "slide_2_image_mobile": "shopify://shop_images/MensKurtaPoster.png",
+            "slide_2_link": "shopify://products/mens-short-kurta-sage-beige",
+            "slide_3_enabled": true,
+            "slide_3_image_desktop": "shopify://shop_images/Peach_blue.png",
+            "slide_3_image_mobile": "shopify://shop_images/Untitled-2.png",
+            "slide_3_link": "shopify://products/peach-noodle-strip-top",
+            "slide_4_enabled": true,
+            "slide_4_image_desktop": "shopify://shop_images/Untitled-1.png",
+            "slide_4_image_mobile": "shopify://shop_images/Untitled-2_1.png",
+            "slide_4_link": "shopify://products/canary-yellow-noodle-strip-top",
+            "slide_5_enabled": false,
+            "slide_5_link": ""
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_6ac5591_nKmDqb"
+      ],
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 12,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
         "padding-block-start": 0,
         "padding-block-end": 0
       }
@@ -625,512 +690,336 @@
         "padding-block-end": 50
       }
     },
-    "featured_product_pW7dEU": {
-      "type": "featured-product",
+    "17708607347f0693fe": {
+      "type": "_blocks",
       "blocks": {
-        "media": {
-          "type": "_media-without-appearance",
-          "name": "t:names.product_media",
-          "static": true,
+        "ai_gen_block_d1660e3_3ccDyD": {
+          "type": "ai_gen_block_d1660e3",
           "settings": {
-            "media_type": "video",
-            "image": "shopify://shop_images/Generated_Image_September_15_2025_-_3_02PM.png",
-            "link": "",
-            "video": "shopify://files/videos/be94964f-5c37-481c-a1d9-e64287c3d938.mp4",
-            "video_loop": true,
-            "video_autoplay": true,
-            "image_position": "cover",
-            "video_position": "contain"
+            "title": "Shop by mood",
+            "subtitle": "Find the perfect collection for your vibe",
+            "cta_text": "Explore",
+            "desktop_width_percent": 100,
+            "section_padding": 45,
+            "section_background_image": "shopify://shop_images/Untitled_Project_-_Artboard_12_2.png",
+            "section_background_video": "shopify://files/videos/Untitled.mp4",
+            "section_background": "#f9f9f9",
+            "section_background_overlay": "#000000",
+            "section_background_overlay_opacity": 0,
+            "title_size": 40,
+            "title_case": "uppercase",
+            "subtitle_size": 16,
+            "mood_text_size": 24,
+            "mood_text_case": "uppercase",
+            "description_size": 14,
+            "title_color": "#000000",
+            "subtitle_color": "#000000",
+            "card_background": "#ffffff",
+            "mood_text_color": "#ffffff",
+            "description_color": "#333333",
+            "cta_color": "#c15045",
+            "cta_hover_color": "#000000",
+            "card_border_radius": 24,
+            "card_border_width": 1,
+            "card_border_color": "#e0e0e0",
+            "card_gap": 30,
+            "card_content_padding": 26,
+            "card_image_aspect_ratio": 115,
+            "card_shadow_x": 0,
+            "card_shadow_y": 4,
+            "card_shadow_blur": 20,
+            "card_shadow_opacity": 10,
+            "card_hover_lift": 8,
+            "card_hover_scale": 102,
+            "image_hover_scale": 105,
+            "card_hover_shadow_x": 0,
+            "card_hover_shadow_y": 12,
+            "card_hover_shadow_blur": 40,
+            "card_hover_shadow_opacity": 20,
+            "overlay_opacity": 60,
+            "nav_button_background": "#ffffff",
+            "nav_button_color": "#000000",
+            "nav_button_hover_background": "#f4f4f4",
+            "dot_color": "#d2d2d2",
+            "dot_active_color": "#ffffff",
+            "mood_1_enabled": true,
+            "mood_1_name": "9 to 5 vibes",
+            "mood_1_description": "Soft, comfortable pieces for relaxing at Office",
+            "mood_1_image": "shopify://shop_images/Location_a_modern_2k_202601221205.jpg",
+            "mood_1_collection": "",
+            "mood_2_enabled": true,
+            "mood_2_name": "Bold & confident",
+            "mood_2_description": "Statement pieces that make you stand out",
+            "mood_2_image": "shopify://shop_images/Location_a_cafe_2k_202601221221.jpg",
+            "mood_2_collection": "",
+            "mood_3_enabled": true,
+            "mood_3_name": "Minimalist",
+            "mood_3_description": "Clean lines and timeless elegance",
+            "mood_3_image": "shopify://shop_images/Location_needs_depth_2k_202601221208.jpg",
+            "mood_3_collection": "",
+            "mood_4_enabled": true,
+            "mood_4_name": "Vacation ready",
+            "mood_4_description": "Durable and stylish for your next destination",
+            "mood_4_image": "shopify://shop_images/Location_outdoors_greenery_2k_202601221225.jpg",
+            "mood_4_collection": "",
+            "mood_5_enabled": true,
+            "mood_5_name": "Effortless Cool",
+            "mood_5_description": "those days when you want to look like you didn't try too hard, but you still look better than everyone else",
+            "mood_5_image": "shopify://shop_images/Effortless_cool_men_2k_202602131201.jpg",
+            "mood_5_collection": "",
+            "mood_6_enabled": false,
+            "mood_6_name": "Sporty active",
+            "mood_6_description": "Performance wear for your active lifestyle",
+            "mood_6_collection": ""
           },
           "blocks": {}
-        },
-        "featured-product": {
-          "type": "_featured-product",
-          "name": "t:names.product",
-          "static": true,
-          "settings": {},
-          "blocks": {
-            "featured-product-title": {
-              "type": "product-title",
-              "name": "t:names.title",
-              "static": true,
-              "settings": {
-                "width": "100%",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "h5",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "featured-product-price": {
-              "type": "_featured-product-price",
-              "name": "t:names.price",
-              "static": true,
-              "settings": {
-                "show_sale_price_first": true,
-                "type_preset": ""
-              },
-              "blocks": {}
-            },
-            "featured-product-gallery": {
-              "type": "_featured-product-gallery",
-              "name": "t:names.image",
-              "static": true,
-              "settings": {
-                "image_ratio": "adapt",
-                "constrain_to_viewport": "contain"
-              },
-              "blocks": {}
-            },
-            "featured-product-swatches": {
-              "type": "swatches",
-              "name": "t:names.swatches",
-              "static": true,
-              "settings": {
-                "product_swatches_alignment": "flex-start",
-                "product_swatches_alignment_mobile": "flex-start",
-                "hide_padding": true,
-                "product_swatches_padding_top": 4,
-                "product_swatches_padding_bottom": 0,
-                "product_swatches_padding_left": 0,
-                "product_swatches_padding_right": 0
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": []
-        }
-      },
-      "name": "t:names.featured_product",
-      "settings": {
-        "product": "deep-wine-chikankari-kurti",
-        "layout": "media-left",
-        "color_scheme": "scheme-4",
-        "padding-block-start": 0,
-        "padding-block-end": 0
-      }
-    },
-    "product_list_8kR3Hb": {
-      "type": "product-list",
-      "blocks": {
-        "ai_gen_block_e97936e_7Gd3QY": {
-          "type": "ai_gen_block_e97936e",
-          "settings": {
-            "heading_text": "Shop for Comfort",
-            "color_scheme": "scheme-1",
-            "heading_size_desktop": 32,
-            "heading_size_mobile": 28,
-            "text_alignment": "center",
-            "padding_top": 40,
-            "padding_bottom": 20,
-            "spacing_below": 32
-          },
-          "blocks": {}
-        },
-        "static-header": {
-          "type": "_product-list-content",
-          "name": "t:names.header",
-          "static": true,
-          "settings": {
-            "content_direction": "row",
-            "vertical_on_mobile": false,
-            "horizontal_alignment": "space-between",
-            "vertical_alignment": "flex-end",
-            "align_baseline": true,
-            "horizontal_alignment_flex_direction_column": "flex-start",
-            "vertical_alignment_flex_direction_column": "center",
-            "gap": 12,
-            "width": "fill",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "custom_height": 100,
-            "inherit_color_scheme": true,
-            "color_scheme": "",
-            "background_media": "none",
-            "video_position": "cover",
-            "background_image_position": "cover",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "product_list_text_jWLgBb": {
-              "type": "_product-list-text",
-              "name": "t:names.collection_title",
-              "settings": {
-                "text": "<h3>{{ closest.collection.title }} </h3>",
-                "width": "fit-content",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "h2",
-                "font": "var(--font-body--family)",
-                "font_size": "",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "collection_link_button_WJVkjn": {
-              "type": "_product-list-button",
-              "name": "t:names.product_list_button",
-              "settings": {
-                "label": "More...",
-                "open_in_new_tab": false,
-                "style_class": "link",
-                "width": "fit-content",
-                "custom_width": 21,
-                "width_mobile": "fit-content",
-                "custom_width_mobile": 50
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "product_list_text_jWLgBb",
-            "collection_link_button_WJVkjn"
-          ]
-        },
-        "static-product-card": {
-          "type": "_product-card",
-          "name": "t:names.product_card",
-          "static": true,
-          "settings": {
-            "product_card_gap": 8,
-            "inherit_color_scheme": true,
-            "color_scheme": "",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "product_card_gallery_qj3nbW": {
-              "type": "_product-card-gallery",
-              "name": "t:names.product_card_media",
-              "settings": {
-                "image_ratio": "portrait",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "group_UydKWg": {
-              "type": "_product-card-group",
-              "settings": {
-                "link": "",
-                "open_in_new_tab": false,
-                "content_direction": "column",
-                "vertical_on_mobile": false,
-                "horizontal_alignment": "space-between",
-                "vertical_alignment": "flex-start",
-                "align_baseline": false,
-                "horizontal_alignment_flex_direction_column": "flex-start",
-                "vertical_alignment_flex_direction_column": "flex-start",
-                "gap": 4,
-                "width": "fill",
-                "custom_width": 35,
-                "width_mobile": "fill",
-                "custom_width_mobile": 43,
-                "height": "fit",
-                "custom_height": 100,
-                "inherit_color_scheme": true,
-                "color_scheme": "",
-                "background_media": "none",
-                "video_position": "cover",
-                "background_image_position": "cover",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_radius": 0,
-                "toggle_overlay": false,
-                "overlay_color": "#00000026",
-                "overlay_style": "solid",
-                "gradient_direction": "to top",
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {
-                "group_E8xhK7": {
-                  "type": "_product-card-group",
-                  "name": "t:names.group",
-                  "settings": {
-                    "link": "",
-                    "open_in_new_tab": false,
-                    "content_direction": "column",
-                    "vertical_on_mobile": true,
-                    "horizontal_alignment": "flex-start",
-                    "vertical_alignment": "center",
-                    "align_baseline": false,
-                    "horizontal_alignment_flex_direction_column": "flex-start",
-                    "vertical_alignment_flex_direction_column": "flex-start",
-                    "gap": 4,
-                    "width": "fill",
-                    "custom_width": 40,
-                    "width_mobile": "fit-content",
-                    "custom_width_mobile": 20,
-                    "height": "fit",
-                    "custom_height": 100,
-                    "inherit_color_scheme": true,
-                    "color_scheme": "",
-                    "background_media": "none",
-                    "video_position": "cover",
-                    "background_image_position": "cover",
-                    "border": "none",
-                    "border_width": 1,
-                    "border_opacity": 100,
-                    "border_radius": 0,
-                    "toggle_overlay": false,
-                    "overlay_color": "#00000026",
-                    "overlay_style": "solid",
-                    "gradient_direction": "to top",
-                    "padding-block-start": 8,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0
-                  },
-                  "blocks": {
-                    "product_title_nKpHR3": {
-                      "type": "product-title",
-                      "name": "t:names.product_title",
-                      "settings": {
-                        "width": "100%",
-                        "max_width": "narrow",
-                        "alignment": "left",
-                        "type_preset": "h5",
-                        "font": "var(--font-body--family)",
-                        "font_size": "1rem",
-                        "line_height": "normal",
-                        "letter_spacing": "normal",
-                        "case": "none",
-                        "wrap": "pretty",
-                        "color": "var(--color-foreground)",
-                        "background": false,
-                        "background_color": "#00000026",
-                        "corner_radius": 0,
-                        "padding-block-start": 0,
-                        "padding-block-end": 0,
-                        "padding-inline-start": 0,
-                        "padding-inline-end": 0
-                      },
-                      "blocks": {}
-                    },
-                    "price_MEV7Py": {
-                      "type": "price",
-                      "settings": {
-                        "show_sale_price_first": true,
-                        "show_installments": false,
-                        "show_tax_info": false,
-                        "type_preset": "custom",
-                        "width": "100%",
-                        "alignment": "left",
-                        "font": "var(--font-body--family)",
-                        "font_size": "0.75rem",
-                        "line_height": "tight",
-                        "letter_spacing": "normal",
-                        "case": "none",
-                        "color": "var(--color-foreground)",
-                        "padding-block-start": 7,
-                        "padding-block-end": 0,
-                        "padding-inline-start": 0,
-                        "padding-inline-end": 0
-                      },
-                      "blocks": {}
-                    }
-                  },
-                  "block_order": [
-                    "product_title_nKpHR3",
-                    "price_MEV7Py"
-                  ]
-                },
-                "swatches_dkNy8U": {
-                  "type": "swatches",
-                  "settings": {
-                    "product_swatches_alignment": "flex-start",
-                    "product_swatches_alignment_mobile": "flex-start",
-                    "hide_padding": false,
-                    "product_swatches_padding_top": 4,
-                    "product_swatches_padding_bottom": 10,
-                    "product_swatches_padding_left": 0,
-                    "product_swatches_padding_right": 0
-                  },
-                  "blocks": {}
-                }
-              },
-              "block_order": [
-                "group_E8xhK7",
-                "swatches_dkNy8U"
-              ]
-            }
-          },
-          "block_order": [
-            "product_card_gallery_qj3nbW",
-            "group_UydKWg"
-          ]
         }
       },
       "block_order": [
-        "ai_gen_block_e97936e_7Gd3QY"
+        "ai_gen_block_d1660e3_3ccDyD"
       ],
-      "name": "Featured collection",
       "settings": {
-        "collection": "mulmul-chikankari-kurtis-soft-cotton-lucknowi-collection",
-        "layout_type": "grid",
-        "carousel_on_mobile": false,
-        "max_products": 5,
-        "columns": 5,
-        "mobile_columns": "2",
-        "mobile_card_size": "60cqw",
-        "columns_gap": 12,
-        "rows_gap": 36,
-        "icons_style": "arrow",
-        "icons_shape": "none",
-        "section_width": "page-width",
+        "content_direction": "row",
+        "vertical_on_mobile": true,
         "horizontal_alignment": "flex-start",
-        "gap": 24,
-        "color_scheme": "scheme-1",
-        "padding-block-start": 45,
-        "padding-block-end": 18
-      }
-    },
-    "featured_product_rKUqUR": {
-      "type": "featured-product",
-      "blocks": {
-        "media": {
-          "type": "_media-without-appearance",
-          "name": "t:names.product_media",
-          "static": true,
-          "settings": {
-            "media_type": "video",
-            "link": "",
-            "video": "shopify://files/videos/Generate_a_highquality_202511061600_mysaz.mp4",
-            "video_loop": true,
-            "video_autoplay": true,
-            "image_position": "cover",
-            "video_position": "cover"
-          },
-          "blocks": {}
-        },
-        "featured-product": {
-          "type": "_featured-product",
-          "name": "t:names.product",
-          "static": true,
-          "settings": {},
-          "blocks": {
-            "featured-product-title": {
-              "type": "product-title",
-              "name": "t:names.title",
-              "static": true,
-              "settings": {
-                "width": "100%",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "h5",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "featured-product-price": {
-              "type": "_featured-product-price",
-              "name": "t:names.price",
-              "static": true,
-              "settings": {
-                "show_sale_price_first": true,
-                "type_preset": ""
-              },
-              "blocks": {}
-            },
-            "featured-product-gallery": {
-              "type": "_featured-product-gallery",
-              "name": "t:names.image",
-              "static": true,
-              "settings": {
-                "image_ratio": "adapt",
-                "constrain_to_viewport": "contain"
-              },
-              "blocks": {}
-            },
-            "featured-product-swatches": {
-              "type": "swatches",
-              "name": "t:names.swatches",
-              "static": true,
-              "settings": {
-                "product_swatches_alignment": "flex-start",
-                "product_swatches_alignment_mobile": "flex-start",
-                "hide_padding": true,
-                "product_swatches_padding_top": 4,
-                "product_swatches_padding_bottom": 0,
-                "product_swatches_padding_left": 0,
-                "product_swatches_padding_right": 0
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": []
-        }
-      },
-      "name": "t:names.featured_product",
-      "settings": {
-        "product": "dhoti-shalwar-white",
-        "layout": "media-left",
-        "color_scheme": "scheme-1",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 13,
+        "section_width": "full-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 24,
+        "toggle_overlay": true,
+        "overlay_color": "#e1e1e1",
+        "overlay_style": "gradient",
+        "gradient_direction": "to bottom",
         "padding-block-start": 0,
         "padding-block-end": 0
+      }
+    },
+    "spotlight_collection_carousel_PAwDMM": {
+      "type": "spotlight-collection-carousel",
+      "name": "Spotlight Carousel",
+      "settings": {
+        "show_sale_badge": true,
+        "badge_text": "FLASH SALE",
+        "title": "Final Few Left",
+        "subtitle": "Classic designs, now in their final numbers",
+        "collection": "best-selling-chikankari-kurtis-top-rated-lucknowi-designs",
+        "product_limit": 6,
+        "background_image": "shopify://shop_images/A_closeup_topdown_2k_202601201617.jpg",
+        "background_video": "shopify://files/videos/Untitled (2).mp4"
+      }
+    },
+    "177096000792c32930": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_4b96935_VEXADw": {
+          "type": "ai_gen_block_4b96935",
+          "settings": {
+            "collection": "mulmul-chikankari-kurtis-soft-cotton-lucknowi-collection",
+            "products_limit": 8,
+            "title": "Mulmul that you will love",
+            "title_alignment": "center",
+            "title_transform": "uppercase",
+            "title_size_mobile": 24,
+            "title_size_desktop": 48,
+            "title_color": "#000000",
+            "section_background_type": "video",
+            "section_background_video": "shopify://files/videos/Untitled.mp4",
+            "background_opacity": 100,
+            "show_section_overlay": true,
+            "overlay_color": "#000000",
+            "overlay_opacity": 0,
+            "card_background_type": "none",
+            "card_background_opacity": 20,
+            "show_card_overlay": true,
+            "card_overlay_color": "#000000",
+            "card_overlay_opacity": 0,
+            "card_width_mobile": 250,
+            "card_width_desktop": 320,
+            "card_gap": 16,
+            "card_gap_desktop": 24,
+            "card_background": "#ffffff",
+            "card_border_radius": 12,
+            "card_shadow_x": 0,
+            "card_shadow_y": 4,
+            "card_shadow_blur": 16,
+            "card_shadow_color": "#00000026",
+            "product_title_size": 16,
+            "product_title_color": "#000000",
+            "price_size": 18,
+            "price_color": "#000000",
+            "compare_price_size": 14,
+            "compare_price_color": "#666666",
+            "show_discount_badge": true,
+            "discount_badge_bg": "#c15045",
+            "discount_badge_color": "#ffffff",
+            "discount_badge_size": 12,
+            "discount_badge_radius": 4,
+            "scrollbar_color": "#cccccc",
+            "section_padding_mobile": 40,
+            "section_padding_desktop": 80
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_4b96935_VEXADw"
+      ],
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 12,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "",
+        "background_media": "video",
+        "video": "shopify://files/videos/Untitled (3).mp4",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 20,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
+    "featured_collection_grid_ACcp6X": {
+      "type": "featured-collection-grid",
+      "name": "Featured Collection Grid",
+      "settings": {
+        "featured_collection": "chikankari-mulmul-short-tops",
+        "featured_image": "shopify://shop_images/Frame_31_3.png",
+        "featured_title": "Crafted for Workdays That Turn Heads",
+        "background_image": "shopify://shop_images/Untitled_18.png"
+      }
+    },
+    "177094944163247e97": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_238aeb7_PmjYBD": {
+          "type": "ai_gen_block_238aeb7",
+          "settings": {
+            "text_content": "<h4><strong>A Grid for You</strong></h4>",
+            "text_color": "#000000",
+            "font_size": 32,
+            "line_height": "1",
+            "text_alignment": "center",
+            "animation_type": "scale_in",
+            "trigger_type": "on_scroll",
+            "animation_duration": 1,
+            "animation_delay": 0,
+            "fade_distance": 30,
+            "slide_distance": 50,
+            "scale_start": 0.5,
+            "desktop_width_percent": 100,
+            "padding_top": 40,
+            "padding_bottom": 40,
+            "padding_horizontal": 20
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_238aeb7_PmjYBD"
+      ],
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 12,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
+    "bento_grid_section_YhfVwH": {
+      "type": "bento-grid-section",
+      "name": "Bento Grid",
+      "settings": {
+        "box1_image": "shopify://shop_images/GeneratedImageSeptember20_2025-2_49PM_33161ffd-9a8e-4cac-b9dd-598c0e25dda4.png",
+        "box1_title": "Short Top",
+        "box1_subtitle": "Collection of Short Tops",
+        "box1_link": "shopify://products/turquoise-blue-mulmul-short-top",
+        "box1_dark_text": true,
+        "box2_image": "shopify://shop_images/Female_model_wearing_2k_202601201133.jpg",
+        "box2_title": "Warming Whites",
+        "box2_subtitle": "",
+        "box2_link": "",
+        "box2_dark_text": false,
+        "box3_title": "STEALS UNDER ₹999",
+        "box3_link": "shopify://collections/steal-under-999",
+        "box4_title": "READY TO SHIP",
+        "box4_link": "",
+        "box5_image": "shopify://shop_images/GeneratedImageNovember03_2025-3_45PM.jpg",
+        "box5_video": "shopify://files/videos/Generate_a_highquality_202511061600_mysaz.mp4",
+        "box5_title": "Dhoti Shalwar",
+        "box5_subtitle": "",
+        "box5_link": "shopify://products/dhoti-shalwar-white",
+        "box5_dark_text": true,
+        "box6_image": "shopify://shop_images/Chiikankari_coord_sets_2k_202601201120.jpg",
+        "box6_title": "FOr MENS",
+        "box6_subtitle": "",
+        "box6_link_type": "collection",
+        "box6_collection": "mens-chikankari-kurtas-authentic-lucknowi-kurta-collection",
+        "box6_product": "",
+        "box6_dark_text": true,
+        "box7_image": "shopify://shop_images/Sample2.png",
+        "box7_title": "",
+        "box7_subtitle": "",
+        "box7_link_type": "collection",
+        "box7_collection": "",
+        "box7_product": "yellow-chikankari-kurti-mulmul-short-top",
+        "box7_dark_text": false,
+        "box8_image": "shopify://shop_images/Screenshot_2026-02-11_at_09.58.30.png",
+        "box8_title": "Influencer MArket",
+        "box8_subtitle": "",
+        "box8_link": "",
+        "box8_dark_text": true,
+        "box9_image": "shopify://shop_images/A_high_quality_2k_202601211101.jpg",
+        "box9_title": "Made in Lucknow.",
+        "box9_subtitle": "0% Machine Work.",
+        "box9_link": "",
+        "box9_dark_text": false
       }
     },
     "collection_list_iAQiBH": {
@@ -1218,6 +1107,7 @@
       "block_order": [
         "ai_gen_block_e97936e_gWxeUN"
       ],
+      "disabled": true,
       "name": "Collection list: Carousel",
       "settings": {
         "collection_list": [
@@ -1579,11 +1469,15 @@
   },
   "order": [
     "slideshow_kWkw8n",
+    "17715576365ca8e1b3",
     "17621515165fe6b4f9",
     "collection_list_FFV7jq",
-    "featured_product_pW7dEU",
-    "product_list_8kR3Hb",
-    "featured_product_rKUqUR",
+    "17708607347f0693fe",
+    "spotlight_collection_carousel_PAwDMM",
+    "177096000792c32930",
+    "featured_collection_grid_ACcp6X",
+    "177094944163247e97",
+    "bento_grid_section_YhfVwH",
     "collection_list_iAQiBH",
     "marquee_y8LEWQ",
     "section_ppbEnA"

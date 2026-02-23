@@ -1,0 +1,701 @@
+{%- comment -%}
+  Featured Collection Grid - Left: Feature Card, Right: Scrollable Window with Background
+{%- endcomment -%}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    --grid-gap: 24px;
+    --card-radius: 24px;
+    margin: 0;
+    display: block;
+  }
+
+  .featured-collection-grid {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 60px 20px;
+    overflow: hidden;
+  }
+
+  .featured-collection-grid__container {
+    display: grid;
+    grid-template-columns: 38% 1fr;
+    gap: var(--grid-gap);
+    align-items: start;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  /* LEFT SIDE - Featured Collection Card (Vertical Portrait) */
+  .featured-card {
+    position: relative;
+    border-radius: var(--card-radius);
+    overflow: hidden;
+    height: 750px;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background: #f5f5f5;
+    width: 100%;
+  }
+
+  .featured-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+  }
+
+  .featured-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .featured-card__badge {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: rgba(255, 255, 255, 0.20); /* Changed from 0.95 to 0.75 */
+  backdrop-filter: blur(12px); /* Increased blur for better readability */
+  -webkit-backdrop-filter: blur(12px);
+  padding: 8px 16px;
+  border-radius: 24px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  z-index: 2;
+}
+
+  .featured-card__badge-icon {
+    font-size: 16px;
+  }
+
+  .featured-card__badge-text {
+  font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a1a1a; /* Dark text stays visible */
+  letter-spacing: -0.01em;
+}
+
+  /* Bottom Overlay with Gradual Gradient */
+  /* Bottom Overlay with Super Smooth Gradient - More Natural */
+.featured-card__overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 40px 32px;
+  background: linear-gradient(to top, 
+   rgba(0, 0, 0, 0.65) 0%, 
+    rgba(0, 0, 0, 0.48) 15%,
+    rgba(0, 0, 0, 0.32) 30%,
+    rgba(0, 0, 0, 0.18) 45%,
+    rgba(0, 0, 0, 0.08) 60%,
+    rgba(0, 0, 0, 0.02) 75%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  z-index: 1;
+}
+
+  .featured-card__text {
+    font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 26px;
+    font-weight: 600;
+    color: #ffffff;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .featured-card__arrow {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+  }
+
+  .featured-card:hover .featured-card__arrow {
+    background: rgba(255, 255, 255, 0.35);
+    transform: scale(1.08);
+  }
+
+  .featured-card__arrow svg {
+    width: 20px;
+    height: 20px;
+    stroke: white;
+    stroke-width: 2.5;
+  }
+
+  /* RIGHT SIDE - Background Window Container */
+  .product-window {
+    position: relative;
+    border-radius: var(--card-radius);
+    overflow: hidden;
+    height: 750px;
+    background: #e8f4f8;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+    width: 100%;
+    min-width: 0;
+  }
+
+  .product-window__background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+  }
+
+  .product-window__content {
+    position: relative;
+    z-index: 1;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 32px;
+    overflow: hidden;
+  }
+
+  /* Horizontal Scrolling Product Cards Inside Window */
+  .product-slider {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding: 8px 0;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .product-slider::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  .product-slider::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+    backdrop-filter: blur(10px);
+  }
+
+  .product-slider::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+  }
+
+  .product-slider::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.5);
+  }
+
+  /* Product Card - Figma Style Match */
+/* Product Card - Figma Style Match */
+/* Product Card - Figma Style Match */
+.product-card {
+  background: #E8E8E8;
+  padding: 16px;
+  border-radius: 32px;
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  min-width: 300px;
+  flex-shrink: 0;
+  scroll-snap-align: start;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+}
+
+.product-card__image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 240px;
+  background: #F5F5F5;
+  overflow: hidden;
+  flex-shrink: 0;
+  border-radius: 24px;
+  margin-bottom: 10px; /* REMOVED GAP - was 10px */
+  z-index: 1;
+}
+
+.product-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.product-card__info {
+  background: white;
+  border-radius: 20px;
+  padding: 14px 16px;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 5px; /* Space between title and bottom row */
+  z-index: 0;
+}
+
+.product-card__title {
+  font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #1a1a1a;
+  letter-spacing: -0.01em;
+  margin: 0;
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.product-card__footer {
+  display: flex;
+  align-items: center; /* Vertically center subtitle and price */
+  justify-content: space-between; /* Subtitle left, price right */
+  gap: 12px;
+}
+
+.product-card__subtitle {
+  font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: #888;
+  margin: 0;
+  flex-shrink: 0; /* Prevent shrinking */
+}
+
+.product-card__price {
+  background: #ADADAD;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 20px;
+  font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  text-align: center;
+  flex-shrink: 0; /* Prevent shrinking */
+}
+.product-card__rotator-container {
+  display: flex !important;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 5px; 
+  height: 20px !important;
+  max-height: 20px !important;
+  overflow: hidden !important;
+  position: relative;
+  flex: 1;
+}
+
+.product-card__rotator-label {
+  font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 12px;
+  color: #888; /* Grey color for "Perfect for" */
+  white-space: nowrap;
+  line-height: 20px;
+}
+
+/* The Moving List */
+.product-card__rotator-window {
+  display: flex;
+  flex-direction: column;
+  animation: slideWords 6s infinite ease-in-out;
+  margin-top: 0; /* Reset margins */
+}
+
+/* The Individual Words */
+.product-card__rotator-word {
+  height: 20px !important;      /* Must match container height */
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  color: #a14e4e; /* Your reddish accent color from the screenshot */
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 12px;
+}
+
+/* Animation Logic */
+@keyframes slideWords {
+  0%, 25% { transform: translateY(0px); }      /* Word 1 */
+  33%, 58% { transform: translateY(-20px); }   /* Word 2 */
+  66%, 91% { transform: translateY(-40px); }   /* Word 3 */
+  100% { transform: translateY(0px); }         /* Back to start */
+}
+
+
+.product-card__buy-btn {
+  background: #1a1a1a;
+  color: white;
+   padding: 8px 16px;
+  border-radius: 20px;
+  font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  border: none;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.product-card__buy-btn:hover {
+  background: #333;
+  transform: scale(1.05);
+}
+
+  /* MOBILE RESPONSIVE */
+  @media (max-width: 1200px) {
+  .featured-collection-grid__container {
+    grid-template-columns: 35% 1fr;
+  }
+
+  .product-card {
+    width: 280px;
+    min-width: 280px;
+  }
+
+  .product-card__image-wrapper {
+    height: 220px;
+  }
+}
+@media (max-width: 968px) {
+  .featured-collection-grid__container {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .featured-card {
+    height: 500px;
+  }
+
+  .product-window {
+    height: 500px;
+    min-height: 500px;
+  }
+
+  .product-window__content {
+    padding: 24px 16px;
+  }
+
+  .product-slider {
+    padding: 8px 0;
+  }
+
+  .product-card {
+    width: 280px;
+    min-width: 280px;
+  }
+
+  .product-card__image-wrapper {
+    height: 220px;
+  }
+}
+
+@media (max-width: 768px) {
+  .featured-collection-grid {
+    padding: 40px 16px;
+  }
+
+  .featured-card {
+    height: 450px;
+  }
+
+  .featured-card__badge {
+    top: 16px;
+    left: 16px;
+    padding: 6px 14px;
+  }
+
+  .featured-card__badge-icon {
+    font-size: 14px;
+  }
+
+  .featured-card__badge-text {
+    font-size: 13px;
+  }
+
+  .featured-card__overlay {
+    padding: 28px 24px;
+  }
+
+  .featured-card__text {
+    font-size: 20px;
+  }
+
+  .featured-card__arrow {
+    width: 40px;
+    height: 40px;
+  }
+
+  .featured-card__arrow svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .product-window {
+    height: 450px;
+    min-height: 450px;
+  }
+
+  .product-window__content {
+    padding: 20px 16px;
+  }
+
+  .product-slider {
+    padding: 8px 0;
+  }
+
+  .product-card {
+    width: 270px;
+    min-width: 270px;
+    padding: 14px;
+  }
+
+  .product-card__image-wrapper {
+    height: 200px;
+  }
+
+  .product-card__title {
+    font-size: 15px;
+  }
+
+  .product-card__subtitle {
+    font-size: 12px;
+  }
+
+  .product-card__buy-btn,
+  .product-card__price {
+    font-size: 13px;
+    padding: 9px 16px;
+  }
+  @media (max-width: 480px) {
+  .featured-collection-grid {
+    padding: 32px 16px;
+  }
+
+  .featured-card {
+    height: 400px;
+  }
+
+  .featured-card__badge {
+    top: 12px;
+    left: 12px;
+    padding: 6px 12px;
+  }
+
+  .featured-card__overlay {
+    padding: 24px 20px;
+  }
+
+  .featured-card__text {
+    font-size: 18px;
+  }
+
+  .featured-card__arrow {
+    width: 36px;
+    height: 36px;
+  }
+
+  .product-window {
+    height: 420px;
+    min-height: 420px;
+  }
+
+  .product-window__content {
+    padding: 20px 16px;
+  }
+
+  .product-slider {
+    padding: 8px 0;
+  }
+
+  .product-card {
+    width: 260px;
+    min-width: 260px;
+    padding: 12px;
+  }
+
+  .product-card__image-wrapper {
+    height: 190px;
+  }
+
+  .product-card__info {
+    padding: -2rem 16px 16px;
+  }
+
+  .product-card__title {
+    font-size: 14px;
+  }
+
+  .product-card__subtitle {
+    font-size: 11px;
+  }
+
+  .product-card__buy-btn,
+  .product-card__price {
+    font-size: 12px;
+    padding: 8px 14px;
+  }
+}
+/* The "Static" Text */
+
+
+  }
+{%- endstyle -%}
+
+<div class="featured-collection-grid">
+  <div class="featured-collection-grid__container">
+    
+    {%- comment -%} LEFT: Featured Collection Card {%- endcomment -%}
+    {%- if section.settings.featured_collection != blank -%}
+      <a href="{{ collections[section.settings.featured_collection].url }}" class="featured-card">
+        {%- if section.settings.featured_image != blank -%}
+          {{ section.settings.featured_image | image_url: width: 800 | image_tag: 
+             loading: 'lazy',
+             class: 'featured-card__image',
+             alt: section.settings.featured_title
+          }}
+        {%- else -%}
+          {{ 'collection-1' | placeholder_svg_tag: 'featured-card__image' }}
+        {%- endif -%}
+        
+        {%- comment -%} Top Rated Badge {%- endcomment -%}
+        <div class="featured-card__badge">
+          <span class="featured-card__badge-icon">⭐</span>
+          <span class="featured-card__badge-text">Top Rated</span>
+        </div>
+        
+        {%- comment -%} Bottom Overlay {%- endcomment -%}
+        <div class="featured-card__overlay">
+          <h2 class="featured-card__text">{{ section.settings.featured_title }}</h2>
+          <div class="featured-card__arrow">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+      </a>
+    {%- endif -%}
+
+    {%- comment -%} RIGHT: Product Window with Background {%- endcomment -%}
+    {%- comment -%} RIGHT: Product Window with Background {%- endcomment -%}
+{%- comment -%} RIGHT: Product Window with Background {%- endcomment -%}
+<div class="product-window">
+  {%- if section.settings.background_image != blank -%}
+    {{ section.settings.background_image | image_url: width: 1200 | image_tag:
+       loading: 'lazy',
+       class: 'product-window__background',
+       alt: 'Background'
+    }}
+  {%- endif -%}
+  
+  <div class="product-window__content">
+    <div class="product-slider">
+      {%- if section.settings.featured_collection != blank -%}
+        {%- assign collection = collections[section.settings.featured_collection] -%}
+        {%- for product in collection.products limit: 3 -%}
+          <a href="{{ product.url }}" class="product-card">
+  <div class="product-card__image-wrapper">
+    {%- if product.featured_image -%}
+      {{ product.featured_image | image_url: width: 600 | image_tag:
+         loading: 'lazy',
+         class: 'product-card__image',
+         alt: product.title
+      }}
+    {%- else -%}
+      {{ 'product-1' | placeholder_svg_tag: 'product-card__image' }}
+    {%- endif -%}
+  </div>
+  
+  <div class="product-card__info">
+    <h3 class="product-card__title">{{ product.title }}</h3>
+    
+    <div class="product-card__footer">
+      {%- comment -%} ROTATING SUBTITLE {%- endcomment -%}
+      <div class="product-card__rotator-container">
+        <span class="product-card__rotator-label">Perfect for</span>
+        <div class="product-card__rotator-window">
+          <span class="product-card__rotator-word">Office</span>
+          <span class="product-card__rotator-word">Dailies</span>
+          <span class="product-card__rotator-word">Casuals</span>
+        </div>
+      </div>
+
+      {%- comment -%} PRICE BUTTON (ONLY ONCE) {%- endcomment -%}
+      <span class="product-card__price">{{ product.price | money }}</span>
+    </div>
+  </div>
+</a>
+
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Featured Collection Grid",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Featured Collection (Left Card)"
+    },
+    {
+      "type": "collection",
+      "id": "featured_collection",
+      "label": "Select Collection",
+      "info": "Products from this collection will appear on the right side"
+    },
+    {
+      "type": "image_picker",
+      "id": "featured_image",
+      "label": "Featured Card Image"
+    },
+    {
+      "type": "text",
+      "id": "featured_title",
+      "label": "Overlay Text",
+      "default": "Crafted for Workdays That Turn Heads"
+    },
+    {
+      "type": "header",
+      "content": "Product Window (Right Side)"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background Image",
+      "info": "Background image for the product cards window"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Collection Grid"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,962 @@
+{%- comment -%}
+  Bento Grid - Modern asymmetric grid layout
+  8 boxes total with customizable images, text, and links
+{%- endcomment -%}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    margin: 0;
+    padding: 60px 20px;
+    display: block;
+  }
+
+  .bento-grid {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: auto auto auto;
+    gap: 20px;
+  }
+
+  /* Grid Layout Structure */
+  .bento-box:nth-child(1) { grid-column: 1 / 2; grid-row: 1; }
+  .bento-box:nth-child(2) { grid-column: 2 / 3; grid-row: 1; }
+  .bento-box:nth-child(3) { grid-column: 3 / 4; grid-row: 1; }
+  .bento-box:nth-child(4) { grid-column: 4 / 5; grid-row: 1; }
+  
+  .bento-box:nth-child(5) { grid-column: 1 / 2; grid-row: 2 / 4; } /* Tall box */
+  .bento-box:nth-child(6) { grid-column: 2 / 3; grid-row: 2; }
+  .bento-box:nth-child(7) { grid-column: 3 / 5; grid-row: 2; } /* Wide box */
+  
+  .bento-box:nth-child(8) { grid-column: 2 / 4; grid-row: 3; } /* Wide box */
+  .bento-box:nth-child(9) { grid-column: 4 / 5; grid-row: 3; }
+
+  /* Box Base Styles */
+  .bento-box {
+    position: relative;
+    border-radius: 24px;
+    overflow: hidden;
+    background: #f5f5f5;
+    min-height: 200px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: default;
+  }
+
+  .bento-box--clickable {
+    cursor: pointer;
+  }
+
+  .bento-box--clickable:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Image Container */
+  .bento-box__image-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+
+  .bento-box__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Video Container */
+.bento-box__video-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.bento-box__video-wrapper iframe,
+.bento-box__video-wrapper video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+  pointer-events: none;
+}
+
+  /* Overlay for text readability */
+  .bento-box__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.2) 0%,
+      rgba(0, 0, 0, 0.5) 100%
+    );
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .bento-box:hover .bento-box__overlay {
+    opacity: 1;
+  }
+
+  /* Text Content */
+  .bento-box__content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 24px;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .bento-box__title {
+    font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 8px 0;
+    line-height: 1.3;
+  }
+
+  .bento-box--dark .bento-box__title {
+    color: #ffffff;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .bento-box__subtitle {
+    font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: #666;
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  .bento-box--dark .bento-box__subtitle {
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  /* Button Box - Smooth Diagonal Shimmer */
+.bento-box--button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #e07856 0%, #d66b45 100%);
+  cursor: pointer;
+  min-height: 120px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.bento-box--button::before {
+  content: '';
+  position: absolute;
+  top: -100%;
+  left: -100%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    135deg,
+    transparent 0%,
+    transparent 45%,
+    rgba(255, 255, 255, 0.5) 50%,
+    transparent 55%,
+    transparent 100%
+  );
+  animation: shimmerWaveDiagonal 3s ease-in-out infinite;
+}
+
+.bento-box--button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 40px rgba(224, 120, 86, 0.4);
+}
+
+.bento-box--button .bento-box__title {
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-align: center;
+  margin: 0;
+  position: relative;
+  z-index: 1;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes shimmerWaveDiagonal {
+  0% {
+    transform: translate(-100%, -100%);
+  }
+  100% {
+    transform: translate(100%, 100%);
+  }
+}
+
+
+  /* Centered Text Box */
+  .bento-box--centered {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .bento-box--centered .bento-box__content {
+    position: relative;
+    padding: 32px;
+  }
+
+  /* Mobile Responsive */
+@media (max-width: 968px) {
+  .bento-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto;
+    gap: 16px;
+  }
+
+  /* Mobile Layout Order */
+  .bento-box:nth-child(1) { grid-column: 1 / 3; grid-row: 1; } /* Box 1 - Full width */
+  .bento-box:nth-child(2) { grid-column: 1 / 3; grid-row: 2; } /* Box 2 - Full width */
+  .bento-box:nth-child(3) { grid-column: 1 / 2; grid-row: 3; } /* Box 3 - Left button */
+  .bento-box:nth-child(4) { grid-column: 2 / 3; grid-row: 3; } /* Box 4 - Right button */
+  .bento-box:nth-child(5) { grid-column: 1 / 3; grid-row: 4; min-height: 400px; } /* Box 5 - Tall full width */
+  .bento-box:nth-child(6) { grid-column: 1 / 2; grid-row: 5; } /* Box 6 - Left */
+  .bento-box:nth-child(7) { grid-column: 1 / 3; grid-row: 7; } /* Box 7 - Full width at bottom */
+  .bento-box:nth-child(8) { grid-column: 1 / 3; grid-row: 6; } /* Box 8 - Full width */
+  .bento-box:nth-child(9) { grid-column: 2 / 3; grid-row: 5; } /* Box 9 - Right */
+
+  .bento-box {
+    min-height: 180px;
+  }
+}
+
+@media (max-width: 640px) {
+  #shopify-section-{{ section.id }} {
+    padding: 40px 16px;
+  }
+
+  .bento-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  /* Mobile Layout - Keep same structure */
+  .bento-box:nth-child(1) { grid-column: 1 / 3; grid-row: 1; min-height: 240px; }
+  .bento-box:nth-child(2) { grid-column: 1 / 3; grid-row: 2; min-height: 240px; }
+  .bento-box:nth-child(3) { grid-column: 1 / 2; grid-row: 3; min-height: 120px; }
+  .bento-box:nth-child(4) { grid-column: 2 / 3; grid-row: 3; min-height: 120px; }
+  .bento-box:nth-child(5) { grid-column: 1 / 3; grid-row: 4; min-height: 350px; }
+  .bento-box:nth-child(6) { grid-column: 1 / 2; grid-row: 5; min-height: 220px; }
+  .bento-box:nth-child(7) { grid-column: 1 / 3; grid-row: 7; min-height: 240px; }
+  .bento-box:nth-child(8) { grid-column: 1 / 3; grid-row: 6; min-height: 200px; }
+  .bento-box:nth-child(9) { grid-column: 2 / 3; grid-row: 5; min-height: 220px; }
+
+  .bento-box {
+    border-radius: 20px;
+  }
+
+  .bento-box__content {
+    padding: 20px;
+  }
+
+  .bento-box__title {
+    font-size: 18px;
+  }
+
+  .bento-box__subtitle {
+    font-size: 13px;
+  }
+
+  .bento-box--button {
+    min-height: 100px;
+  }
+
+  .bento-box--button .bento-box__title {
+    font-size: 14px;
+    padding: 0 8px;
+  }
+}
+
+{%- endstyle -%}
+
+<div class="bento-grid">
+  {%- comment -%} Box 1 - Top Left {%- endcomment -%}
+{%- if section.settings.box1_link != blank -%}
+  <a href="{{ section.settings.box1_link }}" class="bento-box bento-box--clickable {% if section.settings.box1_dark_text %}bento-box--dark{% endif %}">
+{%- else -%}
+  <div class="bento-box {% if section.settings.box1_dark_text %}bento-box--dark{% endif %}">
+{%- endif -%}
+  
+  {%- comment -%} Video has priority, then image {%- endcomment -%}
+  {%- if section.settings.box1_video != null -%}
+    <div class="bento-box__video-wrapper">
+      <video autoplay muted loop playsinline class="bento-box__video">
+        {%- for source in section.settings.box1_video.sources -%}
+          <source src="{{ source.url }}" type="{{ source.mime_type }}">
+        {%- endfor -%}
+      </video>
+    </div>
+    <div class="bento-box__overlay"></div>
+  {%- elsif section.settings.box1_image != blank -%}
+    <div class="bento-box__image-wrapper">
+      {{ section.settings.box1_image | image_url: width: 600 | image_tag:
+         loading: 'lazy',
+         class: 'bento-box__image',
+         alt: section.settings.box1_title
+      }}
+    </div>
+    <div class="bento-box__overlay"></div>
+  {%- endif -%}
+  
+  {%- if section.settings.box1_title != blank or section.settings.box1_subtitle != blank -%}
+    <div class="bento-box__content">
+      {%- if section.settings.box1_title != blank -%}
+        <h3 class="bento-box__title">{{ section.settings.box1_title }}</h3>
+      {%- endif -%}
+      {%- if section.settings.box1_subtitle != blank -%}
+        <p class="bento-box__subtitle">{{ section.settings.box1_subtitle }}</p>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+  
+{%- if section.settings.box1_link != blank -%}</a>{%- else -%}</div>{%- endif -%}
+
+  {%- comment -%} Box 2 - Top Center Left {%- endcomment -%}
+  {%- if section.settings.box2_link != blank -%}
+    <a href="{{ section.settings.box2_link }}" class="bento-box bento-box--clickable {% if section.settings.box2_dark_text %}bento-box--dark{% endif %}">
+  {%- else -%}
+    <div class="bento-box {% if section.settings.box2_dark_text %}bento-box--dark{% endif %}">
+  {%- endif -%}
+    {%- comment -%} Video has priority, then image {%- endcomment -%}
+  {%- if section.settings.box2_video != null -%}
+    <div class="bento-box__video-wrapper">
+      <video autoplay muted loop playsinline class="bento-box__video">
+        {%- for source in section.settings.box2_video.sources -%}
+          <source src="{{ source.url }}" type="{{ source.mime_type }}">
+        {%- endfor -%}
+      </video>
+    </div>
+    <div class="bento-box__overlay"></div>
+  {%- elsif section.settings.box2_image != blank -%}
+    <div class="bento-box__image-wrapper">
+      {{ section.settings.box2_image | image_url: width: 600 | image_tag:
+         loading: 'lazy',
+         class: 'bento-box__image',
+         alt: section.settings.box2_title
+      }}
+    </div>
+    <div class="bento-box__overlay"></div>
+  {%- endif -%}
+
+    {%- if section.settings.box2_title != blank or section.settings.box2_subtitle != blank -%}
+      <div class="bento-box__content">
+        {%- if section.settings.box2_title != blank -%}
+          <h3 class="bento-box__title">{{ section.settings.box2_title }}</h3>
+        {%- endif -%}
+        {%- if section.settings.box2_subtitle != blank -%}
+          <p class="bento-box__subtitle">{{ section.settings.box2_subtitle }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  {%- if section.settings.box2_link != blank -%}</a>{%- else -%}</div>{%- endif -%}
+
+  {%- comment -%} Box 3 - Top Center Right (Button Style) {%- endcomment -%}
+  {%- if section.settings.box3_link != blank -%}
+    <a href="{{ section.settings.box3_link }}" class="bento-box bento-box--button">
+  {%- else -%}
+    <div class="bento-box bento-box--button">
+  {%- endif -%}
+    {%- if section.settings.box3_title != blank -%}
+      <h3 class="bento-box__title">{{ section.settings.box3_title }}</h3>
+    {%- endif -%}
+  {%- if section.settings.box3_link != blank -%}</a>{%- else -%}</div>{%- endif -%}
+
+  {%- comment -%} Box 4 - Top Right (Button Style) {%- endcomment -%}
+  {%- if section.settings.box4_link != blank -%}
+    <a href="{{ section.settings.box4_link }}" class="bento-box bento-box--button">
+  {%- else -%}
+    <div class="bento-box bento-box--button">
+  {%- endif -%}
+    {%- if section.settings.box4_title != blank -%}
+      <h3 class="bento-box__title">{{ section.settings.box4_title }}</h3>
+    {%- endif -%}
+  {%- if section.settings.box4_link != blank -%}</a>{%- else -%}</div>{%- endif -%}
+
+  {%- comment -%} Box 5 - Middle Left (Tall) {%- endcomment -%}
+  {%- if section.settings.box5_link != blank -%}
+    <a href="{{ section.settings.box5_link }}" class="bento-box bento-box--clickable {% if section.settings.box5_dark_text %}bento-box--dark{% endif %}">
+  {%- else -%}
+    <div class="bento-box {% if section.settings.box5_dark_text %}bento-box--dark{% endif %}">
+  {%- endif -%}
+   {%- comment -%} Video has priority, then image {%- endcomment -%}
+  {%- if section.settings.box5_video != null -%}
+    <div class="bento-box__video-wrapper">
+      <video autoplay muted loop playsinline class="bento-box__video">
+        {%- for source in section.settings.box5_video.sources -%}
+          <source src="{{ source.url }}" type="{{ source.mime_type }}">
+        {%- endfor -%}
+      </video>
+    </div>
+    <div class="bento-box__overlay"></div>
+  {%- elsif section.settings.box5_image != blank -%}
+    <div class="bento-box__image-wrapper">
+      {{ section.settings.box5_image | image_url: width: 600 | image_tag:
+         loading: 'lazy',
+         class: 'bento-box__image',
+         alt: section.settings.box5_title
+      }}
+    </div>
+    <div class="bento-box__overlay"></div>
+  {%- endif -%}
+
+    {%- if section.settings.box5_title != blank or section.settings.box5_subtitle != blank -%}
+      <div class="bento-box__content">
+        {%- if section.settings.box5_title != blank -%}
+          <h3 class="bento-box__title">{{ section.settings.box5_title }}</h3>
+        {%- endif -%}
+        {%- if section.settings.box5_subtitle != blank -%}
+          <p class="bento-box__subtitle">{{ section.settings.box5_subtitle }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  {%- if section.settings.box5_link != blank -%}</a>{%- else -%}</div>{%- endif -%}
+
+  {%- comment -%} Box 6 - Middle Center (Clickable to Collection/Product) {%- endcomment -%}
+  {%- liquid
+    assign box6_url = ''
+    if section.settings.box6_link_type == 'collection' and section.settings.box6_collection != blank
+      assign box6_url = collections[section.settings.box6_collection].url
+    elsif section.settings.box6_link_type == 'product' and section.settings.box6_product != blank
+      assign box6_url = section.settings.box6_product.url
+    endif
+  -%}
+  {%- if box6_url != blank -%}
+    <a href="{{ box6_url }}" class="bento-box bento-box--clickable {% if section.settings.box6_dark_text %}bento-box--dark{% endif %}">
+  {%- else -%}
+    <div class="bento-box {% if section.settings.box6_dark_text %}bento-box--dark{% endif %}">
+  {%- endif -%}
+   {%- comment -%} Video has priority, then image {%- endcomment -%}
+  {%- if section.settings.box6_video != null -%}
+    <div class="bento-box__video-wrapper">
+      <video autoplay muted loop playsinline class="bento-box__video">
+        {%- for source in section.settings.box6_video.sources -%}
+          <source src="{{ source.url }}" type="{{ source.mime_type }}">
+        {%- endfor -%}
+      </video>
+    </div>
+    <div class="bento-box__overlay"></div>
+  {%- elsif section.settings.box6_image != blank -%}
+    <div class="bento-box__image-wrapper">
+      {{ section.settings.box6_image | image_url: width: 600 | image_tag:
+         loading: 'lazy',
+         class: 'bento-box__image',
+         alt: section.settings.box6_title
+      }}
+    </div>
+    <div class="bento-box__overlay"></div>
+  {%- endif -%}
+
+    {%- if section.settings.box6_title != blank or section.settings.box6_subtitle != blank -%}
+      <div class="bento-box__content">
+        {%- if section.settings.box6_title != blank -%}
+          <h3 class="bento-box__title">{{ section.settings.box6_title }}</h3>
+        {%- endif -%}
+        {%- if section.settings.box6_subtitle != blank -%}
+          <p class="bento-box__subtitle">{{ section.settings.box6_subtitle }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  {%- if box6_url != blank -%}</a>{%- else -%}</div>{%- endif -%}
+
+  {%- comment -%} Box 7 - Middle Right (Wide, Clickable to Collection/Product) {%- endcomment -%}
+  {%- liquid
+    assign box7_url = ''
+    if section.settings.box7_link_type == 'collection' and section.settings.box7_collection != blank
+      assign box7_url = collections[section.settings.box7_collection].url
+    elsif section.settings.box7_link_type == 'product' and section.settings.box7_product != blank
+      assign box7_url = section.settings.box7_product.url
+    endif
+  -%}
+  {%- if box7_url != blank -%}
+    <a href="{{ box7_url }}" class="bento-box bento-box--clickable {% if section.settings.box7_dark_text %}bento-box--dark{% endif %}">
+  {%- else -%}
+    <div class="bento-box {% if section.settings.box7_dark_text %}bento-box--dark{% endif %}">
+  {%- endif -%}
+   {%- comment -%} Video has priority, then image {%- endcomment -%}
+  {%- if section.settings.box7_video != null -%}
+    <div class="bento-box__video-wrapper">
+      <video autoplay muted loop playsinline class="bento-box__video">
+        {%- for source in section.settings.box7_video.sources -%}
+          <source src="{{ source.url }}" type="{{ source.mime_type }}">
+        {%- endfor -%}
+      </video>
+    </div>
+    <div class="bento-box__overlay"></div>
+  {%- elsif section.settings.box7_image != blank -%}
+    <div class="bento-box__image-wrapper">
+      {{ section.settings.box7_image | image_url: width: 600 | image_tag:
+         loading: 'lazy',
+         class: 'bento-box__image',
+         alt: section.settings.box7_title
+      }}
+    </div>
+    <div class="bento-box__overlay"></div>
+  {%- endif -%}
+
+    {%- if section.settings.box7_title != blank or section.settings.box7_subtitle != blank -%}
+      <div class="bento-box__content">
+        {%- if section.settings.box7_title != blank -%}
+          <h3 class="bento-box__title">{{ section.settings.box7_title }}</h3>
+        {%- endif -%}
+        {%- if section.settings.box7_subtitle != blank -%}
+          <p class="bento-box__subtitle">{{ section.settings.box7_subtitle }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  {%- if box7_url != blank -%}</a>{%- else -%}</div>{%- endif -%}
+
+  {%- comment -%} Box 8 - Bottom Left (Wide, Centered Text) {%- endcomment -%}
+  {%- if section.settings.box8_link != blank -%}
+    <a href="{{ section.settings.box8_link }}" class="bento-box bento-box--clickable bento-box--centered {% if section.settings.box8_dark_text %}bento-box--dark{% endif %}">
+  {%- else -%}
+    <div class="bento-box bento-box--centered {% if section.settings.box8_dark_text %}bento-box--dark{% endif %}">
+  {%- endif -%}
+    {%- comment -%} Video has priority, then image {%- endcomment -%}
+  {%- if section.settings.box8_video != null -%}
+    <div class="bento-box__video-wrapper">
+      <video autoplay muted loop playsinline class="bento-box__video">
+        {%- for source in section.settings.box8_video.sources -%}
+          <source src="{{ source.url }}" type="{{ source.mime_type }}">
+        {%- endfor -%}
+      </video>
+    </div>
+    <div class="bento-box__overlay"></div>
+  {%- elsif section.settings.box8_image != blank -%}
+    <div class="bento-box__image-wrapper">
+      {{ section.settings.box8_image | image_url: width: 600 | image_tag:
+         loading: 'lazy',
+         class: 'bento-box__image',
+         alt: section.settings.box8_title
+      }}
+    </div>
+    <div class="bento-box__overlay"></div>
+  {%- endif -%}
+
+    {%- if section.settings.box8_title != blank or section.settings.box8_subtitle != blank -%}
+      <div class="bento-box__content">
+        {%- if section.settings.box8_title != blank -%}
+          <h3 class="bento-box__title">{{ section.settings.box8_title }}</h3>
+        {%- endif -%}
+        {%- if section.settings.box8_subtitle != blank -%}
+          <p class="bento-box__subtitle">{{ section.settings.box8_subtitle }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  {%- if section.settings.box8_link != blank -%}</a>{%- else -%}</div>{%- endif -%}
+
+  {%- comment -%} Box 9 - Bottom Right {%- endcomment -%}
+  {%- if section.settings.box9_link != blank -%}
+    <a href="{{ section.settings.box9_link }}" class="bento-box bento-box--clickable {% if section.settings.box9_dark_text %}bento-box--dark{% endif %}">
+  {%- else -%}
+    <div class="bento-box {% if section.settings.box9_dark_text %}bento-box--dark{% endif %}">
+  {%- endif -%}
+    {%- comment -%} Video has priority, then image {%- endcomment -%}
+  {%- if section.settings.box9_video != null -%}
+    <div class="bento-box__video-wrapper">
+      <video autoplay muted loop playsinline class="bento-box__video">
+        {%- for source in section.settings.box9_video.sources -%}
+          <source src="{{ source.url }}" type="{{ source.mime_type }}">
+        {%- endfor -%}
+      </video>
+    </div>
+    <div class="bento-box__overlay"></div>
+  {%- elsif section.settings.box9_image != blank -%}
+    <div class="bento-box__image-wrapper">
+      {{ section.settings.box9_image | image_url: width: 600 | image_tag:
+         loading: 'lazy',
+         class: 'bento-box__image',
+         alt: section.settings.box9_title
+      }}
+    </div>
+    <div class="bento-box__overlay"></div>
+  {%- endif -%}
+
+    {%- if section.settings.box9_title != blank or section.settings.box9_subtitle != blank -%}
+      <div class="bento-box__content">
+        {%- if section.settings.box9_title != blank -%}
+          <h3 class="bento-box__title">{{ section.settings.box9_title }}</h3>
+        {%- endif -%}
+        {%- if section.settings.box9_subtitle != blank -%}
+          <p class="bento-box__subtitle">{{ section.settings.box9_subtitle }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  {%- if section.settings.box9_link != blank -%}</a>{%- else -%}</div>{%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Bento Grid",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Box 1 - Top Left"
+    },
+    {
+      "type": "paragraph",
+      "content": "Upload either an image OR a video (not both)"
+    },
+    {
+      "type": "image_picker",
+      "id": "box1_image",
+      "label": "📷 Image"
+    },
+    {
+      "type": "video",
+      "id": "box1_video",
+      "label": "🎥 Video"
+    },
+    {
+      "type": "text",
+      "id": "box1_title",
+      "label": "Title"
+    },
+    {
+      "type": "text",
+      "id": "box1_subtitle",
+      "label": "Subtitle"
+    },
+    {
+      "type": "url",
+      "id": "box1_link",
+      "label": "Link"
+    },
+    {
+      "type": "checkbox",
+      "id": "box1_dark_text",
+      "label": "Use White Text",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Box 2 - Top Center Left"
+    },
+    {
+      "type": "paragraph",
+      "content": "Upload either an image OR a video (not both)"
+    },
+    {
+      "type": "image_picker",
+      "id": "box2_image",
+      "label": "📷 Image"
+    },
+    {
+      "type": "video",
+      "id": "box2_video",
+      "label": "🎥 Video"
+    },
+    {
+      "type": "text",
+      "id": "box2_title",
+      "label": "Title"
+    },
+    {
+      "type": "text",
+      "id": "box2_subtitle",
+      "label": "Subtitle"
+    },
+    {
+      "type": "url",
+      "id": "box2_link",
+      "label": "Link"
+    },
+    {
+      "type": "checkbox",
+      "id": "box2_dark_text",
+      "label": "Use White Text",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Box 3 - Top Center Right (Button)"
+    },
+    {
+      "type": "text",
+      "id": "box3_title",
+      "label": "Button Text",
+      "default": "STEALS UNDER ₹999"
+    },
+    {
+      "type": "url",
+      "id": "box3_link",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Box 4 - Top Right (Button)"
+    },
+    {
+      "type": "text",
+      "id": "box4_title",
+      "label": "Button Text",
+      "default": "READY TO SHIP"
+    },
+    {
+      "type": "url",
+      "id": "box4_link",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Box 5 - Middle Left (Tall)"
+    },
+    {
+      "type": "paragraph",
+      "content": "Upload either an image OR a video (not both)"
+    },
+    {
+      "type": "image_picker",
+      "id": "box5_image",
+      "label": "📷 Image"
+    },
+    {
+      "type": "video",
+      "id": "box5_video",
+      "label": "🎥 Video"
+    },
+    {
+      "type": "text",
+      "id": "box5_title",
+      "label": "Title"
+    },
+    {
+      "type": "text",
+      "id": "box5_subtitle",
+      "label": "Subtitle"
+    },
+    {
+      "type": "url",
+      "id": "box5_link",
+      "label": "Link"
+    },
+    {
+      "type": "checkbox",
+      "id": "box5_dark_text",
+      "label": "Use White Text",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Box 6 - Middle Center"
+    },
+    {
+      "type": "paragraph",
+      "content": "Upload either an image OR a video (not both)"
+    },
+    {
+      "type": "image_picker",
+      "id": "box6_image",
+      "label": "📷 Image"
+    },
+    {
+      "type": "video",
+      "id": "box6_video",
+      "label": "🎥 Video"
+    },
+    {
+      "type": "text",
+      "id": "box6_title",
+      "label": "Title"
+    },
+    {
+      "type": "text",
+      "id": "box6_subtitle",
+      "label": "Subtitle"
+    },
+    {
+      "type": "select",
+      "id": "box6_link_type",
+      "label": "Link Type",
+      "options": [
+        {"value": "none", "label": "None"},
+        {"value": "collection", "label": "Collection"},
+        {"value": "product", "label": "Product"}
+      ],
+      "default": "collection"
+    },
+    {
+      "type": "collection",
+      "id": "box6_collection",
+      "label": "Collection"
+    },
+    {
+      "type": "product",
+      "id": "box6_product",
+      "label": "Product"
+    },
+    {
+      "type": "checkbox",
+      "id": "box6_dark_text",
+      "label": "Use White Text",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Box 7 - Middle Right (Wide)"
+    },
+    {
+      "type": "paragraph",
+      "content": "Upload either an image OR a video (not both)"
+    },
+    {
+      "type": "image_picker",
+      "id": "box7_image",
+      "label": "📷 Image"
+    },
+    {
+      "type": "video",
+      "id": "box7_video",
+      "label": "🎥 Video"
+    },
+    {
+      "type": "text",
+      "id": "box7_title",
+      "label": "Title"
+    },
+    {
+      "type": "text",
+      "id": "box7_subtitle",
+      "label": "Subtitle"
+    },
+    {
+      "type": "select",
+      "id": "box7_link_type",
+      "label": "Link Type",
+      "options": [
+        {"value": "none", "label": "None"},
+        {"value": "collection", "label": "Collection"},
+        {"value": "product", "label": "Product"}
+      ],
+      "default": "collection"
+    },
+    {
+      "type": "collection",
+      "id": "box7_collection",
+      "label": "Collection"
+    },
+    {
+      "type": "product",
+      "id": "box7_product",
+      "label": "Product"
+    },
+    {
+      "type": "checkbox",
+      "id": "box7_dark_text",
+      "label": "Use White Text",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Box 8 - Bottom Left (Wide, Centered)"
+    },
+    {
+      "type": "paragraph",
+      "content": "Upload either an image OR a video (not both)"
+    },
+    {
+      "type": "image_picker",
+      "id": "box8_image",
+      "label": "📷 Image"
+    },
+    {
+      "type": "video",
+      "id": "box8_video",
+      "label": "🎥 Video"
+    },
+    {
+      "type": "text",
+      "id": "box8_title",
+      "label": "Title",
+      "default": "Handcrafted in Lucknow."
+    },
+    {
+      "type": "text",
+      "id": "box8_subtitle",
+      "label": "Subtitle",
+      "default": "0% Machine Work."
+    },
+    {
+      "type": "url",
+      "id": "box8_link",
+      "label": "Link"
+    },
+    {
+      "type": "checkbox",
+      "id": "box8_dark_text",
+      "label": "Use White Text",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Box 9 - Bottom Right"
+    },
+    {
+      "type": "paragraph",
+      "content": "Upload either an image OR a video (not both)"
+    },
+    {
+      "type": "image_picker",
+      "id": "box9_image",
+      "label": "📷 Image"
+    },
+    {
+      "type": "video",
+      "id": "box9_video",
+      "label": "🎥 Video"
+    },
+    {
+      "type": "text",
+      "id": "box9_title",
+      "label": "Title"
+    },
+    {
+      "type": "text",
+      "id": "box9_subtitle",
+      "label": "Subtitle"
+    },
+    {
+      "type": "url",
+      "id": "box9_link",
+      "label": "Link"
+    },
+    {
+      "type": "checkbox",
+      "id": "box9_dark_text",
+      "label": "Use White Text",
+      "default": false
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bento Grid"
+    }
+  ]
+}
+{% endschema %}
