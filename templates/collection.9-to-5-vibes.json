@@ -172,7 +172,7 @@
               "type": "button",
               "settings": {
                 "label": "Shop now",
-                "link": "shopify://collections/all",
+                "link": "shopify://products/mens-short-kurta-sage-beige",
                 "open_in_new_tab": false,
                 "style_class": "link",
                 "width": "fit-content",
@@ -201,9 +201,9 @@
             "align_baseline": false,
             "horizontal_alignment_flex_direction_column": "center",
             "vertical_alignment_flex_direction_column": "space-between",
-            "gap": 32,
+            "gap": 31,
             "width": "fill",
-            "custom_width": 100,
+            "custom_width": 69,
             "width_mobile": "fill",
             "custom_width_mobile": 100,
             "height": "fill",
@@ -212,6 +212,7 @@
             "color_scheme": "scheme-5",
             "background_media": "image",
             "video_position": "cover",
+            "background_image": "shopify://shop_images/GeneratedImageSeptember13_2025-10_41PM.png",
             "background_image_position": "cover",
             "border": "none",
             "border_width": 1,
@@ -244,7 +245,7 @@
             "text_7JU4wc": {
               "type": "text",
               "settings": {
-                "text": "<h3>Bestsellers</h3>",
+                "text": "<h3>Love Lavenders</h3>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "center",
