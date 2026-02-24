@@ -12,29 +12,17 @@
     "section": {
       "type": "section",
       "blocks": {
-        "text_tqQTNE": {
-          "type": "text",
-          "name": "Title",
+        "ai_gen_block_2cb46ce_iVrxmp": {
+          "type": "ai_gen_block_2cb46ce",
+          "name": "Collection heading",
           "settings": {
-            "text": "<h1>{{ closest.collection.title }}</h1>",
-            "width": "fit-content",
-            "max_width": "narrow",
-            "alignment": "left",
-            "type_preset": "h3",
-            "font": "var(--font-primary--family)",
-            "font_size": "",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "balance",
-            "color": "var(--color-foreground-heading)",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
+            "heading_text": "9 to 5 Collection",
+            "heading_size": 60,
+            "text_alignment": "center",
+            "desktop_width_percent": 100,
+            "heading_color": "#000000",
+            "animation_type": "fade_in",
+            "animation_duration": 1
           },
           "blocks": {}
         },
@@ -66,7 +54,7 @@
         }
       },
       "block_order": [
-        "text_tqQTNE",
+        "ai_gen_block_2cb46ce_iVrxmp",
         "text_JEyVkJ"
       ],
       "name": "Collection heading",
