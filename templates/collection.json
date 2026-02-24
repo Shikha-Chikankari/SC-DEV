@@ -43,8 +43,8 @@
           "type": "ai_gen_block_2cb46ce",
           "settings": {
             "heading_text": "9 to 5 Vibes",
-            "heading_size": 85,
-            "text_alignment": "center",
+            "heading_size": 75,
+            "text_alignment": "right",
             "desktop_width_percent": 100,
             "heading_color": "#175b07",
             "animation_type": "fade_in",
