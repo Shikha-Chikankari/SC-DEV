@@ -1064,6 +1064,20 @@
         "box9_dark_text": false
       }
     },
+    "divider_3Q7G9k": {
+      "type": "divider",
+      "name": "t:names.divider_section",
+      "settings": {
+        "color_scheme": "",
+        "section_width": "full-width",
+        "thickness": 1,
+        "corner_radius": "square",
+        "width_percent": 80,
+        "alignment_horizontal": "center",
+        "padding-block-start": 16,
+        "padding-block-end": 16
+      }
+    },
     "collection_list_iAQiBH": {
       "type": "collection-list",
       "blocks": {
@@ -1523,6 +1537,7 @@
     "featured_collection_grid_ACcp6X",
     "177094944163247e97",
     "bento_grid_section_YhfVwH",
+    "divider_3Q7G9k",
     "collection_list_iAQiBH",
     "marquee_y8LEWQ",
     "section_ppbEnA"
