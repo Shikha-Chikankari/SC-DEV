@@ -1,6 +1,304 @@
+{% doc %}
+  @prompt
+    collection heading, give option to choose different size and give option to change from color wheel, and add animation in text
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-collection-heading-{{ ai_gen_id }} {
+    display: block;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+    text-align: {{ block.settings.text_alignment }};
+    padding: 40px 20px;
+  }
+
+  .ai-collection-heading__title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.heading_size }}px;
+    color: {{ block.settings.heading_color }};
+    margin: 0;
+    font-weight: 600;
+    line-height: 1.2;
+    overflow: hidden;
+  }
+
+  {% if block.settings.animation_type == 'fade_in' %}
+    .ai-collection-heading__title-{{ ai_gen_id }} {
+      animation: ai-fade-in-{{ ai_gen_id }} {{ block.settings.animation_duration }}s ease-in-out;
+    }
+
+    @keyframes ai-fade-in-{{ ai_gen_id }} {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  {% elsif block.settings.animation_type == 'slide_in' %}
+    .ai-collection-heading__title-{{ ai_gen_id }} {
+      animation: ai-slide-in-{{ ai_gen_id }} {{ block.settings.animation_duration }}s ease-out;
+    }
+
+    @keyframes ai-slide-in-{{ ai_gen_id }} {
+      0% {
+        opacity: 0;
+        transform: translateX(-50px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+  {% elsif block.settings.animation_type == 'scale_in' %}
+    .ai-collection-heading__title-{{ ai_gen_id }} {
+      animation: ai-scale-in-{{ ai_gen_id }} {{ block.settings.animation_duration }}s ease-out;
+    }
+
+    @keyframes ai-scale-in-{{ ai_gen_id }} {
+      0% {
+        opacity: 0;
+        transform: scale(0.8);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+  {% elsif block.settings.animation_type == 'typing' %}
+    .ai-collection-heading__title-{{ ai_gen_id }} {
+      display: inline-block;
+      border-right: 3px solid {{ block.settings.heading_color }};
+      white-space: nowrap;
+      animation: 
+        ai-typing-{{ ai_gen_id }} {{ block.settings.animation_duration }}s steps(40, end),
+        ai-blink-{{ ai_gen_id }} 0.75s step-end infinite;
+    }
+
+    @keyframes ai-typing-{{ ai_gen_id }} {
+      from {
+        width: 0;
+      }
+      to {
+        width: 100%;
+      }
+    }
+
+    @keyframes ai-blink-{{ ai_gen_id }} {
+      from, to {
+        border-color: transparent;
+      }
+      50% {
+        border-color: {{ block.settings.heading_color }};
+      }
+    }
+  {% elsif block.settings.animation_type == 'wave' %}
+    .ai-collection-heading__title-{{ ai_gen_id }} {
+      display: inline-block;
+    }
+
+    .ai-collection-heading__letter-{{ ai_gen_id }} {
+      display: inline-block;
+      animation: ai-wave-{{ ai_gen_id }} {{ block.settings.animation_duration }}s ease-in-out infinite;
+    }
+
+    @keyframes ai-wave-{{ ai_gen_id }} {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+  {% endif %}
+
+  @media screen and (max-width: 749px) {
+    .ai-collection-heading__title-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.heading_size }}px * 0.6);
+    }
+  }
+{% endstyle %}
+
+<collection-heading-{{ ai_gen_id }}
+  class="ai-collection-heading-{{ ai_gen_id }}"
+  {{ block.shopify_attributes }}
+>
+  {% if block.settings.animation_type == 'wave' %}
+    <h1 class="ai-collection-heading__title-{{ ai_gen_id }}">
+      {% assign heading_text = block.settings.heading_text %}
+      {% if heading_text == blank %}
+        {% assign heading_text = collection.title %}
+      {% endif %}
+      {% assign letters = heading_text | split: '' %}
+      {% for letter in letters %}
+        {% assign delay = forloop.index0 | times: 0.1 %}
+        <span 
+          class="ai-collection-heading__letter-{{ ai_gen_id }}"
+          style="animation-delay: {{ delay }}s;"
+        >{{ letter }}</span>
+      {% endfor %}
+    </h1>
+  {% else %}
+    <h1 class="ai-collection-heading__title-{{ ai_gen_id }}">
+      {% if block.settings.heading_text != blank %}
+        {{ block.settings.heading_text }}
+      {% else %}
+        {{ collection.title }}
+      {% endif %}
+    </h1>
+  {% endif %}
+</collection-heading-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class CollectionHeading{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        const animationType = '{{ block.settings.animation_type }}';
+        
+        if (animationType === 'typing') {
+          this.setupTypingAnimation();
+        }
+      }
+
+      setupTypingAnimation() {
+        const title = this.querySelector('.ai-collection-heading__title-{{ ai_gen_id }}');
+        if (!title) return;
+
+        const text = title.textContent;
+        title.textContent = '';
+        title.style.width = '0';
+        
+        setTimeout(() => {
+          title.textContent = text;
+        }, 100);
+      }
+    }
+
+    customElements.define('collection-heading-{{ ai_gen_id }}', CollectionHeading{{ ai_gen_id }});
+  })();
+</script>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Collection heading",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "heading_text",
+      "label": "Heading text",
+      "info": "Leave blank to use collection title"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading size",
+      "min": 20,
+      "max": 120,
+      "step": 5,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Text alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "header",
+      "content": "Color"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Animation"
+    },
+    {
+      "type": "select",
+      "id": "animation_type",
+      "label": "Animation type",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "fade_in",
+          "label": "Fade in"
+        },
+        {
+          "value": "slide_in",
+          "label": "Slide in"
+        },
+        {
+          "value": "scale_in",
+          "label": "Scale in"
+        },
+        {
+          "value": "typing",
+          "label": "Typing effect"
+        },
+        {
+          "value": "wave",
+          "label": "Wave"
+        }
+      ],
+      "default": "fade_in"
+    },
+    {
+      "type": "range",
+      "id": "animation_duration",
+      "label": "Animation duration",
+      "min": 0.5,
+      "max": 3,
+      "step": 0.5,
+      "unit": "s",
+      "default": 1
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection heading"
+    }
+  ]
+}
 {% endschema %}
