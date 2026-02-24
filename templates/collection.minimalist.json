@@ -42,11 +42,11 @@
         "ai_gen_block_2cb46ce_tFyfac": {
           "type": "ai_gen_block_2cb46ce",
           "settings": {
-            "heading_text": "Vacation Ready",
-            "heading_size": 60,
+            "heading_text": "Minimalist",
+            "heading_size": 75,
             "text_alignment": "left",
             "desktop_width_percent": 100,
-            "heading_color": "#ffffff",
+            "heading_color": "#000000",
             "animation_type": "fade_in",
             "animation_duration": 1
           },
@@ -100,7 +100,7 @@
         "color_scheme": "scheme-3",
         "background_media": "image",
         "video_position": "cover",
-        "background_image": "shopify://shop_images/Websites_product_collection_2k_202602241104.jpg",
+        "background_image": "shopify://shop_images/Websites_product_collection_2k_202602241049.jpg",
         "background_image_position": "cover",
         "border": "none",
         "border_width": 1,
@@ -114,13 +114,249 @@
         "padding-block-end": 52
       }
     },
-    "marquee_ctPcN8": {
+    "section_TRz3er": {
+      "type": "section",
+      "blocks": {
+        "group_Cfmpha": {
+          "type": "group",
+          "settings": {
+            "link": "shopify://products/mens-short-kurta-sage-beige",
+            "open_in_new_tab": false,
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "center",
+            "vertical_alignment_flex_direction_column": "space-between",
+            "gap": 31,
+            "width": "fill",
+            "custom_width": 56,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fill",
+            "custom_height": 100,
+            "inherit_color_scheme": false,
+            "color_scheme": "scheme-5",
+            "background_media": "image",
+            "video_position": "cover",
+            "background_image": "shopify://shop_images/Make_it_fully_2k_202602160738.jpg",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 24,
+            "placeholder": "hero-apparel-2",
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "padding-block-start": 40,
+            "padding-block-end": 40,
+            "padding-inline-start": 40,
+            "padding-inline-end": 40
+          },
+          "blocks": {
+            "spacer_xhhkg3": {
+              "type": "spacer",
+              "settings": {
+                "size": "pixel",
+                "percent_size": 100,
+                "pixel_size": 16,
+                "custom_mobile_size": false,
+                "size_mobile": "percent",
+                "percent_size_mobile": 100,
+                "pixel_size_mobile": 120
+              },
+              "blocks": {}
+            },
+            "text_xMkRUn": {
+              "type": "text",
+              "settings": {
+                "text": "<h3>cool look</h3>",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "center",
+                "type_preset": "h3",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "button_DE3N9H": {
+              "type": "button",
+              "settings": {
+                "label": "Shop Short Kurta",
+                "link": "shopify://products/mens-short-kurta-sage-beige",
+                "open_in_new_tab": false,
+                "style_class": "link",
+                "width": "fit-content",
+                "custom_width": 100,
+                "width_mobile": "fit-content",
+                "custom_width_mobile": 100
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "spacer_xhhkg3",
+            "text_xMkRUn",
+            "button_DE3N9H"
+          ]
+        },
+        "group_cFnRyF": {
+          "type": "group",
+          "settings": {
+            "link": "shopify://products/rayon-soft-lavender-handcrafted-kurti",
+            "open_in_new_tab": false,
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "center",
+            "vertical_alignment_flex_direction_column": "space-between",
+            "gap": 32,
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fill",
+            "custom_height": 100,
+            "inherit_color_scheme": false,
+            "color_scheme": "scheme-5",
+            "background_media": "image",
+            "video_position": "cover",
+            "background_image": "shopify://shop_images/GeneratedImageSeptember13_2025-10_41PM.png",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 24,
+            "placeholder": "hero-apparel-1",
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "padding-block-start": 40,
+            "padding-block-end": 40,
+            "padding-inline-start": 40,
+            "padding-inline-end": 40
+          },
+          "blocks": {
+            "spacer_zrV8jt": {
+              "type": "spacer",
+              "settings": {
+                "size": "pixel",
+                "percent_size": 100,
+                "pixel_size": 16,
+                "custom_mobile_size": false,
+                "size_mobile": "percent",
+                "percent_size_mobile": 100,
+                "pixel_size_mobile": 120
+              },
+              "blocks": {}
+            },
+            "text_4PmDDz": {
+              "type": "text",
+              "settings": {
+                "text": "<h3>love lavenders</h3>",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "center",
+                "type_preset": "h3",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "button_JBXqGE": {
+              "type": "button",
+              "settings": {
+                "label": "Shop now",
+                "link": "shopify://products/rayon-soft-lavender-handcrafted-kurti",
+                "open_in_new_tab": false,
+                "style_class": "link",
+                "width": "fit-content",
+                "custom_width": 100,
+                "width_mobile": "fit-content",
+                "custom_width_mobile": 100
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "spacer_zrV8jt",
+            "text_4PmDDz",
+            "button_JBXqGE"
+          ]
+        }
+      },
+      "block_order": [
+        "group_Cfmpha",
+        "group_cFnRyF"
+      ],
+      "disabled": true,
+      "name": "t:names.split_showcase",
+      "settings": {
+        "content_direction": "row",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 0,
+        "section_width": "full-width",
+        "section_height": "large",
+        "section_height_custom": 50,
+        "color_scheme": "",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 24,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 12,
+        "padding-block-end": 0
+      }
+    },
+    "marquee_fTtNXk": {
       "type": "marquee",
       "blocks": {
-        "text_nFqAwC": {
+        "text_JNxnXH": {
           "type": "text",
           "settings": {
-            "text": "<p>Fashions fade, style is eternal</p>",
+            "text": "<h2>I make myself rich, by making my wants few</h2>",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
@@ -144,7 +380,7 @@
         }
       },
       "block_order": [
-        "text_nFqAwC"
+        "text_JNxnXH"
       ],
       "name": "t:names.marquee_section",
       "settings": {
@@ -387,7 +623,8 @@
   },
   "order": [
     "section",
-    "marquee_ctPcN8",
+    "section_TRz3er",
+    "marquee_fTtNXk",
     "main"
   ]
 }

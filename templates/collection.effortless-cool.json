@@ -15,7 +15,6 @@
         "text_tqQTNE": {
           "type": "text",
           "name": "Title",
-          "disabled": true,
           "settings": {
             "text": "<h1>{{ closest.collection.title }}</h1>",
             "width": "fit-content",
@@ -36,19 +35,6 @@
             "padding-block-end": 0,
             "padding-inline-start": 0,
             "padding-inline-end": 0
-          },
-          "blocks": {}
-        },
-        "ai_gen_block_2cb46ce_tFyfac": {
-          "type": "ai_gen_block_2cb46ce",
-          "settings": {
-            "heading_text": "Vacation Ready",
-            "heading_size": 60,
-            "text_alignment": "left",
-            "desktop_width_percent": 100,
-            "heading_color": "#ffffff",
-            "animation_type": "fade_in",
-            "animation_duration": 1
           },
           "blocks": {}
         },
@@ -81,7 +67,6 @@
       },
       "block_order": [
         "text_tqQTNE",
-        "ai_gen_block_2cb46ce_tFyfac",
         "text_JEyVkJ"
       ],
       "name": "Collection heading",
@@ -90,37 +75,37 @@
         "vertical_on_mobile": true,
         "horizontal_alignment": "space-between",
         "vertical_alignment": "flex-end",
-        "align_baseline": true,
+        "align_baseline": false,
         "horizontal_alignment_flex_direction_column": "flex-start",
         "vertical_alignment_flex_direction_column": "center",
-        "gap": 12,
+        "gap": 24,
         "section_width": "page-width",
-        "section_height": "",
+        "section_height": "small",
         "section_height_custom": 50,
         "color_scheme": "scheme-3",
         "background_media": "image",
         "video_position": "cover",
-        "background_image": "shopify://shop_images/Websites_product_collection_2k_202602241104.jpg",
+        "background_image": "shopify://shop_images/Websites_product_collection_2k_202602240013.jpg",
         "background_image_position": "cover",
         "border": "none",
         "border_width": 1,
         "border_opacity": 100,
-        "border_radius": 0,
+        "border_radius": 24,
         "toggle_overlay": false,
         "overlay_color": "#00000026",
         "overlay_style": "solid",
         "gradient_direction": "to top",
         "padding-block-start": 48,
-        "padding-block-end": 52
+        "padding-block-end": 48
       }
     },
-    "marquee_ctPcN8": {
+    "marquee_Jibdit": {
       "type": "marquee",
       "blocks": {
-        "text_nFqAwC": {
+        "text_kTzHpp": {
           "type": "text",
           "settings": {
-            "text": "<p>Fashions fade, style is eternal</p>",
+            "text": "<p>Get upto 50% OFF on your first Purchase</p>",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
@@ -130,7 +115,7 @@
             "line_height": "tight",
             "letter_spacing": "tight",
             "case": "none",
-            "wrap": "nowrap",
+            "wrap": "pretty",
             "color": "var(--color-foreground)",
             "background": false,
             "background_color": "#00000026",
@@ -144,7 +129,7 @@
         }
       },
       "block_order": [
-        "text_nFqAwC"
+        "text_kTzHpp"
       ],
       "name": "t:names.marquee_section",
       "settings": {
@@ -387,7 +372,7 @@
   },
   "order": [
     "section",
-    "marquee_ctPcN8",
+    "marquee_Jibdit",
     "main"
   ]
 }

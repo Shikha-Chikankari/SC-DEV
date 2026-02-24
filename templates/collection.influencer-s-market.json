@@ -42,7 +42,7 @@
         "ai_gen_block_2cb46ce_tFyfac": {
           "type": "ai_gen_block_2cb46ce",
           "settings": {
-            "heading_text": "Vacation Ready",
+            "heading_text": "Influencer's choice",
             "heading_size": 60,
             "text_alignment": "left",
             "desktop_width_percent": 100,
@@ -100,7 +100,7 @@
         "color_scheme": "scheme-3",
         "background_media": "image",
         "video_position": "cover",
-        "background_image": "shopify://shop_images/Websites_product_collection_2k_202602241104.jpg",
+        "background_image": "shopify://shop_images/Untitled_24.png",
         "background_image_position": "cover",
         "border": "none",
         "border_width": 1,
