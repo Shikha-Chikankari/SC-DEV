@@ -350,6 +350,47 @@
         "padding-block-end": 0
       }
     },
+    "marquee_fTtNXk": {
+      "type": "marquee",
+      "blocks": {
+        "text_JNxnXH": {
+          "type": "text",
+          "settings": {
+            "text": "<h2>I make myself rich, by making my wants few</h2>",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "custom",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "tight",
+            "letter_spacing": "tight",
+            "case": "none",
+            "wrap": "nowrap",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "text_JNxnXH"
+      ],
+      "name": "t:names.marquee_section",
+      "settings": {
+        "movement_direction": "normal",
+        "color_scheme": "",
+        "padding-block-start": 24,
+        "padding-block-end": 24,
+        "gap_between_elements": 24
+      }
+    },
     "main": {
       "type": "main-collection",
       "blocks": {
@@ -583,6 +624,7 @@
   "order": [
     "section",
     "section_TRz3er",
+    "marquee_fTtNXk",
     "main"
   ]
 }
