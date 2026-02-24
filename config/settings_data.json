@@ -124,18 +124,6 @@
         "disabled": false,
         "settings": {}
       },
-      "2950567246721570496": {
-        "type": "shopify://apps/tabs-studio/blocks/global_embed_block/19980fb9-f2ca-4ada-ad36-c0364c3318b8",
-        "disabled": false,
-        "settings": {
-          "init_type": "automatic",
-          "init_selector": "",
-          "replace_contents": true,
-          "init_timing": "immediate",
-          "custom_script": "",
-          "custom_style": ""
-        }
-      },
       "14960293953149298449": {
         "type": "shopify://apps/lavar/blocks/lavar/2745f432-7710-4b6e-a8d3-de346dc5d440",
         "disabled": false,
@@ -143,11 +131,6 @@
       },
       "15620043091132039688": {
         "type": "shopify://apps/hoppy-trust-badges/blocks/trust_badges_icon/6e9703d9-56af-47d9-80bb-0abc8eb8c38b",
-        "disabled": false,
-        "settings": {}
-      },
-      "2140957718858071575": {
-        "type": "shopify://apps/gv-gift-card-app/blocks/app-embed/6aff52d6-7806-4565-a1ee-3e7e4cd23480",
         "disabled": false,
         "settings": {}
       }
@@ -424,6 +407,45 @@
           "selected_variant_hover_background_color": "#1a1a1a",
           "selected_variant_hover_text_color": "#ffffff",
           "selected_variant_hover_border_color": "#1a1a1a"
+        }
+      },
+      "scheme-653f51da-78d5-444b-a249-7ce8beba81d0": {
+        "settings": {
+          "background": "#ffffff",
+          "foreground_heading": "#000000",
+          "foreground": "#000000",
+          "primary": "#c15045",
+          "primary_hover": "#000000",
+          "border": "#00000030",
+          "shadow": "#000000",
+          "primary_button_background": "#000000",
+          "primary_button_text": "#ffffff",
+          "primary_button_border": "#000000",
+          "primary_button_hover_background": "#000000",
+          "primary_button_hover_text": "#ffffff",
+          "primary_button_hover_border": "#000000",
+          "secondary_button_background": "#ffffff",
+          "secondary_button_text": "#000000",
+          "secondary_button_border": "#000000",
+          "secondary_button_hover_background": "#dedede",
+          "secondary_button_hover_text": "#000000",
+          "secondary_button_hover_border": "#000000",
+          "input_background": "#0000000d",
+          "input_text_color": "#000000",
+          "input_border_color": "rgba(0,0,0,0)",
+          "input_hover_background": "#e6e6e6",
+          "variant_background_color": "#ffffff",
+          "variant_text_color": "#000000",
+          "variant_border_color": "#e6e6e6",
+          "variant_hover_background_color": "#ffffff",
+          "variant_hover_text_color": "#000000",
+          "variant_hover_border_color": "#d2d2d2",
+          "selected_variant_background_color": "#000000",
+          "selected_variant_text_color": "#ffffff",
+          "selected_variant_border_color": "#000000",
+          "selected_variant_hover_background_color": "#232323",
+          "selected_variant_hover_text_color": "#ffffff",
+          "selected_variant_hover_border_color": "#232323"
         }
       }
     }
