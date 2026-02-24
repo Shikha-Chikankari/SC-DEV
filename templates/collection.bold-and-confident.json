@@ -15,6 +15,7 @@
         "text_tqQTNE": {
           "type": "text",
           "name": "Title",
+          "disabled": true,
           "settings": {
             "text": "<h1>{{ closest.collection.title }}</h1>",
             "width": "fit-content",
@@ -35,6 +36,20 @@
             "padding-block-end": 0,
             "padding-inline-start": 0,
             "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "ai_gen_block_2cb46ce_Fq3dKf": {
+          "type": "ai_gen_block_2cb46ce",
+          "name": "Collection heading",
+          "settings": {
+            "heading_text": "Bold & Confident",
+            "heading_size": 75,
+            "text_alignment": "center",
+            "desktop_width_percent": 100,
+            "heading_color": "#ffffff",
+            "animation_type": "fade_in",
+            "animation_duration": 1
           },
           "blocks": {}
         },
@@ -67,6 +82,7 @@
       },
       "block_order": [
         "text_tqQTNE",
+        "ai_gen_block_2cb46ce_Fq3dKf",
         "text_JEyVkJ"
       ],
       "name": "Collection heading",
