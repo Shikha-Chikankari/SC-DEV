@@ -1,8 +1,40 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "about_us_main": {
-      "type": "about-us-page"
+      "type": "about-us-page",
+      "settings": {
+        "hero_title": "The Art of Authentic Chikankari",
+        "hero_subtitle": "Handcrafted in the lanes of Lucknow. Curated for the modern woman.",
+        "promise_heading": "Our Brand's Promise",
+        "card1_image": "shopify://shop_images/A_closeup_topdown_2k_202601201617_e6299c7a-64cb-4c8f-b5c3-94d2e1cca9ea.jpg",
+        "card1_icon": "shopify://shop_images/cotton-bureau-svgrepo-com.svg",
+        "card1_title": "Premium Fabric",
+        "card1_description": "Soft, breathable, and skin-friendly",
+        "card2_image": "shopify://shop_images/79a14ac58f875d407fca20a1a446bdb4.jpg",
+        "card2_icon": "shopify://shop_images/map-pin-svgrepo-com.svg",
+        "card2_title": "Direct from Lucknow",
+        "card2_description": "Manufactured by local artisan communities",
+        "card3_image": "shopify://shop_images/A_raw_candid_2k_202601231246_10c2744b-995c-49ef-b654-c966014d5340.jpg",
+        "card3_icon": "shopify://shop_images/needle-sew-svgrepo-com.svg",
+        "card3_title": "100% Handwork",
+        "card3_description": "Authentic embroidery. No machines",
+        "founder_signature": "Varnika",
+        "founder_heading": "From the Founder's Desk",
+        "founder_quote": "I started this brand to bridge the gap between Lucknow's heritage and your daily wardrobe. Every piece you buy supports a family in Lucknow",
+        "founder_image": "shopify://shop_images/2ed99bbe-a3eb-4fbc-862b-5617623146f7.jpg"
+      }
     }
   },
-  "order": ["about_us_main"]
+  "order": [
+    "about_us_main"
+  ]
 }
