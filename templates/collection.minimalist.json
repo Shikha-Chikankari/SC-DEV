@@ -42,11 +42,11 @@
         "ai_gen_block_2cb46ce_tFyfac": {
           "type": "ai_gen_block_2cb46ce",
           "settings": {
-            "heading_text": "9 to 5 Vibes",
+            "heading_text": "Minimalist",
             "heading_size": 75,
-            "text_alignment": "right",
+            "text_alignment": "left",
             "desktop_width_percent": 100,
-            "heading_color": "#175b07",
+            "heading_color": "#000000",
             "animation_type": "fade_in",
             "animation_duration": 1
           },
@@ -100,7 +100,7 @@
         "color_scheme": "scheme-3",
         "background_media": "image",
         "video_position": "cover",
-        "background_image": "shopify://shop_images/Websites_product_collection_2k_202602240813.jpg",
+        "background_image": "shopify://shop_images/Websites_product_collection_2k_202602241049.jpg",
         "background_image_position": "cover",
         "border": "none",
         "border_width": 1,
@@ -320,6 +320,7 @@
         "group_Cfmpha",
         "group_cFnRyF"
       ],
+      "disabled": true,
       "name": "t:names.split_showcase",
       "settings": {
         "content_direction": "row",
