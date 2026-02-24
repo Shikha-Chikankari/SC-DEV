@@ -546,6 +546,20 @@
         "padding-block-end": 0
       }
     },
+    "divider_VViCwT": {
+      "type": "divider",
+      "name": "t:names.divider_section",
+      "settings": {
+        "color_scheme": "",
+        "section_width": "full-width",
+        "thickness": 1,
+        "corner_radius": "square",
+        "width_percent": 80,
+        "alignment_horizontal": "center",
+        "padding-block-start": 16,
+        "padding-block-end": 16
+      }
+    },
     "17621515165fe6b4f9": {
       "type": "_blocks",
       "blocks": {
@@ -820,6 +834,20 @@
         "background_video": "shopify://files/videos/Untitled (2).mp4"
       }
     },
+    "divider_3wTRDb": {
+      "type": "divider",
+      "name": "t:names.divider_section",
+      "settings": {
+        "color_scheme": "",
+        "section_width": "full-width",
+        "thickness": 1,
+        "corner_radius": "square",
+        "width_percent": 80,
+        "alignment_horizontal": "center",
+        "padding-block-start": 16,
+        "padding-block-end": 16
+      }
+    },
     "177096000792c32930": {
       "type": "_blocks",
       "blocks": {
@@ -903,6 +931,20 @@
         "gradient_direction": "to top",
         "padding-block-start": 0,
         "padding-block-end": 0
+      }
+    },
+    "divider_UnG7Hx": {
+      "type": "divider",
+      "name": "t:names.divider_section",
+      "settings": {
+        "color_scheme": "",
+        "section_width": "full-width",
+        "thickness": 1,
+        "corner_radius": "square",
+        "width_percent": 80,
+        "alignment_horizontal": "center",
+        "padding-block-start": 16,
+        "padding-block-end": 16
       }
     },
     "featured_collection_grid_ACcp6X": {
@@ -1470,11 +1512,14 @@
   "order": [
     "slideshow_kWkw8n",
     "17715576365ca8e1b3",
+    "divider_VViCwT",
     "17621515165fe6b4f9",
     "collection_list_FFV7jq",
     "17708607347f0693fe",
     "spotlight_collection_carousel_PAwDMM",
+    "divider_3wTRDb",
     "177096000792c32930",
+    "divider_UnG7Hx",
     "featured_collection_grid_ACcp6X",
     "177094944163247e97",
     "bento_grid_section_YhfVwH",
