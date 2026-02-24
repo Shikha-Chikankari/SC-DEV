@@ -42,11 +42,11 @@
         "ai_gen_block_2cb46ce_tFyfac": {
           "type": "ai_gen_block_2cb46ce",
           "settings": {
-            "heading_text": "Vacation Ready",
+            "heading_text": "Deals Under 999/-",
             "heading_size": 60,
             "text_alignment": "left",
             "desktop_width_percent": 100,
-            "heading_color": "#ffffff",
+            "heading_color": "#000000",
             "animation_type": "fade_in",
             "animation_duration": 1
           },
@@ -100,7 +100,7 @@
         "color_scheme": "scheme-3",
         "background_media": "image",
         "video_position": "cover",
-        "background_image": "shopify://shop_images/Websites_product_collection_2k_202602241104.jpg",
+        "background_image": "shopify://shop_images/Websites_product_collection_2k_202602241158.jpg",
         "background_image_position": "cover",
         "border": "none",
         "border_width": 1,
@@ -120,7 +120,7 @@
         "text_nFqAwC": {
           "type": "text",
           "settings": {
-            "text": "<p>Fashions fade, style is eternal</p>",
+            "text": "<p>Look Expensive, Spend Less - All Under ₹999!</p>",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
