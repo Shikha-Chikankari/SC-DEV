@@ -42,11 +42,11 @@
         "ai_gen_block_2cb46ce_tFyfac": {
           "type": "ai_gen_block_2cb46ce",
           "settings": {
-            "heading_text": "9 to 5 Vibes",
+            "heading_text": "Vacation Ready",
             "heading_size": 75,
-            "text_alignment": "right",
+            "text_alignment": "left",
             "desktop_width_percent": 100,
-            "heading_color": "#175b07",
+            "heading_color": "#ffffff",
             "animation_type": "fade_in",
             "animation_duration": 1
           },
@@ -100,7 +100,7 @@
         "color_scheme": "scheme-3",
         "background_media": "image",
         "video_position": "cover",
-        "background_image": "shopify://shop_images/Websites_product_collection_2k_202602240813.jpg",
+        "background_image": "shopify://shop_images/Websites_product_collection_2k_202602241104.jpg",
         "background_image_position": "cover",
         "border": "none",
         "border_width": 1,
@@ -320,6 +320,7 @@
         "group_Cfmpha",
         "group_cFnRyF"
       ],
+      "disabled": true,
       "name": "t:names.split_showcase",
       "settings": {
         "content_direction": "row",
@@ -347,6 +348,47 @@
         "gradient_direction": "to top",
         "padding-block-start": 12,
         "padding-block-end": 0
+      }
+    },
+    "marquee_8FV9Vj": {
+      "type": "marquee",
+      "blocks": {
+        "text_JQeXpf": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Fashions fade, style is eternal</p>",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "custom",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "tight",
+            "letter_spacing": "tight",
+            "case": "none",
+            "wrap": "nowrap",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "text_JQeXpf"
+      ],
+      "name": "t:names.marquee_section",
+      "settings": {
+        "movement_direction": "normal",
+        "color_scheme": "",
+        "padding-block-start": 24,
+        "padding-block-end": 24,
+        "gap_between_elements": 24
       }
     },
     "main": {
@@ -582,6 +624,7 @@
   "order": [
     "section",
     "section_TRz3er",
+    "marquee_8FV9Vj",
     "main"
   ]
 }
