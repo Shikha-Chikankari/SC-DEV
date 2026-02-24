@@ -49,6 +49,7 @@
         "logo_width": 60,
         "show_search": true,
         "show_cart": true,
+        "show_wishlist": true,
         "show_account": true,
         "color_scheme": ""
       }
@@ -88,6 +89,7 @@
         "announcement_RJnALK",
         "announcement_Jyajmf"
       ],
+      "disabled": true,
       "name": "t:names.announcement_bar",
       "settings": {
         "speed": 4,
