@@ -42,7 +42,7 @@
         "ai_gen_block_2cb46ce_tFyfac": {
           "type": "ai_gen_block_2cb46ce",
           "settings": {
-            "heading_text": "Vacation Ready",
+            "heading_text": "Soul Flow Co-ord SET",
             "heading_size": 60,
             "text_alignment": "left",
             "desktop_width_percent": 100,
@@ -100,7 +100,7 @@
         "color_scheme": "scheme-3",
         "background_media": "image",
         "video_position": "cover",
-        "background_image": "shopify://shop_images/Websites_product_collection_2k_202602241104.jpg",
+        "background_image": "shopify://shop_images/Websites_product_collection_2k_202602241932.jpg",
         "background_image_position": "cover",
         "border": "none",
         "border_width": 1,
@@ -112,47 +112,6 @@
         "gradient_direction": "to top",
         "padding-block-start": 48,
         "padding-block-end": 52
-      }
-    },
-    "marquee_ctPcN8": {
-      "type": "marquee",
-      "blocks": {
-        "text_nFqAwC": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Fashions fade, style is eternal</p>",
-            "width": "fit-content",
-            "max_width": "normal",
-            "alignment": "left",
-            "type_preset": "custom",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "tight",
-            "letter_spacing": "tight",
-            "case": "none",
-            "wrap": "nowrap",
-            "color": "var(--color-foreground)",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "text_nFqAwC"
-      ],
-      "name": "t:names.marquee_section",
-      "settings": {
-        "movement_direction": "normal",
-        "color_scheme": "",
-        "padding-block-start": 24,
-        "padding-block-end": 24,
-        "gap_between_elements": 24
       }
     },
     "main": {
@@ -205,7 +164,7 @@
                 "border": "none",
                 "border_width": 1,
                 "border_opacity": 100,
-                "border_radius": 0,
+                "border_radius": 24,
                 "padding-block-start": 0,
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
@@ -387,7 +346,6 @@
   },
   "order": [
     "section",
-    "marquee_ctPcN8",
     "main"
   ]
 }
