@@ -87,6 +87,47 @@
         "padding-block-end": 48
       }
     },
+    "marquee_PQFpYK": {
+      "type": "marquee",
+      "blocks": {
+        "text_Hfdcnb": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Fluent in email & fashion</p>",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "custom",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "tight",
+            "letter_spacing": "tight",
+            "case": "none",
+            "wrap": "nowrap",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "text_Hfdcnb"
+      ],
+      "name": "t:names.marquee_section",
+      "settings": {
+        "movement_direction": "normal",
+        "color_scheme": "",
+        "padding-block-start": 24,
+        "padding-block-end": 24,
+        "gap_between_elements": 24
+      }
+    },
     "section_EQKggH": {
       "type": "section",
       "blocks": {
@@ -554,6 +595,7 @@
   },
   "order": [
     "section",
+    "marquee_PQFpYK",
     "section_EQKggH",
     "main"
   ]
