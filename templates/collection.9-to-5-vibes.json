@@ -302,7 +302,7 @@
         "align_baseline": false,
         "horizontal_alignment_flex_direction_column": "flex-start",
         "vertical_alignment_flex_direction_column": "center",
-        "gap": 0,
+        "gap": 12,
         "section_width": "full-width",
         "section_height": "large",
         "section_height_custom": 50,
